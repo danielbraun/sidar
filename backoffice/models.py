@@ -2,9 +2,10 @@
 from django.db import models
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
+from django.utils.translation import ugettext_lazy as _
 
 class CommonModel(models.Model):
-	name = models.CharField(verbose_name="שם" , max_length=50)
+	name = models.CharField(verbose_name='שם', max_length=50)
 	
 	def __unicode__(self):
 		return self.name
@@ -14,8 +15,8 @@ class CommonModel(models.Model):
 
 
 class Discipline(CommonModel):
-	
 	class Meta:
+
 		verbose_name = "מחלקה"
 		verbose_name_plural = "מחלקות"
 
@@ -100,9 +101,3 @@ class Generation(CommonModel):
 	class Meta:
 		verbose_name = "דור מעצבים"
 		verbose_name_plural = "דורות מעצבים"
-
-
-
-
-
-
