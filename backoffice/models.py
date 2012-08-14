@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from imagekit.models import ImageSpecField
+from datetime import datetime, timedelta
 from imagekit.processors import ResizeToFit
 from django.utils.translation import ugettext_lazy as _
 
 class CommonModel(models.Model):
-	name = models.CharField(verbose_name='שם', max_length=50)
+	name = models.CharField(verbose_name=u'שם', max_length=50)
 	
 	def __unicode__(self):
 		return self.name
 	
 	class Meta:
 		abstract = True
+		ordering = ['name']
 
 
 class Discipline(CommonModel):
@@ -21,11 +23,12 @@ class Discipline(CommonModel):
 		verbose_name_plural = "מחלקות"
 
 class Designer(CommonModel):
-	photo         = models.ImageField(verbose_name="תמונת מעצב", upload_to="/designer_portraits")
-	birth_date    = models.DateField(verbose_name="תאריך לידה")
-	death_date    = models.DateField(verbose_name="תאריך מוות")
-	birth_country = models.ForeignKey("Country", verbose_name="מדינת לידה")
-	philosophy    = models.TextField(verbose_name="פילוסופיה")
+	photo         = models.ImageField(verbose_name="תמונת מעצב", upload_to="images/", blank=True)
+	birth_date    = models.DateField(verbose_name="תאריך לידה", blank=True, null=True)
+	death_date    = models.DateField(verbose_name="תאריך מוות", blank=True, null=True)
+	birth_country = models.ForeignKey("Country", verbose_name="מדינת לידה", default=1)
+	philosophy_summary = models.TextField(verbose_name=u'תקציר פילוסופיה', blank=True)
+	philosophy = models.FileField(verbose_name=u'פילוסופיה', upload_to="pdf/", blank=True)
 	is_active     = models.BooleanField(verbose_name="פעיל/ה")
 	generation    = models.ForeignKey("Generation", verbose_name="שייך לדור")
 
@@ -34,8 +37,9 @@ class Designer(CommonModel):
 		verbose_name_plural = "מעצבים"
 
 
+
 class Work(CommonModel):
-	raw_image       = models.ImageField(upload_to='works')
+	raw_image       = models.ImageField(upload_to='works', verbose_name=u'תמונת מקור')
 	fullscale_image = ImageSpecField(processors=[ResizeToFit(width=600)], image_field='raw_image')
 	midsize_image   = ImageSpecField(processors=[ResizeToFit(width=350)], image_field='raw_image')
 	preview_image   = ImageSpecField(processors=[ResizeToFit(width=100)], image_field='raw_image')
@@ -47,7 +51,7 @@ class Work(CommonModel):
 	technique       = models.ForeignKey("Technique", verbose_name="טכניקה")
 	height          = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="גובה")
 	width           = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="רוחב")
-	description     = models.TextField(verbose_name="תיאור")
+	description     = models.TextField(verbose_name=u"תיאור")
 	country         = models.ForeignKey("Country", verbose_name="מדינה")
 	collection      = models.ForeignKey("Collection", verbose_name="מאוסף")
 
@@ -85,7 +89,7 @@ class Technique(CommonModel):
 
 
 class Collection(CommonModel):
-	
+	homepage = models.URLField(verbose_name=u'אתר בית')
 	class Meta:
 		verbose_name = "אוסף"
 		verbose_name_plural = "אוספים"

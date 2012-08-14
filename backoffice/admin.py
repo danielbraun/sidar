@@ -1,5 +1,8 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin
 from models import *
 
-for model in [Designer, Work, Country, Discipline, Category, Client, Technique, Collection, Subject, Generation]:
-	admin.site.register(model)
+models = [Designer, Work, Country, Discipline, Category, Client, Technique, Collection, Subject, Generation]
+
+for model in models:
+	admin.site.register(model, TranslationAdmin)

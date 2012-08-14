@@ -1,5 +1,5 @@
 # Django settings for sidar project.
-
+# -*- coding: utf-8 -*-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -17,6 +17,14 @@ DATABASES = {
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    },
+    'legacy': {
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'php_gd',                      # Or path to database file if using sqlite3.
+        'USER': 'root',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.   
     }
 }
 
@@ -29,6 +37,14 @@ TIME_ZONE = 'Asia/Jerusalem'
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'he'
+
+LANGUAGES = (
+    ('he', u'Hebrew'),
+    ('en', u'English'),
+    ('ar', u'Arabic'),
+)
+
+MODELTRANSLATION_TRANSLATION_REGISTRY = 'backoffice.translation'
 
 SITE_ID = 1
 
@@ -122,6 +138,7 @@ INSTALLED_APPS = (
     'backoffice',
     'south',
     'imagekit',
+    'modeltranslation',
 )
 
 # A sample logging configuration. The only tangible logging
