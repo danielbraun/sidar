@@ -225,49 +225,49 @@ class Pages(models.Model):
         db_table = u'pages'
 
 class SidarItems(models.Model):
-    id = models.IntegerField(primary_key=True, db_column='ID') # Field name made lowercase.
-    client = models.CharField(max_length=765, db_column='Client', blank=True) # Field name made lowercase.
-    # copyright = models.CharField(max_length=765, db_column='Copyright', blank=True) # Field name made lowercase.
-    country = models.CharField(max_length=765, db_column='Country', blank=True) # Field name made lowercase.
-    date = models.CharField(max_length=765, db_column='Date', blank=True) # Field name made lowercase.
-    # department = models.CharField(max_length=765, db_column='Department', blank=True) # Field name made lowercase.
-    description = models.TextField(db_column='Description', blank=True) # Field name made lowercase.
+    id                   = models.IntegerField(primary_key=True, db_column='ID') # Field name made lowercase.
+    client               = models.CharField(max_length=765, db_column='Client', blank=True) # Field name made lowercase.
+    # copyright          = models.CharField(max_length=765, db_column='Copyright', blank=True) # Field name made lowercase.
+    country              = models.CharField(max_length=765, db_column='Country', blank=True) # Field name made lowercase.
+    date                 = models.CharField(max_length=765, db_column='Date', blank=True) # Field name made lowercase.
+    # department         = models.CharField(max_length=765, db_column='Department', blank=True) # Field name made lowercase.
+    description          = models.TextField(db_column='Description', blank=True) # Field name made lowercase.
     # description_writer = models.CharField(max_length=765, db_column='Description Writer', blank=True) # Field renamed to remove spaces. Field name made lowercase.
-    designer = models.CharField(max_length=765, db_column='Designer', blank=True) # Field name made lowercase.
-    designercode = models.CharField(max_length=150, db_column='DesignerCode', blank=True) # Field name made lowercase.
-    # directory_path = models.CharField(max_length=765, db_column='Directory Path', blank=True) # Field renamed to remove spaces. Field name made lowercase.
-    document_title = models.CharField(max_length=765, db_column='Document Title', blank=True) # Field renamed to remove spaces. Field name made lowercase.
-    # extension = models.CharField(max_length=765, db_column='Extension', blank=True) # Field name made lowercase.
-    # fieldname = models.CharField(max_length=765, db_column='FieldName', blank=True) # Field name made lowercase.
-    # file_type_mac = models.CharField(max_length=765, db_column='File Type Mac', blank=True) # Field renamed to remove spaces. Field name made lowercase.
-    filename = models.CharField(max_length=765, db_column='Filename', blank=True) # Field name made lowercase.
-    # item = models.CharField(max_length=765, db_column='Item', blank=True) # Field name made lowercase.
-    # keywords = models.CharField(max_length=765, db_column='Keywords', blank=True) # Field name made lowercase.
-    # number_of_pages = models.CharField(max_length=765, db_column='Number of Pages', blank=True) # Field renamed to remove spaces. Field name made lowercase.
-    path = models.CharField(max_length=765, db_column='Path', blank=True) # Field name made lowercase.
-    # illustration_by = models.CharField(max_length=765, db_column='Photo/Illustration by', blank=True) # Field renamed to remove spaces. Field name made lowercase.
-    size = models.CharField(max_length=765, db_column='Size', blank=True) # Field name made lowercase.
-    technique = models.CharField(max_length=765, db_column='Technique', blank=True) # Field name made lowercase.
-    topic = models.CharField(max_length=765, db_column='Topic', blank=True) # Field name made lowercase.
-    # watermark_url = models.CharField(max_length=765, db_column='Watermark URL', blank=True) # Field renamed to remove spaces. Field name made lowercase.
-    # watermarked = models.CharField(max_length=765, db_column='Watermarked', blank=True) # Field name made lowercase.
-    # website = models.CharField(max_length=765, db_column='Website', blank=True) # Field name made lowercase.
-    country_he = models.CharField(max_length=765, blank=True, db_column='ארץ')
-    size_he = models.CharField(max_length=765, blank=True, db_column='גודל')
-    # זכויות_יוצרים = models.CharField(max_length=765, db_column='\xd7\x96\xd7\x9b\xd7\x95\xd7\x99\xd7\x95\xd7\xaa \xd7\x99\xd7\x95\xd7\xa6\xd7\xa8\xd7\x99\xd7\x9d', blank=True) # Field renamed to remove spaces. Field name made lowercase.
-    technique_he = models.CharField(max_length=765, blank=True, db_column='טכניקה')
-    client_he = models.CharField(max_length=765, blank=True, db_column='לקוח')
-    collection_he = models.CharField(max_length=765, blank=True, db_column='מאוסף')
-    # מילות_מפתח = models.CharField(max_length=765, db_column='\xd7\x9e\xd7\x99\xd7\x9c\xd7\x95\xd7\xaa \xd7\x9e\xd7\xa4\xd7\xaa\xd7\x97', blank=True) # Field renamed to remove spaces. Field name made lowercase.
-    designer_he = models.CharField(max_length=765, blank=True, db_column='מעצב')
-    subject_he = models.CharField(max_length=765, blank=True, db_column='נושא')
-    # סוג_המסמך = models.CharField(max_length=765, db_column='\xd7\xa1\xd7\x95\xd7\x92 \xd7\x94\xd7\x9e\xd7\xa1\xd7\x9e\xd7\x9a', blank=True) # Field renamed to remove spaces. Field name made lowercase.
-    # פריט = models.CharField(max_length=765, blank=True)
-    category_he = models.CharField(max_length=765, blank=True, db_column='קטגוריה')
-    title_he = models.CharField(max_length=765, db_column='שם_העבודה', blank=True) # Field renamed to remove spaces. Field name made lowercase.
-    description_he = models.TextField(blank=True, db_column='תאור')
-    date = models.CharField(max_length=765, blank=True, db_column='תאריך')
-    # תאריך_עיברי = models.CharField(max_length=765, db_column='\xd7\xaa\xd7\x90\xd7\xa8\xd7\x99\xd7\x9a \xd7\xa2\xd7\x99\xd7\x91\xd7\xa8\xd7\x99', blank=True) # Field renamed to remove spaces. Field name made lowercase.
+    designer             = models.CharField(max_length=765, db_column='Designer', blank=True) # Field name made lowercase.
+    designercode         = models.CharField(max_length=150, db_column='DesignerCode', blank=True) # Field name made lowercase.
+    # directory_path     = models.CharField(max_length=765, db_column='Directory Path', blank=True) # Field renamed to remove spaces. Field name made lowercase.
+    document_title       = models.CharField(max_length=765, db_column='Document Title', blank=True) # Field renamed to remove spaces. Field name made lowercase.
+    # extension          = models.CharField(max_length=765, db_column='Extension', blank=True) # Field name made lowercase.
+    # fieldname          = models.CharField(max_length=765, db_column='FieldName', blank=True) # Field name made lowercase.
+    # file_type_mac      = models.CharField(max_length=765, db_column='File Type Mac', blank=True) # Field renamed to remove spaces. Field name made lowercase.
+    filename             = models.CharField(max_length=765, db_column='Filename', blank=True) # Field name made lowercase.
+    # item               = models.CharField(max_length=765, db_column='Item', blank=True) # Field name made lowercase.
+    # keywords           = models.CharField(max_length=765, db_column='Keywords', blank=True) # Field name made lowercase.
+    # number_of_pages    = models.CharField(max_length=765, db_column='Number of Pages', blank=True) # Field renamed to remove spaces. Field name made lowercase.
+    path                 = models.CharField(max_length=765, db_column='Path', blank=True) # Field name made lowercase.
+    # illustration_by    = models.CharField(max_length=765, db_column='Photo/Illustration by', blank=True) # Field renamed to remove spaces. Field name made lowercase.
+    size                 = models.CharField(max_length=765, db_column='Size', blank=True) # Field name made lowercase.
+    technique            = models.CharField(max_length=765, db_column='Technique', blank=True) # Field name made lowercase.
+    topic                = models.CharField(max_length=765, db_column='Topic', blank=True) # Field name made lowercase.
+    # watermark_url      = models.CharField(max_length=765, db_column='Watermark URL', blank=True) # Field renamed to remove spaces. Field name made lowercase.
+    # watermarked        = models.CharField(max_length=765, db_column='Watermarked', blank=True) # Field name made lowercase.
+    # website            = models.CharField(max_length=765, db_column='Website', blank=True) # Field name made lowercase.
+    country_he           = models.CharField(max_length=765, blank=True)
+    size_he              = models.CharField(max_length=765, blank=True)
+    # זכויות_יוצרים         = models.CharField(max_length=765, db_column='\xd7\x96\xd7\x9b\xd7\x95\xd7\x99\xd7\x95\xd7\xaa \xd7\x99\xd7\x95\xd7\xa6\xd7\xa8\xd7\x99\xd7\x9d', blank=True) # Field renamed to remove spaces. Field name made lowercase.
+    technique_he         = models.CharField(max_length=765, blank=True)
+    client_he            = models.CharField(max_length=765, blank=True)
+    collection_he        = models.CharField(max_length=765, blank=True)
+    # מילות_מפתח         = models.CharField(max_length=765, db_column='\xd7\x9e\xd7\x99\xd7\x9c\xd7\x95\xd7\xaa \xd7\x9e\xd7\xa4\xd7\xaa\xd7\x97', blank=True) # Field renamed to remove spaces. Field name made lowercase.
+    designer_he          = models.CharField(max_length=765, blank=True)
+    subject_he           = models.CharField(max_length=765, blank=True)
+    # סוג_המסמך          = models.CharField(max_length=765, db_column='\xd7\xa1\xd7\x95\xd7\x92 \xd7\x94\xd7\x9e\xd7\xa1\xd7\x9e\xd7\x9a', blank=True) # Field renamed to remove spaces. Field name made lowercase.
+    # פריט               = models.CharField(max_length=765, blank=True)
+    category_he          = models.CharField(max_length=765, blank=True)
+    title_he             = models.CharField(max_length=765, blank=True) # Field renamed to remove spaces. Field name made lowercase.
+    description_he       = models.TextField(blank=True)
+    date                 = models.CharField(max_length=765, blank=True)
+    # תאריך_עיברי         = models.CharField(max_length=765, db_column='\xd7\xaa\xd7\x90\xd7\xa8\xd7\x99\xd7\x9a \xd7\xa2\xd7\x99\xd7\x91\xd7\xa8\xd7\x99', blank=True) # Field renamed to remove spaces. Field name made lowercase.
     class Meta:
         db_table = u'sidar_items'
 

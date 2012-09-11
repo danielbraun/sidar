@@ -169,3 +169,8 @@ LOGGING = {
         },
     }
 }
+
+PORTFOLIO_CSV_ROOT = "/Users/danielbraun/Development/design26d"
+
+
+

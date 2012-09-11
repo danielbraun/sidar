@@ -4,10 +4,13 @@ from imagekit.models import ImageSpecField
 from datetime import datetime, timedelta
 from imagekit.processors import ResizeToFit
 from django.utils.translation import ugettext_lazy as _
+from utils import nullify, emptify
+import time
+
 
 class CommonModel(models.Model):
 	name = models.CharField(verbose_name=u'שם', max_length=50)
-	
+	# add last updated
 	def __unicode__(self):
 		return self.name
 	
@@ -17,10 +20,25 @@ class CommonModel(models.Model):
 
 
 class Discipline(CommonModel):
+	
+	@classmethod
+	def from_portfolio(cls, dict):
+		"""
+		>>> Discipline(name_en='Graphical Design', name_he=u'עיצוב גרפי').save()
+		>>> Discipline.from_portfolio({'Filename': 'G-JiY-Cal-001.jpg'}).name_en[0] == 'G'
+		True
+		"""
+		filename = dict['Filename']
+		for discipline in Discipline.objects.all():
+			if discipline.name_en[0] == filename[0] and filename[1] == '-':
+				return discipline
+		raise Exception('Could not find a matching discipline for work.')
+
 	class Meta:
 
 		verbose_name = "מחלקה"
 		verbose_name_plural = "מחלקות"
+
 
 class Designer(CommonModel):
 	photo         = models.ImageField(verbose_name="תמונת מעצב", upload_to="images/", blank=True)
@@ -47,6 +65,7 @@ class Work(CommonModel):
 	discipline      = models.ForeignKey("Discipline", verbose_name="תחום עיצוב")
 	category        = models.ForeignKey("Category", verbose_name="קטגוריה")
 	publish_date    = models.DateField(verbose_name="תאריך הוצאה לאור")
+	# publish_date_as_text = models.CharField(verbose_name=u'תאריך כמלל', max_length=50)
 	client          = models.ForeignKey("Client", verbose_name="לקוח")
 	technique       = models.ForeignKey("Technique", verbose_name="טכניקה")
 	height          = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="גובה")
@@ -60,7 +79,7 @@ class Work(CommonModel):
 		verbose_name_plural = "עבודות"
 
 class Country(CommonModel):
-
+	# unique
 	class Meta:
 		verbose_name = "מדינה"
 		verbose_name_plural = "מדינות"
@@ -96,9 +115,14 @@ class Collection(CommonModel):
 
 class Subject(CommonModel):
 	
+	@classmethod
+	def from_portfolio(cls, dict):
+		return [(Subject.objects.get_or_create(name_he=nullify(subject.strip()))) for subject in dict[u'נושא'].split(',')]
+
 	class Meta:
 		verbose_name = "נושא"
 		verbose_name_plural = "נושאים"
+
 
 class Generation(CommonModel):
 
