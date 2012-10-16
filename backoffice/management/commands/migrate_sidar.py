@@ -5,7 +5,8 @@ from backoffice.sidar_models import Designerscategory, Designers, SidarItems
 
 from sidar.settings import LANGUAGES
 from django.utils import translation
-from utils import nullify, emptify
+from backoffice.utils import nullify, emptify
+from backoffice.external.html2text import html2text
 
 class Command(BaseCommand):
 	help = "Converts old sidar models and tables to new ones"
@@ -22,7 +23,7 @@ class Command(BaseCommand):
 				# birth_country=(Country.objects.get_or_create(name_he=nullify(object.birthcountry)))[0],
 				is_active=object.status,
 				generation_id=object.catcode,
-				philosophy_summary_he=emptify(object.comments)
+				philosophy_summary_he=emptify(html2text(object.comments.strip()))
 			).save()
 
 		# Client migration from sidar_items

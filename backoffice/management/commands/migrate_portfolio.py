@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-from backoffice.models import Work, Country, Subject
+from backoffice.models import Work, Country, Subject, Category, Discipline, Client, Technique, Collection, Designer
 from django.core.management.base import BaseCommand, CommandError
+from django.core.files import File
 from sidar.settings import PORTFOLIO_CSV_ROOT
-
+from backoffice.external.html2text import html2text
+from datetime import datetime
 import os, csv, sys, codecs
 
 
@@ -38,13 +40,28 @@ class Command(BaseCommand):
 					with codecs.open(os.path.join(root, name), encoding='utf-16-le') as f:
 						reader = unicode_csv_reader(f, delimiter='\t')
 						for row in reader:
-							Work(
-								name_he=row[u'שם העבודה'], name_en=row['Document Title'],
-								country=(Country.objects.get_or_create(
-									name_he=row['ארץ'],
-									defaults={'name_en': row[u'Country']})
-								)[0],
-								raw_image=open(path_hash[line['Filename']]),
-								subjects=Subject.from_portfolio(row),
-								discipline=Discipline.from_portfolio(row),
-							).save()
+							work = Work(
+								name_he        = row[u'שם העבודה'], name_en=row['Document Title'],
+								country        = Country.from_portfolio(row),
+								raw_image      = File(open(path_hash[row['Filename']])),
+								# subjects     = Subject.from_portfolio(row),
+								discipline     = Discipline.from_portfolio(row),
+								category       = Category.from_portfolio(row),
+								client         = Client.from_portfolio(row),
+								technique      = Technique.from_portfolio(row),
+								# collection   =  ask reuven
+								collection     = Collection.objects.get_or_create(name_he=None)[0],
+								description_he = html2text(row[u'תאור']).strip(),
+								description_en = html2text(row[u'Description']).strip(),
+								# publish_date   = datetime.now(),
+								publish_date_as_text_he = row[u'תאריך'].strip(), 
+								publish_date_as_text_en = row[u'Date'].strip(), 
+								size_as_text_he = row[u'גודל'].strip(),
+								size_as_text_en = row[u'Size'].strip(),
+								# height         = 0.00,
+								designer       = Designer.from_portfolio(row)
+								# width          = 0.00
+								).save()
+
+							# for subject in Subject.from_portfolio(row):
+							# 	work.subjects.add(subject)
