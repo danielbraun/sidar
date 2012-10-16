@@ -1,5 +1,6 @@
 # Django settings for sidar project.
 # -*- coding: utf-8 -*-
+import os
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', 'True'))
 TEMPLATE_DEBUG = DEBUG
 
