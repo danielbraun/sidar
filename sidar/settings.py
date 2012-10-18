@@ -3,6 +3,7 @@
 
 import os
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
+print 'DEBUG = ', DEBUG
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
