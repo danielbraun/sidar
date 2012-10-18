@@ -1,7 +1,8 @@
 # Django settings for sidar project.
 # -*- coding: utf-8 -*-
+
 import os
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', 'True'))
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -128,6 +129,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    'templates',
 )
 
 INSTALLED_APPS = (
