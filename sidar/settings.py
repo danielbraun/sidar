@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import os
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
-print 'DEBUG = ', DEBUG
+
+DEBUG=False
+
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
