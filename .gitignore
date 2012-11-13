@@ -6,4 +6,6 @@ media
 *.log
 *.pot
 local_settings.py
-
+*.sublime-project
+*.sublime-workspace
+.ropeproject

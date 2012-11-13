@@ -1,7 +1,6 @@
 # Django settings for sidar project.
 # -*- coding: utf-8 -*-
 
-import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -16,7 +15,7 @@ MANAGERS = ADMINS
 if DEBUG:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+            'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
             'NAME': 'sqlite3.db',                      # Or path to database file if using sqlite3.
             'USER': '',                      # Not used with sqlite3.
             'PASSWORD': '',                  # Not used with sqlite3.
@@ -24,12 +23,12 @@ if DEBUG:
             'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
         },
         'legacy': {
-            'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+            'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
             'NAME': 'php_gd',                      # Or path to database file if using sqlite3.
             'USER': 'root',                      # Not used with sqlite3.
             'PASSWORD': '',                  # Not used with sqlite3.
             'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.   
+            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
         }
     }
 else:
@@ -98,7 +97,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -108,7 +107,7 @@ SECRET_KEY = '**&amp;6s=rn2(0@a4@c3m4#^15jom%@x5p21&amp;$#nc^udo+dzd-68#'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -180,6 +179,3 @@ LOGGING = {
 }
 
 PORTFOLIO_CSV_ROOT = "/Users/danielbraun/Development/design26d"
-
-
-
