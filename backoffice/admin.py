@@ -12,9 +12,10 @@ class WorkAdmin(TranslationAdmin):
 	search_fields   = ['designer__name_he', 'category__name_he',]
 	list_display    = ('__unicode__', 'designer', 'category', 'admin_thumbnail',)
 	admin_thumbnail = AdminThumbnail(image_field='preview_image')
+	filter_horizontal = ['subjects',]
 
 class DesignerAdmin(TranslationAdmin):
-	list_display = ('name', 'name_en', 'main_discipline', 'work_count')
+	list_display = ('name', 'name_en', 'name_ar', 'main_discipline', 'work_count')
 	# list_filter = ('main_discipline',)
 
 

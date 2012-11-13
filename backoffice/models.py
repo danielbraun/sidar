@@ -71,11 +71,10 @@ class Designer(CommonModel):
 	is_active          = models.BooleanField(u'פעיל/ה')
 	generation         = models.ForeignKey("Generation", verbose_name="שייך לדור")
 
+
 	class Meta:
 		verbose_name = "מעצב"
 		verbose_name_plural = "מעצבים"
-
-
 
 
 class Work(CommonModel):
