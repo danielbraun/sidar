@@ -3,3 +3,7 @@
 sqlite3.db
 venv
 media
+*.log
+*.pot
+local_settings.py
+
