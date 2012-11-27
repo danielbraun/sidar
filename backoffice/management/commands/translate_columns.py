@@ -3,13 +3,15 @@
 from django.core.management.base import BaseCommand
 from django.db import connections
 from django.db.utils import DatabaseError
+from sidar.settings import LEGACY_DB_NAMES
 
 
 class Command(BaseCommand):
     help = "Convert hebrew columns to english ones"
 
     def handle(self, *args, **options):
-        cursor = connections['legacy'].cursor()
+        # cursor = connections['legacy'].cursor()
+        cursors = [connections[name].cursor() for name in LEGACY_DB_NAMES]
         fields = [
             ('ארץ', 'country_he'),
             ('גודל', 'size_he'),
@@ -30,6 +32,7 @@ class Command(BaseCommand):
             else:
                 field += ("LONGTEXT",)
             try:
-                cursor.execute("alter table sidar_items change %s %s %s;" % field)
+                for cursor in cursors:
+                    cursor.execute("alter table sidar_items change %s %s %s;" % field)
             except DatabaseError:
                 pass

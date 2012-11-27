@@ -15,6 +15,7 @@ class Archives(models.Model):
     extra = models.TextField(blank=True)
 
     class Meta:
+        managed = False
         db_table = u'archives'
 
 
@@ -34,6 +35,7 @@ class Archivescategory(models.Model):
     body = models.TextField(blank=True)
 
     class Meta:
+        managed = False
         db_table = u'archivescategory'
 
 
@@ -54,6 +56,7 @@ class Articles(models.Model):
     source = models.IntegerField(null=True, blank=True)
 
     class Meta:
+        managed = False
         db_table = u'articles'
 
 
@@ -67,6 +70,7 @@ class Articlescategory(models.Model):
     body = models.TextField(blank=True)
 
     class Meta:
+        managed = False
         db_table = u'articlescategory'
 
 
@@ -83,6 +87,7 @@ class Biblio(models.Model):
     extra = models.TextField(blank=True)
 
     class Meta:
+        managed = False
         db_table = u'biblio'
 
 
@@ -96,6 +101,7 @@ class Bibliocategory(models.Model):
     body = models.TextField(blank=True)
 
     class Meta:
+        managed = False
         db_table = u'bibliocategory'
 
 
@@ -113,6 +119,7 @@ class Categories(models.Model):
     extra = models.TextField(blank=True)
 
     class Meta:
+        managed = False
         db_table = u'categories'
 
 
@@ -127,6 +134,7 @@ class Categoriescategory(models.Model):
     body = models.TextField(blank=True)
 
     class Meta:
+        managed = False
         db_table = u'categoriescategory'
 
 
@@ -149,6 +157,7 @@ class Designers(models.Model):
     status = models.IntegerField(null=True, blank=True)
 
     class Meta:
+        managed = False
         db_table = u'designers'
 
 
@@ -157,6 +166,7 @@ class Designerscategory(models.Model):
     name = models.CharField(max_length=765)
 
     class Meta:
+        managed = False
         db_table = u'designerscategory'
 
 
@@ -177,6 +187,7 @@ class Events(models.Model):
     extra = models.TextField(blank=True)
 
     class Meta:
+        managed = False
         db_table = u'events'
 
 
@@ -193,6 +204,7 @@ class Links(models.Model):
     extra = models.TextField(blank=True)
 
     class Meta:
+        managed = False
         db_table = u'links'
 
 
@@ -206,6 +218,7 @@ class Linkscategory(models.Model):
     body = models.TextField(blank=True)
 
     class Meta:
+        managed = False
         db_table = u'linkscategory'
 
 
@@ -223,6 +236,7 @@ class Movies(models.Model):
     extra = models.TextField(blank=True)
 
     class Meta:
+        managed = False
         db_table = u'movies'
 
 
@@ -236,6 +250,7 @@ class Moviescategory(models.Model):
     body = models.TextField(blank=True)
 
     class Meta:
+        managed = False
         db_table = u'moviescategory'
 
 
@@ -251,6 +266,7 @@ class Pages(models.Model):
     extra = models.TextField(blank=True)
 
     class Meta:
+        managed = False
         db_table = u'pages'
 
 
@@ -300,6 +316,7 @@ class SidarItems(models.Model):
     # תאריך_עיברי         = models.CharField(max_length=765, db_column='\xd7\xaa\xd7\x90\xd7\xa8\xd7\x99\xd7\x9a \xd7\xa2\xd7\x99\xd7\x91\xd7\xa8\xd7\x99', blank=True) # Field renamed to remove spaces. Field name made lowercase.
 
     class Meta:
+        managed = False
         db_table = u'sidar_items'
 
 
@@ -309,6 +326,7 @@ class Studiorelate(models.Model):
     relates = models.CharField(max_length=765, blank=True)
 
     class Meta:
+        managed = False
         db_table = u'studiorelate'
 
 
@@ -325,6 +343,7 @@ class Subjects(models.Model):
     extra = models.TextField(blank=True)
 
     class Meta:
+        managed = False
         db_table = u'subjects'
 
 
@@ -338,6 +357,7 @@ class Subjectscategory(models.Model):
     body = models.TextField(blank=True)
 
     class Meta:
+        managed = False
         db_table = u'subjectscategory'
 
 
@@ -360,6 +380,7 @@ class Timeline(models.Model):
     extra = models.TextField(blank=True)
 
     class Meta:
+        managed = False
         db_table = u'timeline'
 
 
@@ -372,4 +393,5 @@ class Users(models.Model):
     privilages = models.IntegerField(null=True, blank=True)
 
     class Meta:
+        managed = False
         db_table = u'users'

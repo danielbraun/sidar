@@ -61,9 +61,11 @@ class Designer(CommonModel):
     work_count.short_description = u'מספר עבודות'
 
     photo = models.ImageField(u'תמונת מעצב', upload_to="images/", blank=True)
-    birth_date = models.DateField(u'תאריך לידה', blank=True, null=True)
-    death_date = models.DateField(u'תאריך מוות', blank=True, null=True)
-    birth_country = models.ForeignKey("Country", verbose_name="מדינת לידה", default=1)
+    # birth_year = models.DateField(u'שנת לידה', blank=True, null=True)
+    birth_year = models.IntegerField(u'שנת לידה', blank=True, null=True)
+    # death_year = models.DateField(u'שנת מוות', blank=True, null=True)
+    death_year = models.IntegerField(u'שנת מוות', blank=True, null=True)
+    birth_country = models.ForeignKey("Country", verbose_name="מדינת לידה", default=None, null=True)
     philosophy_summary = models.TextField(u'תקציר פילוסופיה', blank=True)
     philosophy = models.FileField(u'קובץ פילוסופיה', upload_to="pdf/", blank=True)
     is_active = models.BooleanField(u'פעיל/ה')
@@ -183,5 +185,5 @@ class Subject(CommonModel):
 class Generation(CommonModel):
 
     class Meta:
-        verbose_name = "דור מעצבים"
-        verbose_name_plural = "דורות מעצבים"
+        verbose_name = u'דור מעצבים'
+        verbose_name_plural = u'דורות מעצבים'

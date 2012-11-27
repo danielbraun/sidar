@@ -7,7 +7,7 @@ models = [Country, Discipline, Category, Client, Technique, Collection, Subject,
 
 
 class TranslatedModelAdmin(TranslationAdmin):
-    list_display = ('name', 'name_en')
+    list_display = ('name', 'name_he', 'name_en')
 
 
 class WorkAdmin(TranslationAdmin):

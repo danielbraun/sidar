@@ -1,8 +1,16 @@
 # Django settings for sidar project.
 # -*- coding: utf-8 -*-
 
+import socket
 
-DEBUG = True
+DEBUG = (socket.gethostname() != "design25")
+
+DBBACKUP_STORAGE = 'dbbackup.storage.filesystem_storage'
+DBBACKUP_FILESYSTEM_DIRECTORY = '/Users/danielbraun/Backup'
+
+PORTFOLIO_CSV_ROOT = "/Users/danielbraun/Development/design26d"
+
+# DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -11,29 +19,28 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+LEGACY_DB_NAMES = ['php_gd', 'php_id']
 
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'sqlite3.db',                      # Or path to database file if using sqlite3.
-            'USER': '',                      # Not used with sqlite3.
-            'PASSWORD': '',                  # Not used with sqlite3.
-            'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-        },
-        'legacy': {
-            'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'php_gd',                      # Or path to database file if using sqlite3.
-            'USER': 'root',                      # Not used with sqlite3.
-            'PASSWORD': '',                  # Not used with sqlite3.
-            'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'sqlite3.db',                      # Or path to database file if using sqlite3.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
-else:
-    import dj_database_url
-    DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
+}
+
+for name in LEGACY_DB_NAMES:
+    DATABASES[name] = {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': name,
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    }
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -147,6 +154,7 @@ INSTALLED_APPS = (
     'south',
     'imagekit',
     'modeltranslation',
+    'dbbackup',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -178,4 +186,4 @@ LOGGING = {
     }
 }
 
-PORTFOLIO_CSV_ROOT = "/Users/danielbraun/Development/design26d"
+

@@ -1,0 +1,18 @@
+[
+	{
+		"model": "backoffice.discipline",
+		"pk": 1,
+		"fields": {
+			"name_en": "Graphical Design",
+			"name_he": "עיצוב גרפי"
+		}
+	},
+	{
+		"model": "backoffice.discipline",
+		"pk": 2,
+		"fields": {
+			"name_en": "Industrial Design",
+			"name_he": "עיצוב תעשייתי"
+		}
+	}
+]

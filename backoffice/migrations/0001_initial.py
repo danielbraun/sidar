@@ -12,6 +12,9 @@ class Migration(SchemaMigration):
         db.create_table('backoffice_discipline', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
+            ('name_he', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_en', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_ar', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
         ))
         db.send_create_signal('backoffice', ['Discipline'])
 
@@ -19,11 +22,18 @@ class Migration(SchemaMigration):
         db.create_table('backoffice_designer', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('photo', self.gf('django.db.models.fields.files.ImageField')(max_length=100)),
-            ('birth_date', self.gf('django.db.models.fields.DateField')()),
-            ('death_date', self.gf('django.db.models.fields.DateField')()),
-            ('birth_country', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['backoffice.Country'])),
-            ('philosophy', self.gf('django.db.models.fields.TextField')()),
+            ('name_he', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_en', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_ar', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('photo', self.gf('django.db.models.fields.files.ImageField')(max_length=100, blank=True)),
+            ('birth_year', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
+            ('death_year', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
+            ('birth_country', self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['backoffice.Country'])),
+            ('philosophy_summary', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('philosophy_summary_he', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('philosophy_summary_en', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('philosophy_summary_ar', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('philosophy', self.gf('django.db.models.fields.files.FileField')(max_length=100, blank=True)),
             ('is_active', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('generation', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['backoffice.Generation'])),
         ))
@@ -32,15 +42,28 @@ class Migration(SchemaMigration):
         # Adding model 'Work'
         db.create_table('backoffice_work', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
+            ('name_he', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_en', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_ar', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('designer', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['backoffice.Designer'], null=True)),
             ('raw_image', self.gf('django.db.models.fields.files.ImageField')(max_length=100)),
             ('discipline', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['backoffice.Discipline'])),
             ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['backoffice.Category'])),
-            ('publish_date', self.gf('django.db.models.fields.DateField')()),
+            ('publish_date_as_text', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('publish_date_as_text_he', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('publish_date_as_text_en', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('publish_date_as_text_ar', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
             ('client', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['backoffice.Client'])),
             ('technique', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['backoffice.Technique'])),
-            ('height', self.gf('django.db.models.fields.DecimalField')(max_digits=5, decimal_places=2)),
-            ('width', self.gf('django.db.models.fields.DecimalField')(max_digits=5, decimal_places=2)),
+            ('size_as_text', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('size_as_text_he', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('size_as_text_en', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('size_as_text_ar', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
             ('description', self.gf('django.db.models.fields.TextField')()),
+            ('description_he', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('description_en', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('description_ar', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
             ('country', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['backoffice.Country'])),
             ('collection', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['backoffice.Collection'])),
         ))
@@ -58,6 +81,9 @@ class Migration(SchemaMigration):
         db.create_table('backoffice_country', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
+            ('name_he', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_en', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_ar', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
         ))
         db.send_create_signal('backoffice', ['Country'])
 
@@ -65,6 +91,9 @@ class Migration(SchemaMigration):
         db.create_table('backoffice_category', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
+            ('name_he', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_en', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_ar', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
             ('parent', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['backoffice.Category'], null=True, blank=True)),
         ))
         db.send_create_signal('backoffice', ['Category'])
@@ -73,6 +102,9 @@ class Migration(SchemaMigration):
         db.create_table('backoffice_client', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
+            ('name_he', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_en', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_ar', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
         ))
         db.send_create_signal('backoffice', ['Client'])
 
@@ -80,6 +112,9 @@ class Migration(SchemaMigration):
         db.create_table('backoffice_technique', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
+            ('name_he', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_en', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_ar', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
         ))
         db.send_create_signal('backoffice', ['Technique'])
 
@@ -87,6 +122,10 @@ class Migration(SchemaMigration):
         db.create_table('backoffice_collection', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
+            ('name_he', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_en', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_ar', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('homepage', self.gf('django.db.models.fields.URLField')(max_length=200)),
         ))
         db.send_create_signal('backoffice', ['Collection'])
 
@@ -94,6 +133,9 @@ class Migration(SchemaMigration):
         db.create_table('backoffice_subject', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
+            ('name_he', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_en', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_ar', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
         ))
         db.send_create_signal('backoffice', ['Subject'])
 
@@ -101,6 +143,9 @@ class Migration(SchemaMigration):
         db.create_table('backoffice_generation', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
+            ('name_he', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_en', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('name_ar', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
         ))
         db.send_create_signal('backoffice', ['Generation'])
 
@@ -145,54 +190,86 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Category'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'name_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'parent': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Category']", 'null': 'True', 'blank': 'True'})
         },
         'backoffice.client': {
             'Meta': {'object_name': 'Client'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'name_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'})
         },
         'backoffice.collection': {
             'Meta': {'object_name': 'Collection'},
+            'homepage': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'name_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'})
         },
         'backoffice.country': {
             'Meta': {'object_name': 'Country'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'name_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'})
         },
         'backoffice.designer': {
             'Meta': {'object_name': 'Designer'},
-            'birth_country': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Country']"}),
-            'birth_date': ('django.db.models.fields.DateField', [], {}),
-            'death_date': ('django.db.models.fields.DateField', [], {}),
+            'birth_country': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'to': "orm['backoffice.Country']"}),
+            'birth_year': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'death_year': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'generation': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Generation']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
-            'philosophy': ('django.db.models.fields.TextField', [], {}),
-            'photo': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'})
+            'name_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'philosophy': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'blank': 'True'}),
+            'philosophy_summary': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'philosophy_summary_ar': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'philosophy_summary_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'philosophy_summary_he': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'photo': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'blank': 'True'})
         },
         'backoffice.discipline': {
             'Meta': {'object_name': 'Discipline'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'name_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'})
         },
         'backoffice.generation': {
             'Meta': {'object_name': 'Generation'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'name_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'})
         },
         'backoffice.subject': {
             'Meta': {'object_name': 'Subject'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'name_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'})
         },
         'backoffice.technique': {
             'Meta': {'object_name': 'Technique'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'name_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'})
         },
         'backoffice.work': {
             'Meta': {'object_name': 'Work'},
@@ -201,14 +278,27 @@ class Migration(SchemaMigration):
             'collection': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Collection']"}),
             'country': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Country']"}),
             'description': ('django.db.models.fields.TextField', [], {}),
+            'description_ar': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'description_he': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'designer': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Designer']", 'null': 'True'}),
             'discipline': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Discipline']"}),
-            'height': ('django.db.models.fields.DecimalField', [], {'max_digits': '5', 'decimal_places': '2'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'publish_date': ('django.db.models.fields.DateField', [], {}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'name_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'name_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'publish_date_as_text': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'publish_date_as_text_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'publish_date_as_text_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'publish_date_as_text_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'raw_image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
+            'size_as_text': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'size_as_text_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'size_as_text_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'size_as_text_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'subjects': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['backoffice.Subject']", 'symmetrical': 'False'}),
-            'technique': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Technique']"}),
-            'width': ('django.db.models.fields.DecimalField', [], {'max_digits': '5', 'decimal_places': '2'})
+            'technique': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Technique']"})
         }
     }
 

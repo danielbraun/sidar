@@ -1,23 +1,28 @@
 # -*- coding: utf-8 -*-
 import datetime
 from south.db import db
-from south.v2 import SchemaMigration
+from south.v2 import DataMigration
 from django.db import models
 
+from sidar.settings import LEGACY_DB_NAMES
+from backoffice.sidar_models import Designerscategory
 
-class Migration(SchemaMigration):
+
+class Migration(DataMigration):
 
     def forwards(self, orm):
-        # Adding field 'Work.designer'
-        db.add_column('backoffice_work', 'designer',
-                      self.gf('django.db.models.fields.related.ForeignKey')(to=orm['backoffice.Designer'], null=True),
-                      keep_default=False)
-
+        "Write your forwards methods here."
+        # Note: Remember to use orm['appname.ModelName'] rather than "from appname.models..."
+        for db_name in LEGACY_DB_NAMES:
+            for generation in Designerscategory.objects.using(db_name).all():
+                orm.Generation(
+                    id=generation.catcode,
+                    name_he=generation.name
+                ).save()
 
     def backwards(self, orm):
-        # Deleting field 'Work.designer'
-        db.delete_column('backoffice_work', 'designer_id')
-
+        for generation in orm.Generation.objects.all():
+            generation.delete()
 
     models = {
         'backoffice.category': {
@@ -57,8 +62,8 @@ class Migration(SchemaMigration):
         'backoffice.designer': {
             'Meta': {'object_name': 'Designer'},
             'birth_country': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'to': "orm['backoffice.Country']"}),
-            'birth_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'death_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'birth_year': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'death_year': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'generation': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Generation']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -117,18 +122,24 @@ class Migration(SchemaMigration):
             'description_he': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'designer': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Designer']", 'null': 'True'}),
             'discipline': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Discipline']"}),
-            'height': ('django.db.models.fields.DecimalField', [], {'max_digits': '5', 'decimal_places': '2'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'name_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'name_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'name_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
-            'publish_date': ('django.db.models.fields.DateField', [], {}),
+            'publish_date_as_text': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'publish_date_as_text_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'publish_date_as_text_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'publish_date_as_text_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'raw_image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
+            'size_as_text': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'size_as_text_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'size_as_text_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'size_as_text_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'subjects': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['backoffice.Subject']", 'symmetrical': 'False'}),
-            'technique': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Technique']"}),
-            'width': ('django.db.models.fields.DecimalField', [], {'max_digits': '5', 'decimal_places': '2'})
+            'technique': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Technique']"})
         }
     }
 
     complete_apps = ['backoffice']
+    symmetrical = True

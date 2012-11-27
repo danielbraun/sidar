@@ -8,72 +8,20 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Deleting field 'Designer.philosophy_ar'
-        db.delete_column('backoffice_designer', 'philosophy_ar')
 
-        # Deleting field 'Designer.philosophy'
-        db.delete_column('backoffice_designer', 'philosophy')
+        # Changing field 'Designer.death_year'
+        db.alter_column('backoffice_designer', 'death_year', self.gf('django.db.models.fields.IntegerField')(null=True))
 
-        # Deleting field 'Designer.philosophy_en'
-        db.delete_column('backoffice_designer', 'philosophy_en')
-
-        # Deleting field 'Designer.philosophy_he'
-        db.delete_column('backoffice_designer', 'philosophy_he')
-
-        # Adding field 'Designer.philosophy_summary'
-        db.add_column('backoffice_designer', 'philosophy_summary',
-                      self.gf('django.db.models.fields.TextField')(default=''),
-                      keep_default=False)
-
-        # Adding field 'Designer.philosophy_summary_he'
-        db.add_column('backoffice_designer', 'philosophy_summary_he',
-                      self.gf('django.db.models.fields.TextField')(null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'Designer.philosophy_summary_en'
-        db.add_column('backoffice_designer', 'philosophy_summary_en',
-                      self.gf('django.db.models.fields.TextField')(null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'Designer.philosophy_summary_ar'
-        db.add_column('backoffice_designer', 'philosophy_summary_ar',
-                      self.gf('django.db.models.fields.TextField')(null=True, blank=True),
-                      keep_default=False)
-
+        # Changing field 'Designer.birth_year'
+        db.alter_column('backoffice_designer', 'birth_year', self.gf('django.db.models.fields.IntegerField')(null=True))
 
     def backwards(self, orm):
-        # Adding field 'Designer.philosophy_ar'
-        db.add_column('backoffice_designer', 'philosophy_ar',
-                      self.gf('django.db.models.fields.TextField')(null=True, blank=True),
-                      keep_default=False)
 
-        # Adding field 'Designer.philosophy'
-        db.add_column('backoffice_designer', 'philosophy',
-                      self.gf('django.db.models.fields.TextField')(default=''),
-                      keep_default=False)
+        # Changing field 'Designer.death_year'
+        db.alter_column('backoffice_designer', 'death_year', self.gf('django.db.models.fields.DateField')(null=True))
 
-        # Adding field 'Designer.philosophy_en'
-        db.add_column('backoffice_designer', 'philosophy_en',
-                      self.gf('django.db.models.fields.TextField')(null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'Designer.philosophy_he'
-        db.add_column('backoffice_designer', 'philosophy_he',
-                      self.gf('django.db.models.fields.TextField')(null=True, blank=True),
-                      keep_default=False)
-
-        # Deleting field 'Designer.philosophy_summary'
-        db.delete_column('backoffice_designer', 'philosophy_summary')
-
-        # Deleting field 'Designer.philosophy_summary_he'
-        db.delete_column('backoffice_designer', 'philosophy_summary_he')
-
-        # Deleting field 'Designer.philosophy_summary_en'
-        db.delete_column('backoffice_designer', 'philosophy_summary_en')
-
-        # Deleting field 'Designer.philosophy_summary_ar'
-        db.delete_column('backoffice_designer', 'philosophy_summary_ar')
-
+        # Changing field 'Designer.birth_year'
+        db.alter_column('backoffice_designer', 'birth_year', self.gf('django.db.models.fields.DateField')(null=True))
 
     models = {
         'backoffice.category': {
@@ -112,9 +60,9 @@ class Migration(SchemaMigration):
         },
         'backoffice.designer': {
             'Meta': {'object_name': 'Designer'},
-            'birth_country': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Country']"}),
-            'birth_date': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime(1962, 8, 27, 0, 0)'}),
-            'death_date': ('django.db.models.fields.DateField', [], {}),
+            'birth_country': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'to': "orm['backoffice.Country']"}),
+            'birth_year': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'death_year': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'generation': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Generation']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -122,11 +70,12 @@ class Migration(SchemaMigration):
             'name_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'name_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'name_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
-            'philosophy_summary': ('django.db.models.fields.TextField', [], {}),
+            'philosophy': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'blank': 'True'}),
+            'philosophy_summary': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'philosophy_summary_ar': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'philosophy_summary_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'philosophy_summary_he': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'photo': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'})
+            'photo': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'blank': 'True'})
         },
         'backoffice.discipline': {
             'Meta': {'object_name': 'Discipline'},
@@ -170,18 +119,24 @@ class Migration(SchemaMigration):
             'description_ar': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'description_he': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'designer': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Designer']", 'null': 'True'}),
             'discipline': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Discipline']"}),
-            'height': ('django.db.models.fields.DecimalField', [], {'max_digits': '5', 'decimal_places': '2'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'name_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'name_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'name_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
-            'publish_date': ('django.db.models.fields.DateField', [], {}),
+            'publish_date_as_text': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'publish_date_as_text_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'publish_date_as_text_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'publish_date_as_text_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'raw_image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
+            'size_as_text': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'size_as_text_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'size_as_text_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'size_as_text_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'subjects': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['backoffice.Subject']", 'symmetrical': 'False'}),
-            'technique': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Technique']"}),
-            'width': ('django.db.models.fields.DecimalField', [], {'max_digits': '5', 'decimal_places': '2'})
+            'technique': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['backoffice.Technique']"})
         }
     }
 

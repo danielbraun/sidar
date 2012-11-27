@@ -3,7 +3,7 @@ from backoffice.models import Work, Country, Category, Discipline, Client, Techn
 from django.core.management.base import BaseCommand
 from django.core.files import File
 from sidar.settings import PORTFOLIO_CSV_ROOT
-from backoffice.external.html2text import html2text
+from html2text import html2text
 import os
 import csv
 import codecs
