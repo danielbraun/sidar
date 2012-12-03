@@ -157,6 +157,7 @@ INSTALLED_APPS = (
     'imagekit',
     'modeltranslation',
     'dbbackup',
+    'gunicorn',
 )
 
 # A sample logging configuration. The only tangible logging
