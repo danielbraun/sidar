@@ -34,15 +34,7 @@ class Migration(SchemaMigration):
         db.create_table('backoffice_work', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('name_he', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
-            ('name_en', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
-            ('name_ar', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
-            ('sidar_id', self.gf('django.db.models.fields.CharField')(max_length=50, unique=True, null=True)),
-            ('raw_image', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True)),
-            ('description', self.gf('django.db.models.fields.TextField')()),
-            ('description_he', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('description_en', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('description_ar', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('sidar_id', self.gf('django.db.models.fields.CharField')(max_length=50, null=True)),
         ))
         db.send_create_signal('backoffice', ['Work'])
 
@@ -188,17 +180,9 @@ class Migration(SchemaMigration):
         },
         'backoffice.work': {
             'Meta': {'object_name': 'Work'},
-            'description': ('django.db.models.fields.TextField', [], {}),
-            'description_ar': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'description_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'description_he': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
-            'name_ar': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
-            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
-            'name_he': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
-            'raw_image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True'}),
-            'sidar_id': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True', 'null': 'True'})
+            'sidar_id': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True'})
         }
     }
 

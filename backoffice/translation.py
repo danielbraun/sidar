@@ -13,7 +13,8 @@ class DesignerTranslationOptions(CommonModelTranslationOptions):
 
 
 class WorkTranslationOptions(CommonModelTranslationOptions):
-    fields = ('name', 'description', 'publish_date_as_text', 'size_as_text')
+    # fields = ('name', 'description', 'publish_date_as_text', 'size_as_text')
+    fields = ('name', 'description')
 
 translator.register(Designer, DesignerTranslationOptions)
 translator.register(Work, WorkTranslationOptions)

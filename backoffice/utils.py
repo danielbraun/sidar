@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-
+import csv
+from sidar.settings import PORTFOLIO_CSV_ROOT
+import codecs
+import os
+
+
+def remove_file_extension(filename):
+    return os.path.splitext(filename)[0]
 
 
 def nullify(str):
@@ -34,3 +42,36 @@ def booleanize(str):
         return True
     if str == u"לא":
         return False
+
+
+def unicode_csv_reader(unicode_csv_data, dialect=csv.excel, **kwargs):
+    # csv.py doesn't do Unicode; encode temporarily as UTF-8:
+    csv_reader = csv.DictReader(utf_8_encoder(unicode_csv_data),
+                                dialect=dialect, **kwargs)
+    for row in csv_reader:
+        # decode UTF-8 back to Unicode, cell by cell:
+        yield dict((unicode(key, 'utf-8'), unicode(value, 'utf-8')) for (key, value) in row.items())
+
+
+def utf_8_encoder(unicode_csv_data):
+    for line in unicode_csv_data:
+        yield line.encode('utf-8')
+
+
+def all_portfolio_rows():
+    for root, dirs, files in os.walk(PORTFOLIO_CSV_ROOT):
+        for name in files:
+            if name.rpartition('.')[-1] == "txt":
+                with codecs.open(os.path.join(root, name), encoding='utf-16-le') as f:
+                    print ("Processing text file: %s" % os.path.join(root, name))
+                    try:
+                        reader = unicode_csv_reader(f, delimiter='\t')
+                        for row in reader:
+                            # Test if it's a valid portfolio file.
+                            try:
+                                row['Filename']
+                            except KeyError:
+                                continue
+                            yield row
+                    except TypeError:
+                        pass

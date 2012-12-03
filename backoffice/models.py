@@ -22,21 +22,7 @@ class CommonModel(models.Model):
 
 class Discipline(CommonModel):
 
-    @classmethod
-    def from_portfolio(cls, dict):
-        """
-        >>> Discipline(name_en='Graphical Design', name_he=u'עיצוב גרפי').save()
-        >>> Discipline.from_portfolio({'Filename': 'G-JiY-Cal-001.jpg'}).name_en[0] == 'G'
-        True
-        """
-        filename = dict['Filename']
-        for discipline in Discipline.objects.all():
-            if discipline.name_en[0] == filename[0] and filename[1] == '-':
-                return discipline
-        raise Exception('Could not find a matching discipline for work.')
-
     class Meta:
-
         verbose_name = u'דיסיפלינה'
         verbose_name_plural = u'דיסיפלינות'
 
@@ -77,28 +63,32 @@ class Designer(CommonModel):
 
 
 class Work(CommonModel):
-    designer = models.ForeignKey('Designer', verbose_name=u'מעצב', null=True)
-    raw_image = models.ImageField(u'תמונת מקור', upload_to='works')
+    sidar_id = models.CharField(u'קוד עבודה', max_length=50, null=True, unique=True)
+    # designer = models.ForeignKey('Designer', verbose_name=u'מעצב', null=True)
+    raw_image = models.ImageField(u'תמונת מקור', upload_to='works', null=True)
     fullscale_image = ImageSpecField(processors=[ResizeToFit(width=600), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
     midsize_image = ImageSpecField(processors=[ResizeToFit(width=350), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
     preview_image = ImageSpecField(processors=[ResizeToFit(width=100), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
-    subjects = models.ManyToManyField("Subject", verbose_name=u'נושאים')
-    discipline = models.ForeignKey("Discipline", verbose_name=u'תחום עיצוב')
-    category = models.ForeignKey("Category", verbose_name=u'קטגוריה')
+    # subjects = models.ManyToManyField("Subject", verbose_name=u'נושאים')
+    discipline = models.ForeignKey("Discipline", verbose_name=u'תחום עיצוב', null=True)
+    # category = models.ForeignKey("Category", verbose_name=u'קטגוריה')
     # publish_date       = models.DateField(verbose_name="תאריך הוצאה לאור")
-    publish_date_as_text = models.CharField(u'תאריך כמלל', max_length=50, blank=True, null=True)
-    client = models.ForeignKey("Client", verbose_name=u'לקוח')
-    technique = models.ForeignKey("Technique", verbose_name=u'טכניקה')
+    # publish_date_as_text = models.CharField(u'תאריך כמלל', max_length=50, blank=True, null=True)
+    # client = models.ForeignKey("Client", verbose_name=u'לקוח')
+    # technique = models.ForeignKey("Technique", verbose_name=u'טכניקה')
     # height             = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="גובה")
     # width              = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="רוחב")
-    size_as_text = models.CharField(u'גודל כמלל', max_length=50, blank=True, null=True)
+    # size_as_text = models.CharField(u'גודל כמלל', max_length=50, blank=True, null=True)
     description = models.TextField(u'תיאור')
-    country = models.ForeignKey("Country", verbose_name=u'מדינה')
-    collection = models.ForeignKey("Collection", verbose_name=u'מאוסף')
+    # country = models.ForeignKey("Country", verbose_name=u'מדינה')
+    # collection = models.ForeignKey("Collection", verbose_name=u'מאוסף')
 
     class Meta:
         verbose_name = "עבודה"
         verbose_name_plural = "עבודות"
+
+    def __unicode__(self):
+        return self.sidar_id
 
 
 class Country(CommonModel):

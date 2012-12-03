@@ -3,13 +3,15 @@
 
 import socket
 
-DEBUG = (socket.gethostname() != "design25")
+# DEBUG = (socket.gethostname() != "design25")
+DEBUG = False
+
 
 DBBACKUP_STORAGE = 'dbbackup.storage.filesystem_storage'
 DBBACKUP_FILESYSTEM_DIRECTORY = '/Users/danielbraun/Backup'
 
-PORTFOLIO_CSV_ROOT = "/Users/danielbraun/Development/design26d"
-
+# PORTFOLIO_CSV_ROOT = "/Users/danielbraun/Development/design26d"
+PORTFOLIO_CSV_ROOT = u'/Volumes/m$/D/המכון לעיצוב/מחלקות עיצוב'
 # DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -32,15 +34,15 @@ DATABASES = {
     }
 }
 
-for name in LEGACY_DB_NAMES:
-    DATABASES[name] = {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': name,
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-    }
+# for name in LEGACY_DB_NAMES:
+#     DATABASES[name] = {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': name,
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': '',
+#         'PORT': '',
+#     }
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
