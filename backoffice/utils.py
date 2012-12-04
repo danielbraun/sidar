@@ -77,6 +77,6 @@ def all_portfolio_rows():
                             yield row
                     except TypeError:
                         pass
-    if file_count is 0:
+    if file_count == 0:
         raise Exception('Did not find any portfolio files. PORTFOLIO_CSV_ROOT = %s' % PORTFOLIO_CSV_ROOT.encode('utf-8'))
     print "Scanned through %s portfolio files." % file_count

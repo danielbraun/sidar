@@ -1,6 +1,6 @@
 import socket
 
-if socket.gethostname() is "design25":
+if socket.gethostname() == "design25":
     from sidar.settings_staging import *
     print "Using staging server settings."
 else:
