@@ -5,6 +5,7 @@ env.hosts = ['sidar@10.10.10.10']
 DESIGN26_HOSTNAME = 'design26.local'
 github_repo = 'https://github.com/dbraun86/sidar.git'
 
+
 def mount_design26m():
     from socket import gethostbyname
     design26_ip = gethostbyname(DESIGN26_HOSTNAME)
@@ -20,7 +21,8 @@ def push_ssh_key():
     run('cat %s >> ~/.ssh/authorized_keys' % keyfile)
     run('rm %s' % keyfile)
 
-def deploy_to_design25():
+
+def deploy_design25_from_github():
     local('pip freeze > requirements.txt')
     source = 'source venv/bin/activate && '
     with cd('~/sidar'):
@@ -28,3 +30,4 @@ def deploy_to_design25():
         # run('source venv/bin/activate')
         run(source + 'pip install -r requirements.txt')
         run(source + 'python manage.py migrate')
+    sudo('service gunicorn restart')

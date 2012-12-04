@@ -80,7 +80,7 @@ class Work(CommonModel):
     # width              = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="רוחב")
     # size_as_text = models.CharField(u'גודל כמלל', max_length=50, blank=True, null=True)
     description = models.TextField(u'תיאור')
-    # country = models.ForeignKey("Country", verbose_name=u'מדינה')
+    country = models.ForeignKey("Country", verbose_name=u'מדינה', null=True, blank=True)
     # collection = models.ForeignKey("Collection", verbose_name=u'מאוסף')
 
     class Meta:
