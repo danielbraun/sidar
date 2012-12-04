@@ -23,8 +23,10 @@ def clone_github():
     run('git clone %s' % github_repo)
 
 def deploy_to_design25():
-    run('cd ~/sidar')
-    run('git pull origin')
-    run('virtualenv venv')
-    run('source venv/bin/activate')
-    run('pip install -r requirements.txt')
+    local('pip freeze > requirements.txt')
+    source = 'source venv/bin/activate && '
+    with cd('~/sidar'):
+        run('git pull')
+        # run('source venv/bin/activate')
+        run(source + 'pip install -r requirements.txt')
+        run(source + 'python manage.py migrate')
