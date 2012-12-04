@@ -9,3 +9,4 @@ local_settings.py
 *.sublime-project
 *.sublime-workspace
 .ropeproject
+sqlite3.db-journal

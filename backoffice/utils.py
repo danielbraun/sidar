@@ -59,10 +59,12 @@ def utf_8_encoder(unicode_csv_data):
 
 
 def all_portfolio_rows():
+    file_count = 0
     for root, dirs, files in os.walk(PORTFOLIO_CSV_ROOT):
         for name in files:
             if name.rpartition('.')[-1] == "txt":
                 with codecs.open(os.path.join(root, name), encoding='utf-16-le') as f:
+                    file_count = file_count + 1
                     print ("Processing text file: %s" % os.path.join(root, name))
                     try:
                         reader = unicode_csv_reader(f, delimiter='\t')
@@ -75,3 +77,6 @@ def all_portfolio_rows():
                             yield row
                     except TypeError:
                         pass
+    if file_count is 0:
+        raise Exception('Did not find any portfolio files. PORTFOLIO_CSV_ROOT = %s' % PORTFOLIO_CSV_ROOT.encode('utf-8'))
+    print "Scanned through %s portfolio files." % file_count
