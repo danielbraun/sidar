@@ -4,6 +4,7 @@ MySQL-python==1.2.4b5
 PIL==1.1.7
 South==0.7.6
 distribute==0.6.30
+django-countries==1.5
 django-dbbackup==1.70
 django-imagekit==2.0.1
 django-modeltranslation==0.3.3

@@ -12,3 +12,13 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
+
+for name in LEGACY_DB_NAMES:
+    DATABASES[name] = {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': name,
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    }
