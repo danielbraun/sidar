@@ -29,11 +29,6 @@ class Discipline(CommonModel):
 
 class Designer(CommonModel):
 
-    @classmethod
-    def from_portfolio(cls, portfolio_row):
-        name_he = portfolio_row[u'מעצב'].replace('\'', '`')
-        return Designer.objects.get(name_he=name_he)
-
     def main_discipline(self):
         try:
             key = self.work_set.values('discipline').annotate(dcount=Count('discipline')).order_by('-dcount')[0]['discipline']
