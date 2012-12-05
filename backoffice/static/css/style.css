@@ -1,0 +1,37 @@
+#sidar_header {
+	border-bottom: 1px solid black;
+	height: 35px;
+	line-height: 35px;
+}
+#sidar_header h1 {
+	display: inline;
+}
+
+#sidar_header img {
+	/*height: 30px;*/
+	vertical-align: middle;
+}
+
+.shenkar_logo {
+	height: 3em;
+}
+
+.sidar_logo {
+	height: 2em;
+}
+
+#header {
+	position: relative;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.clear {
+	clear: both;
+}
