@@ -17,7 +17,6 @@ class CommonModel(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ['name']
 
 
 class Discipline(CommonModel):
@@ -49,8 +48,8 @@ class Designer(CommonModel):
     birth_country = models.ForeignKey("Country", verbose_name="מדינת לידה", default=None, null=True)
     philosophy_summary = models.TextField(u'תקציר פילוסופיה', blank=True)
     philosophy = models.FileField(u'קובץ פילוסופיה', upload_to="pdf/", blank=True)
-    is_active = models.BooleanField(u'פעיל/ה')
-    generation = models.ForeignKey("Generation", verbose_name="שייך לדור")
+    is_active = models.BooleanField(u'פעיל/ה', default=False)
+    generation = models.ForeignKey("Generation", verbose_name="שייך לדור", null=True)
 
     class Meta:
         verbose_name = "מעצב"
@@ -59,7 +58,7 @@ class Designer(CommonModel):
 
 class Work(CommonModel):
     sidar_id = models.CharField(u'קוד עבודה', max_length=50, null=True, unique=True)
-    # designer = models.ForeignKey('Designer', verbose_name=u'מעצב', null=True)
+    designer = models.ForeignKey('Designer', verbose_name=u'מעצב', null=True)
     raw_image = models.ImageField(u'תמונת מקור', upload_to='works', null=True)
     fullscale_image = ImageSpecField(processors=[ResizeToFit(width=600), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
     midsize_image = ImageSpecField(processors=[ResizeToFit(width=350), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')

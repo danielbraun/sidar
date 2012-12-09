@@ -29,6 +29,7 @@ def push_ssh_key():
 
 
 def deploy_design25_from_github():
+    mount_design26m()
     local('pip freeze > requirements.txt')
     source = 'source venv/bin/activate && '
     with cd('~/sidar'):

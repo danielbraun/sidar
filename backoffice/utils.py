@@ -62,7 +62,7 @@ def all_portfolio_rows():
     file_count = 0
     for root, dirs, files in os.walk(PORTFOLIO_CSV_ROOT):
         for name in files:
-            if name.rpartition('.')[-1] == "txt":
+            if name.rpartition('.')[-1] == "txt" and 'scanlog' not in name.lower():
                 with codecs.open(os.path.join(root, name), encoding='utf-16-le') as f:
                     file_count = file_count + 1
                     print ("Processing text file: %s" % os.path.join(root, name))
