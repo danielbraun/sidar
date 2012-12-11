@@ -58,6 +58,20 @@ def utf_8_encoder(unicode_csv_data):
         yield line.encode('utf-8')
 
 
+def split_languages_from_string(string):
+    name_en = []
+    name_he = []
+    for word in string.split(' '):
+        if has_hebrew_chars(word):
+            name_he.append(word)
+        else:
+            name_en.append(word)
+    return {
+        'he': ' '.join(name_he),
+        'en': ' '.join(name_en)
+        }
+
+
 def all_portfolio_rows():
     file_count = 0
     for root, dirs, files in os.walk(PORTFOLIO_CSV_ROOT):

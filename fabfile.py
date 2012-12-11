@@ -11,7 +11,7 @@ def mount_design26m():
     from socket import gethostbyname
     design26_ip = gethostbyname(DESIGN26_HOSTNAME)
     sudo('mkdir -p %s' % design26m_mount_point)
-    sudo('if ! mount | grep design26m; then mount.cifs //%s/M$ ' + design26m_mount_point + ' -o user=sidar; fi;' % design26_ip)
+    sudo('if ! mount | grep design26m; then mount.cifs //%s/M$ %s -o user=sidar; fi;' % (design26_ip, design26m_mount_point))
 
 
 def import_sidar_mysql():

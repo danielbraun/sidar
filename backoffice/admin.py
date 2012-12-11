@@ -3,7 +3,7 @@ from modeltranslation.admin import TranslationAdmin
 from models import *
 from imagekit.admin import AdminThumbnail
 
-models = [Country, Discipline, Generation]
+models = [Country, Discipline, Generation, Category, Subject]
 
 
 class TranslatedModelAdmin(TranslationAdmin):
@@ -15,7 +15,7 @@ class WorkAdmin(TranslationAdmin):
     # search_fields = ['designer__name_he', 'category__name_he', ]
     # list_display = ('__unicode__', 'designer', 'category', 'admin_thumbnail',)
     admin_thumbnail = AdminThumbnail(image_field='preview_image')
-    # filter_horizontal = ['subjects', ]
+    filter_horizontal = ['subjects', ]
     list_display = ('name_he', 'designer', 'discipline')
     ordering = ('name_he',)
 
