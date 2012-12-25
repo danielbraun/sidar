@@ -9,7 +9,7 @@ from django.db.models import Count
 
 
 class CommonModel(models.Model):
-    name = models.CharField(u'שם', max_length=50)
+    name = models.CharField(u'שם', max_length=255)
     # add last updated
 
     def __unicode__(self):
@@ -57,6 +57,13 @@ class Designer(CommonModel):
 
 
 class Work(CommonModel):
+    DATE_ACCURACY_LEVELS = (
+        ('de', u'עשור'),
+        ('y', u'שנה'),
+        ('m', u'חודש'),
+        ('d', u'יום')
+    )
+
     sidar_id = models.CharField(u'קוד עבודה', max_length=50, null=True, unique=True)
     designer = models.ForeignKey('Designer', verbose_name=u'מעצב', null=True)
     raw_image = models.ImageField(u'תמונת מקור', upload_to='works', null=True)
@@ -66,16 +73,22 @@ class Work(CommonModel):
     subjects = models.ManyToManyField("Subject", verbose_name=u'נושאים', null=True)
     discipline = models.ForeignKey("Discipline", verbose_name=u'תחום עיצוב', null=True)
     category = models.ForeignKey("Category", verbose_name=u'קטגוריה', null=True)
-    # publish_date       = models.DateField(verbose_name="תאריך הוצאה לאור")
-    # publish_date_as_text = models.CharField(u'תאריך כמלל', max_length=50, blank=True, null=True)
-    # client = models.ForeignKey("Client", verbose_name=u'לקוח')
-    # technique = models.ForeignKey("Technique", verbose_name=u'טכניקה')
-    # height             = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="גובה")
-    # width              = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="רוחב")
-    # size_as_text = models.CharField(u'גודל כמלל', max_length=50, blank=True, null=True)
+    # Date related fields
+    publish_date_as_text = models.CharField(u'תאריך כמלל', max_length=50, blank=True, null=True)
+    publish_date = models.DateField(verbose_name="תאריך הוצאה לאור", null=True)
+    date_accuracy_level = models.CharField(u'רמת דיוק תאריך', max_length=2, choices=DATE_ACCURACY_LEVELS, default=None, blank=True)
+    # Size related fields
+    size_as_text = models.CharField(u'גודל כמלל', max_length=50, blank=True, null=True)
+    height = models.DecimalField(u'גובה', max_digits=5, decimal_places=2, default=0)
+    width = models.DecimalField(u'רוחב', max_digits=5, decimal_places=2, default=0)
+    depth = models.DecimalField(u'עומק (תלת-מימדי)', max_digits=5, decimal_places=2, default=0)
+
+    client = models.ForeignKey('Client', verbose_name=u'לקוח', null=True)
+    techniques = models.ManyToManyField('Technique', verbose_name=u'טכניקות')
+    collections = models.ManyToManyField('Collection', verbose_name=u'מאוספים')
+    keywords = models.ManyToManyField('Keyword', verbose_name=u'מילות מפתח')
     description = models.TextField(u'תיאור')
     country = models.ForeignKey("Country", verbose_name=u'מדינה', null=True, blank=True)
-    # collection = models.ForeignKey("Collection", verbose_name=u'מאוסף')
 
     class Meta:
         verbose_name = "עבודה"
@@ -153,6 +166,12 @@ class Collection(CommonModel):
     class Meta:
         verbose_name = "אוסף"
         verbose_name_plural = "אוספים"
+
+
+class Keyword(CommonModel):
+    class Meta:
+        verbose_name = u'מילת מפתח'
+        verbose_name_plural = u'מילות מפתח'
 
 
 class Subject(CommonModel):

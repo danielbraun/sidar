@@ -4,6 +4,8 @@ from sidar.settings import PORTFOLIO_CSV_ROOT
 import codecs
 import os
 
+from html2text import html2text
+
 
 def remove_file_extension(filename):
     return os.path.splitext(filename)[0]
@@ -69,7 +71,14 @@ def split_languages_from_string(string):
     return {
         'he': ' '.join(name_he),
         'en': ' '.join(name_en)
-        }
+    }
+
+
+def clean(string):
+    try:
+        return html2text(string.strip())
+    except:
+        return string.strip()
 
 
 def all_portfolio_rows():
@@ -88,6 +97,9 @@ def all_portfolio_rows():
                                 row['Filename']
                             except KeyError:
                                 continue
+                            # Clean up all row fields
+                            for key in row:
+                                row[key] = row[key].strip()
                             yield row
                     except TypeError:
                         pass

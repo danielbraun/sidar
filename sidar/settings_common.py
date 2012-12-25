@@ -154,6 +154,7 @@ INSTALLED_APPS = (
     'modeltranslation',
     'dbbackup',
     'gunicorn',
+    # 'storages',
 )
 
 # A sample logging configuration. The only tangible logging
