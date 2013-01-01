@@ -1,0 +1,146 @@
+{% extends "website/base.html" %}
+
+
+{% block navigation %}
+
+<ul>
+	<li class="navitem_1">
+		<a href="{% url about %}">על המכון</a>
+	</li>
+	<li class="navitem_2">
+		<a href="{% url goals %}">מטרות המכון</a>
+	</li>
+
+	{% for object in disciplines %}
+	<li class="navitem_{{ forloop.counter|add:"2" }}">
+		<a href="{% url discipline-detail object.id %}">ע.{{ object }}</a>
+	</li>
+	{% endfor %}
+
+</ul>
+
+{% endblock navigation %}
+
+
+{% block pagebody %}
+
+
+<div id="maintitle" style="background-color:#dbd8d2"></div>
+<div class="pagination"></div>
+<div class="clearboth"></div>
+<div style="height:122px;"></div><script type="text/javascript">
+
+var leftrightslide=new Array()
+			{% for work in object_list %}
+				leftrightslide[{{ forloop.counter0 }}]="<a href='{% url work-detail work.discipline.id work.id %}'><img src='' alt='{{ work.name }}' width='215' height='215' /><\/a>"
+			{% endfor %}
+
+			// leftrightslide[0]="<a href='single.php?id=9001&pos=gd&designer=שגיא גיא'><img src='scripts/timthumbcrop.php?src=gd/midsize/Sagee Guy- Works/Posters/Posters/G-SaG-Pos-017.jpg&w=215&h=215&zc=2&a=c' alt='שגיא גיא' width='215' height='215' /><\/a>" 
+			// leftrightslide[1]="<a href='single.php?id=422&pos=gd&designer=לא ידוע'><img src='scripts/timthumbcrop.php?src=gd/midsize/Col- Hechal Shlomo- works/Posters/East/G-CHeS-Pos-004e.JPG&w=215&h=215&zc=2&a=c' alt='לא ידוע' width='215' height='215' /><\/a>" 
+			// leftrightslide[2]="<a href='single.php?id=805&pos=gd&designer=קולקטיב'><img src='scripts/timthumbcrop.php?src=gd/midsize/Col- Zionism 2000- Works/Posters/G-CZiO-Pos-234.jpg&w=215&h=215&zc=2&a=c' alt='קולקטיב' width='215' height='215' /><\/a>" 
+			// leftrightslide[3]="<a href='single.php?id=11884&pos=gd&designer=סטודיו רולי'><img src='scripts/timthumbcrop.php?src=gd/midsize/Studio Roli- Works/Posters/G-StR-Pos-020.jpg&w=215&h=215&zc=2&a=c' alt='סטודיו רולי' width='215' height='215' /><\/a>" 
+			// leftrightslide[4]="<a href='single.php?id=8475&pos=gd&designer=ריזינגר דן'><img src='scripts/timthumbcrop.php?src=gd/midsize/Reisinger Dan- Works/Posters/Cultural/G-ReD-Pos-152.jpg&w=215&h=215&zc=2&a=c' alt='ריזינגר דן' width='215' height='215' /><\/a>" 
+			// leftrightslide[5]="<a href='single.php?id=12472&pos=gd&designer=טרטקובר דוד'><img src='scripts/timthumbcrop.php?src=gd/midsize/Tartakover David- Works/Posters/G-TaD-Pos-079.jpg&w=215&h=215&zc=2&a=c' alt='טרטקובר דוד' width='215' height='215' /><\/a>" 
+			// leftrightslide[6]="<a href='single.php?id=12784&pos=gd&designer=ורדימון ירום'><img src='scripts/timthumbcrop.php?src=gd/midsize/Vardimon Yarom- Works/Posters/G-VaY-Pos-036.jpg&w=215&h=215&zc=2&a=c' alt='ורדימון ירום' width='215' height='215' /><\/a>" 
+			// leftrightslide[7]="<a href='single.php?id=9012&pos=gd&designer=שגיא גיא'><img src='scripts/timthumbcrop.php?src=gd/midsize/Sagee Guy- Works/Posters/Posters/G-SaG-Pos-028.jpg&w=215&h=215&zc=2&a=c' alt='שגיא גיא' width='215' height='215' /><\/a>" 
+			// leftrightslide[8]="<a href='single.php?id=11262&pos=gd&designer=האחים שמיר'><img src='scripts/timthumbcrop.php?src=gd/midsize/Shamir Brothers- Works/Posters/Shamir Brothers/G-ShB-Pos-161.jpg&w=215&h=215&zc=2&a=c' alt='האחים שמיר' width='215' height='215' /><\/a>" 
+			// leftrightslide[9]="<a href='single.php?id=12467&pos=gd&designer=טרטקובר דוד'><img src='scripts/timthumbcrop.php?src=gd/midsize/Tartakover David- Works/Posters/G-TaD-Pos-074.jpg&w=215&h=215&zc=2&a=c' alt='טרטקובר דוד' width='215' height='215' /><\/a>" 
+			// leftrightslide[10]="<a href='single.php?id=11244&pos=gd&designer=האחים שמיר'><img src='scripts/timthumbcrop.php?src=gd/midsize/Shamir Brothers- Works/Posters/Shamir Brothers/G-ShB-Pos-143.jpg&w=215&h=215&zc=2&a=c' alt='האחים שמיר' width='215' height='215' /><\/a>" 
+
+
+
+				//Specify gap between each image (use HTML):
+				var imagegap=" "
+
+				//Specify pixels gap between each slideshow rotation (use integer):
+				var slideshowgap=5
+
+
+				////NO NEED TO EDIT BELOW THIS LINE////////////
+
+				var speed=2
+				leftrightslide='<nobr>'+leftrightslide.join(imagegap)+'<\/nobr>'
+				var iedom=document.all||document.getElementById
+				if (iedom)
+					document.write('<span id="temp" style="visibility:hidden;position:absolute;top:-100px;left:-9000px">'+leftrightslide+'<\/span>')
+				var actualwidth=''
+				var cross_slide, ns_slide
+
+				function fillup(){
+					if (iedom){
+						cross_slide=document.getElementById? document.getElementById("test2") : document.all.test2
+						cross_slide2=document.getElementById? document.getElementById("test3") : document.all.test3
+						cross_slide.innerHTML=cross_slide2.innerHTML=leftrightslide
+						actualwidth=document.all? cross_slide.offsetWidth : document.getElementById("temp").offsetWidth
+						cross_slide2.style.left=actualwidth+slideshowgap+"px"
+					}
+					else if (document.layers){
+						ns_slide=document.ns_slidemenu.document.ns_slidemenu2
+						ns_slide2=document.ns_slidemenu.document.ns_slidemenu3
+						ns_slide.document.write(leftrightslide)
+						ns_slide.document.close()
+						actualwidth=ns_slide.document.width
+						ns_slide2.left=actualwidth+slideshowgap
+						ns_slide2.document.write(leftrightslide)
+						ns_slide2.document.close()
+					}
+					lefttime=setInterval("slideleft()",30)
+				}
+				window.onload=fillup
+
+				function slideleft(){
+					if (iedom){
+						if (parseInt(cross_slide.style.left)>(actualwidth*(-1)+8))
+							cross_slide.style.left=parseInt(cross_slide.style.left)-speed+"px"
+						else
+							cross_slide.style.left=parseInt(cross_slide2.style.left)+actualwidth+slideshowgap+"px"
+
+						if (parseInt(cross_slide2.style.left)>(actualwidth*(-1)+8))
+							cross_slide2.style.left=parseInt(cross_slide2.style.left)-speed+"px"
+						else
+							cross_slide2.style.left=parseInt(cross_slide.style.left)+actualwidth+slideshowgap+"px"
+
+					}
+					else if (document.layers){
+						if (ns_slide.left>(actualwidth*(-1)+8))
+							ns_slide.left-=speed
+						else
+							ns_slide.left=ns_slide2.left+actualwidth+slideshowgap
+
+						if (ns_slide2.left>(actualwidth*(-1)+8))
+							ns_slide2.left-=speed
+						else
+							ns_slide2.left=ns_slide.left+actualwidth+slideshowgap
+					}
+				}
+			</script><br>
+			<div style="position:relative;width:100%;height:215px;overflow:hidden;">
+				<div style="position:absolute;height:215px;width:100%;" onmouseover="speed=0" onmouseout="speed=2">
+					<div id="test2" style="position:absolute;left:0px;top:0px"></div>
+					<div id="test3" style="position:absolute;left:-1000px;top:0px"></div>
+				</div>
+			</div>
+			<div id="homepage_intro_div">
+				<div class="shenkarlogo"></div>
+				<div class="verticallogo"></div>
+				<div class="shenkartagline">
+					מכון שנקר לתיעוד וחקר העיצוב בישראל
+				</div>
+				<div class="verticaltagline">
+					המכון עוסק בהיסטוריית העיצוב מאז ההתיישבות הראשונה בארץ ישראל.
+				</div>
+			</div>
+			<div id="homepage_subintro_div">
+				<br>
+				<strong>האתר ותכניו נמצאים בתהליך הקמה, ולכן ייתכנו בהם טעויות.</strong> נשמח לקבל כל הערה. <span>הכניסה לאתר חופשית. כדי להשתמש בדף האישי יש להירשם למערכת.</span>
+			</div>
+			<div id="sidebar">
+				<a href="#" id="sidebar_searchlink" class="sidebar_searchlink_disabled">חיפוש מתקדם</a>
+			</div><!-- sidebar -->
+			<div id="pagefooter">
+				<p>
+					© 2011 <a href="{% url home %}">מכון שנקר לתיעוד וחקר העיצוב בישראל</a>, כל הזכויות שמורות.
+				</p>
+			</div>
+
+			{% endblock pagebody %}

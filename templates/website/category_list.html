@@ -1,0 +1,12 @@
+{% extends "website/discipline_detail.html" %}
+
+{% block pagebody %}
+<div class="main_text_wrap">
+{% for category in category_list %}
+	<p>{{ category.name }}</p>
+{% endfor %}	
+</div>
+
+
+{% endblock pagebody %}
+		

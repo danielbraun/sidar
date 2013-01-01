@@ -1,6 +1,7 @@
 # Django settings for sidar project.
 # -*- coding: utf-8 -*-
 
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 DEBUG = False
 
 DBBACKUP_STORAGE = 'dbbackup.storage.filesystem_storage'
@@ -115,6 +116,10 @@ TEMPLATE_LOADERS = (
     #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'website.context_processors.default',
+    )
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -154,6 +159,7 @@ INSTALLED_APPS = (
     'modeltranslation',
     'dbbackup',
     'gunicorn',
+    'website',
     # 'storages',
 )
 

@@ -1,0 +1,194 @@
+{% extends "website/discipline_detail.html" %}
+
+{% block pagebody %}
+
+<table class="generaltable" cellspacing="2" border="1">
+	<tbody>
+		<tr>
+			<td class="midsize_image_td">
+				<a><img src=""><img src="{{ STATIC_URL }}website/images/spacer.png" class="spacer"></a>
+				<table class="generaltable">
+					<tbody>
+						<tr>
+							<td>
+								זכויות יוצרים
+							</td>
+							<td>
+								עבודה זו מוגנת ואין להעתיקה או לשכפלה מבלי אישור
+							</td>
+						</tr>
+						<tr>
+							<td>
+								copyrights
+							</td>
+							<td>
+								This work is copyright protected ©
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+			<td class="midsize_info_td">
+				<table class="generaltable">
+					<tbody>
+						<tr>
+							<td width="60">
+								מעצב
+							</td>
+							<td class="large">
+								<strong><a href="{% url work-list discipline.id %}?designer={{ work.designer.id }}">{{ work.designer.name }}</a></strong>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Designer
+							</td>
+							<td>
+								<strong>{{ work.designer.name_en }}</strong>&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td>
+								נושא
+							</td>
+							<td>
+								{% for subject in work.subjects.all %}
+									<a href="{% url work-list discipline.id %}?subject={{ subject.id }}">
+										{{ subject.name }}</a>{% if not forloop.last %},{% endif %}
+								{% endfor %}
+							</td>
+						</tr>
+						<tr>
+							<td nowrap>
+								שם העבודה
+							</td>
+							<td>
+								{{ work.name }}
+							</td>
+						</tr>
+						<tr>
+							<td nowrap>
+								Title
+							</td>
+							<td>
+								{{ work.name_en }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								קטגוריה
+							</td>
+							<td>
+								<a href="{% url work-list discipline.id %}?category={{ work.category.id }}">{{ work.category.name }}</a>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								תאריך
+							</td>
+							<td>
+								{{ work.publish_date_as_text }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								לקוח
+							</td>
+							<td>
+								{{ work.client }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Client
+							</td>
+							<td>
+								{{ work.client.name_en }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								טכניקה
+							</td>
+							<td>
+								{{ work.techniques.all|join:", " }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Technique
+							</td>
+							<td>
+								
+							</td>
+						</tr>
+						<tr>
+							<td>
+								גודל
+							</td>
+							<td>
+								{{ work.size_as_text }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								תאור
+							</td>
+							<td>
+								{{ work.description }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Description
+							</td>
+							<td>
+								{{ work.description_en }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								ארץ
+							</td>
+							<td>
+								{{ work.country }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								מילות מפתח
+							</td>
+							<td>
+								{% for keyword in work.keywords.all %}
+									<a href="{% url work-list discipline.id %}?keyword={{ keyword.id }}">
+										{{ keyword }}</a>{% if not forloop.last %},{% endif %}
+								{% endfor %}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								פריט
+							</td>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td>
+								מאוסף
+							</td>
+							<td>
+								{% for catalog in work.catalogs.all %}
+									<a href="{% url work-list discipline.id %}?catalog={{ catalog.id }}">
+										{{ catalog.name }}</a>{% if not forloop.last %},{% endif %}
+								{% endfor %}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</tbody>
+</table><!-- ends -->
+
+{% endblock pagebody %}

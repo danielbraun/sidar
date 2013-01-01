@@ -10,3 +10,4 @@ local_settings.py
 *.sublime-workspace
 .ropeproject
 sqlite3.db-journal
+Thumbs.db

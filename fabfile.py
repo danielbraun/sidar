@@ -1,7 +1,7 @@
 from fabric.api import *
 
 
-env.hosts = ['sidar@10.10.10.10']
+env.hosts = ['sidar@design25.local']
 DESIGN26_HOSTNAME = 'design26.local'
 github_repo = 'https://github.com/dbraun86/sidar.git'
 design26m_mount_point = '/mnt/design26m'

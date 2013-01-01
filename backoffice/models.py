@@ -4,26 +4,45 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from imagekit.processors.crop import TrimBorderColor
 # from django.utils.translation import ugettext_lazy as _
-from utils import nullify
 from django.db.models import Count
+from django.template.defaultfilters import slugify
 
 
 class CommonModel(models.Model):
     name = models.CharField(u'שם', max_length=255)
-    # add last updated
 
     def __unicode__(self):
         return self.name
 
+    def _slugify(self):
+        return slugify(self.name_en)
+
+    slug = property(_slugify)
+
     class Meta:
         abstract = True
+        ordering = ['name_he']
+
+
+class GenericManager(models.Manager):
+    def belonging_to_discipline(self, discipline, field):
+        return self.filter(pk__in=Work.objects.filter(discipline=discipline).values(field).distinct())
 
 
 class Discipline(CommonModel):
 
-    class Meta:
+    class Meta(CommonModel.Meta):
         verbose_name = u'דיסיפלינה'
         verbose_name_plural = u'דיסיפלינות'
+
+
+class DesignerManager(GenericManager):
+    def specializing_in(self, discipline):
+        result = []
+        for designer in Designer.objects.all():
+            if designer.main_discipline() == discipline:
+                result.append(designer)
+        return result
 
 
 class Designer(CommonModel):
@@ -40,10 +59,10 @@ class Designer(CommonModel):
         return self.work_set.count()
     work_count.short_description = u'מספר עבודות'
 
+    objects = DesignerManager()
+
     photo = models.ImageField(u'תמונת מעצב', upload_to="images/", blank=True)
-    # birth_year = models.DateField(u'שנת לידה', blank=True, null=True)
     birth_year = models.IntegerField(u'שנת לידה', blank=True, null=True)
-    # death_year = models.DateField(u'שנת מוות', blank=True, null=True)
     death_year = models.IntegerField(u'שנת מוות', blank=True, null=True)
     birth_country = models.ForeignKey("Country", verbose_name="מדינת לידה", default=None, null=True)
     philosophy_summary = models.TextField(u'תקציר פילוסופיה', blank=True)
@@ -51,9 +70,20 @@ class Designer(CommonModel):
     is_active = models.BooleanField(u'פעיל/ה', default=False)
     generation = models.ForeignKey("Generation", verbose_name="שייך לדור", null=True)
 
-    class Meta:
+    class Meta(CommonModel.Meta):
         verbose_name = "מעצב"
         verbose_name_plural = "מעצבים"
+
+
+class WorkManager(models.Manager):
+    def one_from_each_discipline(self):
+        works = []
+        for discipline in Discipline.objects.all():
+            try:
+                works.append(discipline.work_set.order_by('?')[0])
+            except IndexError:
+                pass
+        return works
 
 
 class Work(CommonModel):
@@ -63,6 +93,8 @@ class Work(CommonModel):
         ('m', u'חודש'),
         ('d', u'יום')
     )
+
+    objects = WorkManager()
 
     sidar_id = models.CharField(u'קוד עבודה', max_length=50, null=True, unique=True)
     designer = models.ForeignKey('Designer', verbose_name=u'מעצב', null=True)
@@ -90,7 +122,7 @@ class Work(CommonModel):
     description = models.TextField(u'תיאור')
     country = models.ForeignKey("Country", verbose_name=u'מדינה', null=True, blank=True)
 
-    class Meta:
+    class Meta(CommonModel.Meta):
         verbose_name = "עבודה"
         verbose_name_plural = "עבודות"
 
@@ -99,63 +131,37 @@ class Work(CommonModel):
 
 
 class Country(CommonModel):
-    @classmethod
-    def from_portfolio(cls, portfolio_row):
-        return Country.objects.get_or_create(name_he=nullify(portfolio_row[u'ארץ']),
-                                             name_en=nullify(portfolio_row[u'Country']))[0]
-    # unique
-
-    class Meta:
+    class Meta(CommonModel.Meta):
         verbose_name = "מדינה"
         verbose_name_plural = "מדינות"
 
 
+# class CategoryManager(models.Manager):
+#     def belonging_to_discipline(self, discipline):
+#         category_list = Work.objects.filter(discipline=discipline).values('category').distinct()
+#         return self.filter(pk__in=category_list)
+
+
 class Category(CommonModel):
-    @classmethod
-    def from_portfolio(cls, portfolio_row):
-        u"""
-        >>> cat = Category.from_portfolio({u'קטגוריה': u'Art and Design אמנות ועיצוב'})
-        >>> cat.name_he == u'אמנות ועיצוב' and cat.name_en == 'Art and Design'
-        True
-        """
-        from utils import has_hebrew_chars
-        name_en = []
-        name_he = []
-        for word in portfolio_row[u'קטגוריה'].split(' '):
-            if has_hebrew_chars(word):
-                name_he.append(word)
-            else:
-                name_en.append(word)
-        return Category.objects.get_or_create(name_he=nullify(' '.join(name_he)), defaults={'name_en': nullify(' '.join(name_en))})[0]
 
     parent = models.ForeignKey('self', verbose_name="קטגורית על", blank=True, null=True)
+    objects = GenericManager()
 
-    class Meta:
+    class Meta(CommonModel.Meta):
         verbose_name = "קטגוריה"
         verbose_name_plural = "קטגוריות"
 
 
 class Client(CommonModel):
 
-    @classmethod
-    def from_portfolio(cls, portfolio_row):
-        return Client.objects.get_or_create(name_he=nullify(portfolio_row[u'לקוח']),
-                                            name_en=nullify(portfolio_row['Client']))[0]
-
-    class Meta:
+    class Meta(CommonModel.Meta):
         verbose_name = "לקוח"
         verbose_name_plural = "לקוחות"
 
 
 class Technique(CommonModel):
 
-    @classmethod
-    def from_portfolio(cls, portfolio_row):
-        return Technique.objects.get_or_create(
-            name_he=nullify(portfolio_row[u'טכניקה']),
-            name_en=nullify(portfolio_row['Technique']))[0]
-
-    class Meta:
+    class Meta(CommonModel.Meta):
         verbose_name = "טכניקה"
         verbose_name_plural = "טכניקות"
 
@@ -163,30 +169,27 @@ class Technique(CommonModel):
 class Collection(CommonModel):
     homepage = models.URLField(u'אתר בית')
 
-    class Meta:
+    class Meta(CommonModel.Meta):
         verbose_name = "אוסף"
         verbose_name_plural = "אוספים"
 
 
 class Keyword(CommonModel):
-    class Meta:
+    class Meta(CommonModel.Meta):
         verbose_name = u'מילת מפתח'
         verbose_name_plural = u'מילות מפתח'
 
 
 class Subject(CommonModel):
+    objects = GenericManager()
 
-    @classmethod
-    def from_portfolio(cls, portfolio_row):
-        return [(Subject.objects.get_or_create(name_he=nullify(subject.strip())))[0] for subject in portfolio_row[u'נושא'].split(',')]
-
-    class Meta:
+    class Meta(CommonModel.Meta):
         verbose_name = "נושא"
         verbose_name_plural = "נושאים"
 
 
 class Generation(CommonModel):
 
-    class Meta:
+    class Meta(CommonModel.Meta):
         verbose_name = u'דור מעצבים'
         verbose_name_plural = u'דורות מעצבים'

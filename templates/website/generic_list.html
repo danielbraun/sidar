@@ -1,0 +1,8 @@
+{% extends "website/discipline_detail.html" %}
+
+{% block pagebody %}
+{% for object in object_list %}
+	<p>{{ object.name }}</p>
+{% endfor %}	
+{% endblock pagebody %}
+		
