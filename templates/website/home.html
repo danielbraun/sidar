@@ -24,9 +24,6 @@
 
 {% block pagebody %}
 
-
-<div id="maintitle" style="background-color:#dbd8d2"></div>
-<div class="pagination"></div>
 <div class="clearboth"></div>
 <div style="height:122px;"></div><script type="text/javascript">
 
@@ -34,20 +31,6 @@ var leftrightslide=new Array()
 			{% for work in object_list %}
 				leftrightslide[{{ forloop.counter0 }}]="<a href='{% url work-detail work.discipline.id work.id %}'><img src='' alt='{{ work.name }}' width='215' height='215' /><\/a>"
 			{% endfor %}
-
-			// leftrightslide[0]="<a href='single.php?id=9001&pos=gd&designer=שגיא גיא'><img src='scripts/timthumbcrop.php?src=gd/midsize/Sagee Guy- Works/Posters/Posters/G-SaG-Pos-017.jpg&w=215&h=215&zc=2&a=c' alt='שגיא גיא' width='215' height='215' /><\/a>" 
-			// leftrightslide[1]="<a href='single.php?id=422&pos=gd&designer=לא ידוע'><img src='scripts/timthumbcrop.php?src=gd/midsize/Col- Hechal Shlomo- works/Posters/East/G-CHeS-Pos-004e.JPG&w=215&h=215&zc=2&a=c' alt='לא ידוע' width='215' height='215' /><\/a>" 
-			// leftrightslide[2]="<a href='single.php?id=805&pos=gd&designer=קולקטיב'><img src='scripts/timthumbcrop.php?src=gd/midsize/Col- Zionism 2000- Works/Posters/G-CZiO-Pos-234.jpg&w=215&h=215&zc=2&a=c' alt='קולקטיב' width='215' height='215' /><\/a>" 
-			// leftrightslide[3]="<a href='single.php?id=11884&pos=gd&designer=סטודיו רולי'><img src='scripts/timthumbcrop.php?src=gd/midsize/Studio Roli- Works/Posters/G-StR-Pos-020.jpg&w=215&h=215&zc=2&a=c' alt='סטודיו רולי' width='215' height='215' /><\/a>" 
-			// leftrightslide[4]="<a href='single.php?id=8475&pos=gd&designer=ריזינגר דן'><img src='scripts/timthumbcrop.php?src=gd/midsize/Reisinger Dan- Works/Posters/Cultural/G-ReD-Pos-152.jpg&w=215&h=215&zc=2&a=c' alt='ריזינגר דן' width='215' height='215' /><\/a>" 
-			// leftrightslide[5]="<a href='single.php?id=12472&pos=gd&designer=טרטקובר דוד'><img src='scripts/timthumbcrop.php?src=gd/midsize/Tartakover David- Works/Posters/G-TaD-Pos-079.jpg&w=215&h=215&zc=2&a=c' alt='טרטקובר דוד' width='215' height='215' /><\/a>" 
-			// leftrightslide[6]="<a href='single.php?id=12784&pos=gd&designer=ורדימון ירום'><img src='scripts/timthumbcrop.php?src=gd/midsize/Vardimon Yarom- Works/Posters/G-VaY-Pos-036.jpg&w=215&h=215&zc=2&a=c' alt='ורדימון ירום' width='215' height='215' /><\/a>" 
-			// leftrightslide[7]="<a href='single.php?id=9012&pos=gd&designer=שגיא גיא'><img src='scripts/timthumbcrop.php?src=gd/midsize/Sagee Guy- Works/Posters/Posters/G-SaG-Pos-028.jpg&w=215&h=215&zc=2&a=c' alt='שגיא גיא' width='215' height='215' /><\/a>" 
-			// leftrightslide[8]="<a href='single.php?id=11262&pos=gd&designer=האחים שמיר'><img src='scripts/timthumbcrop.php?src=gd/midsize/Shamir Brothers- Works/Posters/Shamir Brothers/G-ShB-Pos-161.jpg&w=215&h=215&zc=2&a=c' alt='האחים שמיר' width='215' height='215' /><\/a>" 
-			// leftrightslide[9]="<a href='single.php?id=12467&pos=gd&designer=טרטקובר דוד'><img src='scripts/timthumbcrop.php?src=gd/midsize/Tartakover David- Works/Posters/G-TaD-Pos-074.jpg&w=215&h=215&zc=2&a=c' alt='טרטקובר דוד' width='215' height='215' /><\/a>" 
-			// leftrightslide[10]="<a href='single.php?id=11244&pos=gd&designer=האחים שמיר'><img src='scripts/timthumbcrop.php?src=gd/midsize/Shamir Brothers- Works/Posters/Shamir Brothers/G-ShB-Pos-143.jpg&w=215&h=215&zc=2&a=c' alt='האחים שמיר' width='215' height='215' /><\/a>" 
-
-
 
 				//Specify gap between each image (use HTML):
 				var imagegap=" "
@@ -137,10 +120,6 @@ var leftrightslide=new Array()
 			<div id="sidebar">
 				<a href="#" id="sidebar_searchlink" class="sidebar_searchlink_disabled">חיפוש מתקדם</a>
 			</div><!-- sidebar -->
-			<div id="pagefooter">
-				<p>
-					© 2011 <a href="{% url home %}">מכון שנקר לתיעוד וחקר העיצוב בישראל</a>, כל הזכויות שמורות.
-				</p>
-			</div>
+			
 
 			{% endblock pagebody %}

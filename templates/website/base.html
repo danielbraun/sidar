@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="style_ie8.css" />
 <![endif]-->
 </head>
-<body class="main pages">
+<body class="{% block pos %}main{% endblock pos %} {% block body_class %}pages{% endblock body_class %}">
 	<div id="pagewrap">
 		<div id="pageheader">
 			<a id="logo" href="{% url home %}">מכון שנקר לתיעוד וחקר העיצוב בישראל | Shenkar Design Archive &amp; Research Center</a>
@@ -29,21 +29,28 @@
 							בחר/י תחום מיקוד
 						</option>
 						{% for object in disciplines %}
-							<option value="{% url discipline-detail object.id %}"{% if object.id == discipline.id %}selected{% endif %}>
-								עיצוב {{ object }}
-								
-							</option>
+						<option value="{% url discipline-detail object.id %}"{% if object.id == discipline.id %}selected{% endif %}>
+							עיצוב {{ object }}
+
+						</option>
 						{% endfor %}
 					</select>
 				</form>
 			</div>
 		</div><!-- pageheader -->
 		<div id="pagebody">
+
 			<div id="maintitle">
 				<strong>{% block maintitle %}{% endblock maintitle %}</strong>
 			</div>
+			<div class="pagination">{% block pagination %}{% endblock pagination %}</div>
 			<div class="main_text_wrap">
 				{% block pagebody %}{% endblock pagebody %}
+				<div id="pagefooter">
+					<p>
+						© {% now "Y" %} <a href="{% url home %}">מכון שנקר לתיעוד וחקר העיצוב בישראל</a>, כל הזכויות שמורות.
+					</p>
+				</div>
 			</div>
 			
 		</div><!-- pagebody -->

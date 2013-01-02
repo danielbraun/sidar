@@ -10,6 +10,12 @@ from django.views.generic.detail import DetailView
 
 from backoffice.models import Generation
 
+from django.views.generic.base import TemplateView
+
+from backoffice.models import Category
+
+from website.utils import chunks
+
 
 def generic_list(request, discipline, model, field):
     discipline = Discipline.objects.get(pk=discipline)
@@ -28,6 +34,10 @@ class WorkListView(ListView):
         works = Work.objects.filter(discipline=self.discipline)
         try:
             works = works.filter(designer=self.request.GET['designer'])
+        except KeyError:
+            pass
+        try:
+            works = works.filter(designer=self.request.GET['category'])
         except KeyError:
             pass
         return works
@@ -90,3 +100,25 @@ class DesignerListView(DisciplineMixin, ListView):
                 'designer_groups': [Designer.objects.belonging_to_discipline(self.discipline, 'designer').filter(name_he__startswith=unicode(letter, 'utf-8')) for letter in group]
             })
         return object_list
+
+
+class DecadeListView(DisciplineMixin, TemplateView):
+    template_name = "website/decade_list.html"
+
+    def get_context_data(self, **kwargs):
+            context = super(DecadeListView, self).get_context_data(**kwargs)
+            context['decades'] = range(1890, 2030, 10)
+            return context
+
+
+class DisciplineTemplateView(DisciplineMixin, TemplateView):
+    pass
+
+
+class CategoryListView(DisciplineMixin, ListView):
+    template_name = "website/category_list.html"
+
+    def get_queryset(self):
+        self.discipline = Discipline.objects.get(pk=self.kwargs['discipline'])
+        chunk_size = 4
+        return chunks(Category.objects.belonging_to_discipline(self.discipline, 'category'), chunk_size)

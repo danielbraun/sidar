@@ -8,8 +8,11 @@ design26m_mount_point = '/mnt/design26m'
 
 
 def mount_design26m():
-    from socket import gethostbyname
-    design26_ip = gethostbyname(DESIGN26_HOSTNAME)
+    from socket import gethostbyname, gaierror
+    try:
+        design26_ip = gethostbyname(DESIGN26_HOSTNAME)
+    except gaierror:
+        raise Exception('Could not reach design26 - Is it on? Are you connected to Shenkar network?')
     sudo('mkdir -p %s' % design26m_mount_point)
     sudo('if ! mount | grep design26m; then mount.cifs //%s/M$ %s -o user=sidar; fi;' % (design26_ip, design26m_mount_point))
 
@@ -34,7 +37,7 @@ def deploy_design25_from_github():
     source = 'source venv/bin/activate && '
     with cd('~/sidar'):
         run('git pull')
-        # run('source venv/bin/activate')
         run(source + 'pip install -r requirements.txt')
         run(source + 'python manage.py migrate')
+        run(source + 'python manage.py collectstatic --noinput')
     sudo('service gunicorn restart')
