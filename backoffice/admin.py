@@ -4,10 +4,11 @@ from models import *
 from imagekit.admin import AdminThumbnail
 
 models = [Country, Discipline, Generation, Category, Subject,
-          Technique, Keyword, Client, Collection]
+          Technique, Client, Collection]
 
 
 class TranslatedModelAdmin(TranslationAdmin):
+    search_fields = ['name']
     list_display = ('name_he', 'name_en')
     ordering = ('name_he',)
 

@@ -8,16 +8,18 @@
 	<th>קטגוריות משנה	</th>
 	<th style="text-align: left;">Categories</th>
 </tr>
-{% for category_group in object_list %}
+{% for group in object_list %}
 <tr>
-	<td class="rainbowcell rbcell_{{ forloop.counter }}"></td>
+	<td class="rainbowcell rbcell_{{ forloop.counter }}">{{ group.parent }}</td>
 	<td>
-		{% for category in category_group %}
+		{% for category in group.children %}
 			<a href="{% url work-list discipline.id %}?category={{ category.id }}">{{ category }}</a>
 			{% if not forloop.last %}-{% endif %}
 		{% endfor %}
 	</td>
-	<td style="text-align: left;"></td>
+	<td style="text-align: left;">
+		<strong>{{ group.parent.name_en }}</strong>
+	</td>
 </tr>
 {% endfor %}
 {% endblock table_rows %}

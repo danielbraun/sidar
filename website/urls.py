@@ -7,6 +7,9 @@ from django.conf.urls import include
 from website.views import WorkListView, WorkDetailView, DesignerListView, DecadeListView
 from website.views import DisciplineTemplateView
 from website.views import CategoryListView
+from website.views import SubjectListView
+
+
 discipline = patterns('website.views',
                      (r'^article/$', DisciplineTemplateView.as_view(template_name='website/article_list.html'), {}, "article-list"),
                      (r'^bibliography/$', DisciplineTemplateView.as_view(template_name='website/bibliography.html'), {}, "bibliography"),
@@ -16,7 +19,7 @@ discipline = patterns('website.views',
                      (r'^decade/$', DecadeListView.as_view(), {}, "decade-list"),
                      (r'^designer/$', DesignerListView.as_view(), {}, 'designer-list'),
                      (r'^category/$', CategoryListView.as_view(), {}, 'category-list'),
-                     (r'^subject/$', 'generic_list', {'model': models.Subject, 'field': 'subjects'}, 'subject-list'),
+                     (r'^subject/$', SubjectListView.as_view(), {}, 'subject-list'),
                      (r'^work/(?P<pk>\d+)/$', WorkDetailView.as_view(), {}, "work-detail"),
                      (r'^work/$', WorkListView.as_view(), {}, "work-list"),
                      (r'^$', DetailView.as_view(model=models.Discipline, template_name='website/discipline_detail.html', pk_url_kwarg='discipline'), {}, "discipline-detail"),

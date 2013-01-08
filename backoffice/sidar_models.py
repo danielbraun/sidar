@@ -106,7 +106,7 @@ class Bibliocategory(models.Model):
 
 
 class Categories(models.Model):
-    artid = models.IntegerField()
+    artid = models.IntegerField(primary_key=True)
     namehebrew = models.CharField(max_length=765, db_column='nameHebrew')  # Field name made lowercase.
     nameenglish = models.CharField(max_length=765, db_column='nameEnglish', blank=True)  # Field name made lowercase.
     linkname = models.CharField(max_length=765, blank=True)
@@ -331,7 +331,7 @@ class Studiorelate(models.Model):
 
 
 class Subjects(models.Model):
-    artid = models.IntegerField()
+    artid = models.IntegerField(primary_key=True)
     namehebrew = models.CharField(max_length=765, db_column='nameHebrew')  # Field name made lowercase.
     nameenglish = models.CharField(max_length=765, db_column='nameEnglish', blank=True)  # Field name made lowercase.
     linkactive = models.CharField(max_length=150, blank=True)

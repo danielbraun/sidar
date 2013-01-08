@@ -1,4 +1,40 @@
-{% extends "website/table.html" %}
+{% extends "website/discipline_detail.html" %}
+
+{% block body_class %}subject{% endblock body_class %}
+{% block maintitle %}נושאים{% endblock maintitle %}
+
+{% block pagination %}{% endblock pagination %}
+
 {% block pagebody %}
-	
+
+<table class="generaltable subjects_list">
+	<tbody>
+		<tr>
+			{% for group in object_list %}
+			{% cycle "<td>" "" %}
+			<table class="generaltable">
+				<tbody>
+					<tr>
+						<th>
+							{{ group.parent }}
+						</th>
+					</tr>
+					{% for subject in group.children %}
+					<tr>
+						<td>
+							<a href="{% url work-list discipline.id %}?subject={{ subject.id }}">
+								<strong>{{ subject.name }}</strong>
+							</a>
+
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table><br/>
+			{% cycle "" "</td>" %}
+			{% endfor %}
+		</tr>
+	</tbody>
+</table>
+
 {% endblock pagebody %}

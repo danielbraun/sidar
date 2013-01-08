@@ -6,7 +6,7 @@ DEBUG = False
 
 DBBACKUP_STORAGE = 'dbbackup.storage.filesystem_storage'
 DBBACKUP_FILESYSTEM_DIRECTORY = '~/Backup'
-
+SOUTH_TESTS_MIGRATE = False
 # PORTFOLIO_CSV_ROOT = "/Users/danielbraun/Development/design26d"
 # PORTFOLIO_CSV_ROOT = u'/Volumes/m$/D/המכון לעיצוב/מחלקות עיצוב'
 # DEBUG = True

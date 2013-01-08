@@ -1,7 +1,6 @@
 {% extends "website/discipline_detail.html" %}
 
-{% block pagebody %}
-<div class="pagination">
+{% block pagination %}
 	<ul>
 		{% for page in paginator.page_range %}
 			{% if page == paginator.num_pages or page == 1  or page == page_obj.next_page_number or page == page_obj.previous_page_number or page == page_obj.number%}
@@ -17,14 +16,6 @@
 				</li>
 			{% endif %}
 		{% endfor %}
-
-		<!--
-		<li class="current">1</li>
-		<li><a href="catalog.php?&amp;pos=gd&amp;designer=כנען רקפת&amp;page=2">2</a></li>
-		<li><a href="catalog.php?&amp;pos=gd&amp;designer=כנען רקפת&amp;page=3">3</a></li>
-		<li><a href="catalog.php?&amp;pos=gd&amp;designer=כנען רקפת&amp;page=4">4</a></li>
-		<li><a href="catalog.php?&amp;pos=gd&amp;designer=כנען רקפת&amp;page=5">5</a></li>
-	-->
 	</ul>
 	<div class="pagination_arrows">
 		{% if page_obj.has_previous %}
@@ -41,7 +32,11 @@
 		{% endif %}
 		הבא ›</a>
 	</div>
-</div>
+
+{% endblock pagination %}
+
+
+{% block pagebody %}
 
 <div class="main_text_wrap">
 	<table class="generaltable" cellspacing="2" border="1">

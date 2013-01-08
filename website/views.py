@@ -16,6 +16,8 @@ from backoffice.models import Category
 
 from website.utils import chunks
 
+from backoffice.models import Subject
+
 
 def generic_list(request, discipline, model, field):
     discipline = Discipline.objects.get(pk=discipline)
@@ -37,7 +39,11 @@ class WorkListView(ListView):
         except KeyError:
             pass
         try:
-            works = works.filter(designer=self.request.GET['category'])
+            works = works.filter(subjects=self.request.GET['subject'])
+        except KeyError:
+            pass
+        try:
+            works = works.filter(category=self.request.GET['category'])
         except KeyError:
             pass
         return works
@@ -120,5 +126,14 @@ class CategoryListView(DisciplineMixin, ListView):
 
     def get_queryset(self):
         self.discipline = Discipline.objects.get(pk=self.kwargs['discipline'])
-        chunk_size = 4
-        return chunks(Category.objects.belonging_to_discipline(self.discipline, 'category'), chunk_size)
+        # chunk_size = 4
+        # return chunks(Category.objects.belonging_to_discipline(self.discipline, 'category'), chunk_size)
+        return Category.objects.with_parents_as_tree(self.discipline, 'category')
+
+
+class SubjectListView(DisciplineMixin, ListView):
+    template_name = "website/subject_list.html"
+
+    def get_queryset(self):
+        self.discipline = Discipline.objects.get(pk=self.kwargs['discipline'])
+        return Subject.objects.with_parents_as_tree(self.discipline, 'subjects')

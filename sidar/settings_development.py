@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from sidar.settings_common import *
+import sys
 DEBUG = TEMPLATE_DEBUG = True
 PORTFOLIO_CSV_ROOT = u'/Volumes/m$/D/המכון לעיצוב/מחלקות עיצוב'
 DATABASES = {
@@ -13,12 +14,14 @@ DATABASES = {
     }
 }
 
-for name in LEGACY_DB_NAMES:
-    DATABASES[name] = {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': name,
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-    }
+# Don't set up legacy database during testing
+if 'test' not in sys.argv:
+    for name in LEGACY_DB_NAMES:
+        DATABASES[name] = {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': name,
+            'USER': 'root',
+            'PASSWORD': 'sidar',
+            'HOST': '',
+            'PORT': '',
+        }

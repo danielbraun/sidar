@@ -5,7 +5,6 @@ from imagekit.processors import ResizeToFit
 from imagekit.processors.crop import TrimBorderColor
 # from django.utils.translation import ugettext_lazy as _
 from django.db.models import Count
-from django.template.defaultfilters import slugify
 
 
 class CommonModel(models.Model):
@@ -13,11 +12,6 @@ class CommonModel(models.Model):
 
     def __unicode__(self):
         return self.name
-
-    def _slugify(self):
-        return slugify(self.name_en)
-
-    slug = property(_slugify)
 
     class Meta:
         abstract = True
@@ -27,6 +21,18 @@ class CommonModel(models.Model):
 class GenericManager(models.Manager):
     def belonging_to_discipline(self, discipline, field):
         return self.filter(pk__in=Work.objects.filter(discipline=discipline).values(field).distinct())
+
+    def with_parents_as_tree(self, discipline, field):
+        tree = []
+        discipline_subjects = self.belonging_to_discipline(discipline, field)
+        parent_ids = discipline_subjects.filter(parent__isnull=False).values('parent_id').distinct()
+        for parent in self.filter(pk__in=parent_ids):
+            tree.append({
+                'parent': parent,
+                # 'children': parent.subject_set.belonging_to_discipline(discipline, field).all()
+                'children': self.filter(parent=parent).filter(pk__in=discipline_subjects.values('id'))
+            })
+        return tree
 
 
 class Discipline(CommonModel):
@@ -136,15 +142,9 @@ class Country(CommonModel):
         verbose_name_plural = "מדינות"
 
 
-# class CategoryManager(models.Manager):
-#     def belonging_to_discipline(self, discipline):
-#         category_list = Work.objects.filter(discipline=discipline).values('category').distinct()
-#         return self.filter(pk__in=category_list)
-
-
 class Category(CommonModel):
 
-    parent = models.ForeignKey('self', verbose_name="קטגורית על", blank=True, null=True)
+    parent = models.ForeignKey('self', verbose_name=u'קטגורית על', blank=True, null=True)
     objects = GenericManager()
 
     class Meta(CommonModel.Meta):
@@ -182,6 +182,7 @@ class Keyword(CommonModel):
 
 class Subject(CommonModel):
     objects = GenericManager()
+    parent = models.ForeignKey('self', verbose_name=u'נושא על', blank=True, null=True)
 
     class Meta(CommonModel.Meta):
         verbose_name = "נושא"

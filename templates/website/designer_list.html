@@ -8,48 +8,49 @@
 
 {% endblock maintitle %}
 
-{% block pagebody %}
-<div class="pagination">
-	<small>מקרא צבעים: 
-		<strong>
-			{% for generation in generations %}
-			<span class="designer_type_{{ generation.id }}">{{ generation }}</span>
-			{% endfor %}	
-		</strong>
-	</small>
-</div>
-<div class="main_text_wrap">
-	<table class ="generaltable designers_list">
-		<tbody>
-			<tr>
-				{% for group in object_list %}
-				{% cycle "<td>" "" %}
-				<table class="generaltable">
-					<tbody>
-						<tr>
-							<th>
-								{{ group.letters|join:"-" }}
-							</th>
-						</tr>
-						{% for group in group.designer_groups %}
-						{% for designer in group %}
-						<tr>
-							<td class="designers_group_{{ designer.generation.id }}">
-								<a href="{% url work-list discipline.id %}?designer={{ designer.id }}" class="designer_type_{{ designer.generation.id }}">
-									<strong>{{ designer.name }}</strong>
-								</a>
-								
-							</td>
-						</tr>
-						{% endfor %}
-						{% endfor %}
-					</tbody>
-				</table><br/>
-				{% cycle "" "</td>" %}
-				{% endfor %}
-			</tr>
-		</tbody>
-	</table>
 
-</div>
+{% block pagination %}
+<small>מקרא צבעים: 
+	<strong>
+		{% for generation in generations %}
+		<span class="designer_type_{{ generation.id }}">{{ generation }}</span>
+		{% endfor %}	
+	</strong>
+</small>
+{% endblock pagination %}
+
+{% block pagebody %}
+<table class ="generaltable designers_list">
+	<tbody>
+		<tr>
+			{% for group in object_list %}
+			{% cycle "<td>" "" %}
+			<table class="generaltable">
+				<tbody>
+					<tr>
+						<th>
+							{{ group.letters|join:"-" }}
+						</th>
+					</tr>
+					{% for group in group.designer_groups %}
+					{% for designer in group %}
+					<tr>
+						<td class="designers_group_{{ designer.generation.id }}">
+							<a href="{% url work-list discipline.id %}?designer={{ designer.id }}" class="designer_type_{{ designer.generation.id }}">
+								<strong>{{ designer.name }}</strong>
+							</a>
+
+						</td>
+					</tr>
+					{% endfor %}
+					{% endfor %}
+				</tbody>
+			</table><br/>
+			{% cycle "" "</td>" %}
+			{% endfor %}
+		</tr>
+	</tbody>
+</table>
+
+
 {% endblock pagebody %}
