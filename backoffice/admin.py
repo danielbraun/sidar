@@ -3,8 +3,7 @@ from modeltranslation.admin import TranslationAdmin
 from models import *
 from imagekit.admin import AdminThumbnail
 
-models = [Country, Discipline, Generation, Category, Subject,
-          Technique, Client, Collection]
+models = [Discipline, Generation, Category, Subject]
 
 
 class TranslatedModelAdmin(TranslationAdmin):

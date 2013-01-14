@@ -1,1 +1,131 @@
-# Create your views here.
+# -*- coding: utf-8 -*-
+from django.views.generic.base import TemplateView
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+
+from backoffice.models import Designer, Discipline, Work, Generation, Category, Subject
+from bibliography.models import Book, BookCategory
+
+
+class DisciplineMixin(object):
+    def dispatch(self, *args, **kwargs):
+        self.discipline = Discipline.objects.get(pk=kwargs['discipline'])
+        return super(DisciplineMixin, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(DisciplineMixin, self).get_context_data(**kwargs)
+        context['discipline'] = self.discipline
+        return context
+
+
+class WorkListView(DisciplineMixin, ListView):
+    paginate_by = 10
+
+    def get_queryset(self):
+        works = Work.objects.filter(discipline=self.discipline)
+        try:
+            works = works.filter(designer=self.request.GET['designer'])
+        except KeyError:
+            pass
+        try:
+            works = works.filter(subjects=self.request.GET['subject'])
+        except KeyError:
+            pass
+        try:
+            works = works.filter(category=self.request.GET['category'])
+        except KeyError:
+            pass
+        return works
+
+    def get_context_data(self, **kwargs):
+        context = super(WorkListView, self).get_context_data(**kwargs)
+        try:
+            query = self.request.GET.copy()
+            del query['page']
+            context['filters'] = query.urlencode()
+        except KeyError:
+            pass
+        return context
+
+
+class WorkDetailView(DisciplineMixin, DetailView):
+    model = Work
+
+
+class DesignerListView(DisciplineMixin, ListView):
+    template_name = 'backoffice/designer_list.html'
+
+    letter_groups = (
+        ('א',),
+        ('ב', 'ג', 'ד'),
+        ('ה', 'ו'),
+        ('ז', 'ח', 'ט'),
+        ('י', 'כ', 'ל'),
+        ('מ', 'נ'),
+        ('ס', 'ע'),
+        ('פ',),
+        ('צ', 'ק'),
+        ('ר',),
+        ('ש', 'ת')
+    )
+
+    def get_context_data(self, **kwargs):
+        context = super(DesignerListView, self).get_context_data(**kwargs)
+        context['generations'] = Generation.objects.all()
+        return context
+
+    def get_queryset(self):
+        object_list = []
+        for group in self.letter_groups:
+            object_list.append({
+                'letters': group,
+                'designer_groups': [Designer.objects.belonging_to_discipline(self.discipline, 'designer').filter(name_he__startswith=unicode(letter, 'utf-8')) for letter in group]
+            })
+        return object_list
+
+
+class DecadeListView(DisciplineMixin, TemplateView):
+    template_name = "backoffice/decade_list.html"
+
+    def get_context_data(self, **kwargs):
+            context = super(DecadeListView, self).get_context_data(**kwargs)
+            context['decades'] = range(1890, 2030, 10)
+            return context
+
+
+class DisciplineTemplateView(DisciplineMixin, TemplateView):
+    pass
+
+
+class CategoryListView(DisciplineMixin, ListView):
+    template_name = "backoffice/category_list.html"
+
+    def get_queryset(self):
+        return Category.objects.with_parents_as_tree(self.discipline, 'category')
+
+
+class SubjectListView(DisciplineMixin, ListView):
+    template_name = 'backoffice/subject_list.html'
+
+    def get_queryset(self):
+        return Subject.objects.with_parents_as_tree(self.discipline, 'subjects')
+
+
+class BookListView(DisciplineMixin, ListView):
+
+    def get_queryset(self):
+        queryset = Book.objects.filter(discipline=self.discipline)
+        try:
+            self.category = BookCategory.objects.get(pk=self.args[0])
+            queryset = queryset.filter(category=self.category)
+        except IndexError:
+            pass
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(BookListView, self).get_context_data(**kwargs)
+        try:
+            context['category'] = self.category
+        except AttributeError:
+            pass
+        return context

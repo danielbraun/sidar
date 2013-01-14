@@ -13,6 +13,7 @@ def mount_design26m():
         design26_ip = gethostbyname(DESIGN26_HOSTNAME)
     except gaierror:
         raise Exception('Could not reach design26 - Is it on? Are you connected to Shenkar network?')
+    sudo('if mount | grep design26m; then umount %s; fi;' % design26m_mount_point)
     sudo('mkdir -p %s' % design26m_mount_point)
     sudo('if ! mount | grep design26m; then mount.cifs //%s/M$ %s -o user=sidar; fi;' % (design26_ip, design26m_mount_point))
 

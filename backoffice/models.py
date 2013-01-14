@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.db.models import Count
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from imagekit.processors.crop import TrimBorderColor
-# from django.utils.translation import ugettext_lazy as _
-from django.db.models import Count
 
 
 class CommonModel(models.Model):
@@ -29,7 +28,6 @@ class GenericManager(models.Manager):
         for parent in self.filter(pk__in=parent_ids):
             tree.append({
                 'parent': parent,
-                # 'children': parent.subject_set.belonging_to_discipline(discipline, field).all()
                 'children': self.filter(parent=parent).filter(pk__in=discipline_subjects.values('id'))
             })
         return tree

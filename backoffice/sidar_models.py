@@ -75,7 +75,7 @@ class Articlescategory(models.Model):
 
 
 class Biblio(models.Model):
-    artid = models.IntegerField()
+    artid = models.IntegerField(primary_key=True)
     itemname = models.CharField(max_length=765, db_column='itemName')  # Field name made lowercase.
     author = models.CharField(max_length=765, blank=True)
     publisher = models.CharField(max_length=765, blank=True)

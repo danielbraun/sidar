@@ -106,3 +106,7 @@ def all_portfolio_rows():
     if file_count == 0:
         raise Exception('Did not find any portfolio files. PORTFOLIO_CSV_ROOT = %s' % PORTFOLIO_CSV_ROOT.encode('utf-8'))
     print "Scanned through %s portfolio files." % file_count
+
+
+def chunks(l, n):
+    return [l[i:i + n] for i in range(0, len(l), n)]
