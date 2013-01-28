@@ -13,7 +13,7 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         for db_name in LEGACY_DB_NAMES:
-            discipline = orm['backoffice.Discipline'].objects.get(name_en__startswith=db_name[4])
+            discipline = orm['backoffice.Discipline'].objects.get(name_en__istartswith=db_name[4])
             for book in Biblio.objects.using(db_name).all():
                 orm.Book(
                     title=book.itemname.strip(),
