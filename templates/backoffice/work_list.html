@@ -1,85 +1,53 @@
 {% extends "backoffice/discipline_detail.html" %}
 
 {% block pagination %}
-	<ul>
-		{% for page in paginator.page_range %}
-			{% if page == paginator.num_pages or page == 1  or page == page_obj.next_page_number or page == page_obj.previous_page_number or page == page_obj.number%}
-				<li
-					{% if page == page_obj.number %}
-						class="current">{{ page }}
-					{% else %}
-						><a href="?page={{ page }}&{{ filters }}">
-							{{ page }}
-						</a>
-					{% endif %}
-					
-				</li>
+<ul>
+	{% for page in paginator.page_range %}
+	{% if page == paginator.num_pages or page == 1  or page == page_obj.next_page_number or page == page_obj.previous_page_number or page == page_obj.number%}
+	<li
+	{% if page == page_obj.number %}
+	class="current">{{ page }}
+	{% else %}
+	><a href="?page={{ page }}&{{ filters }}">
+	{{ page }}
+</a>
+{% endif %}
+
+</li>
+{% endif %}
+{% endfor %}
+</ul>
+<div class="pagination_arrows">
+	{% if page_obj.has_previous %}
+	<a href="?page={{ page_obj.previous_page_number }}&{{ filters }}">
+		{% else %}
+		<a class="disabled">
 			{% endif %}
-		{% endfor %}
-	</ul>
-	<div class="pagination_arrows">
-		{% if page_obj.has_previous %}
-			<a href="?page={{ page_obj.previous_page_number }}&{{ filters }}">
-		{% else %}
-			<a class="disabled">
-		{% endif %}
-		‹ הקודם</a>
-		 | 
-		{% if page_obj.has_next %}
+			‹ הקודם</a>
+			| 
+			{% if page_obj.has_next %}
 			<a href="?page={{page_obj.next_page_number}}&{{filters}}">
-		{% else %}
-			<a class="disabled">
-		{% endif %}
-		הבא ›</a>
-	</div>
+				{% else %}
+				<a class="disabled">
+					{% endif %}
+					הבא ›</a>
+				</div>
 
-{% endblock pagination %}
+				{% endblock pagination %}
 
 
-{% block pagebody %}
+				{% block pagebody %}
 
-<div class="main_text_wrap">
-	<table class="generaltable" cellspacing="2" border="1">
-		<tbody>
-			{% for work in object_list %}
-			{% if forloop.counter0|divisibleby:2 %}<tr>{% endif %}
-			<td class="preview_image_td">
-				<a href="{% url work-detail discipline.id work.id %}"><img src="{% if work.preview_image %}{% endif %}"><img src="images/spacer.png" class="spacer"></a>
-			</td>
-			<td class="preview_info_td">
-				<table class="generaltable">
-					<tbody>
-						<tr>
-							<td width="60">מעצב</td>
-							<td class="large"><strong>{{ work.designer.name }}</strong></td>
-						</tr>
-						<tr>
-							<td>Designer</td>
-							<td><strong>{{ work.designer.name_en }}</strong>&nbsp;</td>
-						</tr>
-						<tr>
-							<td>נושא</td>
-							<td>{{ work.subjects.all|join:", " }}
-							</td>
-						</tr>
-						<tr>
-							<td nowrap>שם העבודה</td>
-							<td>{{ work.name }}</td>
-						</tr>
-						<tr>
-							<td>קטגוריה</td>
-							<td>{{ work.category }}</td>
-						</tr>
-						<tr>
-							<td>תאריך</td>
-							<td>{{ work.publish_date_as_text }}</td>
-						</tr>
+				<div class="main_text_wrap">
+					<table class="generaltable" cellspacing="2" border="1">
+						<tbody>
+							{% for work in object_list %}
+							{% if forloop.counter0|divisibleby:2 %}<tr>{% endif %}
+							{% include "backoffice/includes/work_summary.html" with work=work %}
+						</td>
+						{% if forloop.counter|divisibleby:2 %}</tr>{% endif %}
+						{% endfor %}
 					</tbody>
 				</table>
-			</td>
-			{% if forloop.counter|divisibleby:2 %}</tr>{% endif %}
-			{% endfor %}
-		</tbody>
-	</table>
-</div>
-{% endblock pagebody %}
+			</div>
+			{% endblock pagebody %}

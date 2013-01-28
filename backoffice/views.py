@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
 
+from backoffice.forms import SearchForm
 from backoffice.models import Designer, Discipline, Work, Generation, Category, Subject
 from bibliography.models import Book, BookCategory
 
@@ -25,15 +27,15 @@ class WorkListView(DisciplineMixin, ListView):
         works = Work.objects.filter(discipline=self.discipline)
         try:
             works = works.filter(designer=self.request.GET['designer'])
-        except KeyError:
+        except:
             pass
         try:
             works = works.filter(subjects=self.request.GET['subject'])
-        except KeyError:
+        except:
             pass
         try:
             works = works.filter(category=self.request.GET['category'])
-        except KeyError:
+        except:
             pass
         return works
 
@@ -98,17 +100,17 @@ class DisciplineTemplateView(DisciplineMixin, TemplateView):
 
 
 class CategoryListView(DisciplineMixin, ListView):
-    template_name = "backoffice/category_list.html"
+    model = Category
 
     def get_queryset(self):
-        return Category.objects.with_parents_as_tree(self.discipline, 'category')
+        return Category.objects.belonging_to_discipline(self.discipline, 'category').order_by('parent', 'name').exclude(parent=None)
 
 
 class SubjectListView(DisciplineMixin, ListView):
-    template_name = 'backoffice/subject_list.html'
+    model = Subject
 
     def get_queryset(self):
-        return Subject.objects.with_parents_as_tree(self.discipline, 'subjects')
+        return Subject.objects.belonging_to_discipline(self.discipline, 'subjects').order_by('parent', 'name').exclude(parent=None)
 
 
 class BookListView(DisciplineMixin, ListView):
@@ -129,3 +131,13 @@ class BookListView(DisciplineMixin, ListView):
         except AttributeError:
             pass
         return context
+
+
+class DisciplineSearchView(DisciplineMixin, FormView):
+    form_class = SearchForm
+    template_name = 'search.html'
+
+    def get_form_kwargs(self):
+        kwargs = super(DisciplineSearchView, self).get_form_kwargs()
+        kwargs['discipline'] = self.discipline
+        return kwargs

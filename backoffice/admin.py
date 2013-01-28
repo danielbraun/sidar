@@ -1,7 +1,9 @@
 from django.contrib import admin
-from modeltranslation.admin import TranslationAdmin
-from models import *
 from imagekit.admin import AdminThumbnail
+from modeltranslation.admin import TranslationAdmin
+
+from models import *
+
 
 models = [Discipline, Generation, Category, Subject]
 
@@ -25,7 +27,7 @@ class WorkAdmin(TranslationAdmin):
 
 class DesignerAdmin(TranslationAdmin):
     # list_display = ('name_en', 'name_ar', 'main_discipline', 'work_count')
-    list_display = ('name_he', 'main_discipline', 'work_count')
+    list_display = ('name_he', 'main_discipline', 'work_count', 'is_active')
     # list_filter = ('main_discipline',)
     ordering = ('name_he',)
 

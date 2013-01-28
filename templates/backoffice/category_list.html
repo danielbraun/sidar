@@ -3,22 +3,24 @@
 {% block maintitle %}קטגוריות{% endblock maintitle %}
 {% block table_rows %}
 
+{% regroup category_list by parent as category_groups %}
+
 <tr>
 	<th>קטגוריות בעיצוב</th>
 	<th>קטגוריות משנה	</th>
 	<th style="text-align: left;">Categories</th>
 </tr>
-{% for group in object_list %}
+{% for group in category_groups %}
 <tr>
-	<td class="rainbowcell rbcell_{{ forloop.counter }}">{{ group.parent }}</td>
+	<td class="rainbowcell rbcell_{{ forloop.counter }}">{{ group.grouper }}</td>
 	<td>
-		{% for category in group.children %}
-			<a href="{% url work-list discipline.id %}?category={{ category.id }}">{{ category }}</a>
-			{% if not forloop.last %}-{% endif %}
+		{% for category in group.list %}
+		<a href="{% url work-list discipline.id %}?category={{ category.id }}">{{ category }}</a>
+		{% if not forloop.last %}-{% endif %}
 		{% endfor %}
 	</td>
 	<td style="text-align: left;">
-		<strong>{{ group.parent.name_en }}</strong>
+		<strong>{{ group.grouper.name_en }}</strong>
 	</td>
 </tr>
 {% endfor %}

@@ -1,0 +1,44 @@
+{% extends "backoffice/discipline_detail.html" %}
+
+{% block body_class %}search{% endblock body_class %}
+{% block maintitle %}חיפוש מתקדם{% endblock maintitle %}
+
+{% block pagebody %}
+
+<table class="generaltable">
+	<tr>
+		<th>
+			חיפוש מתקדם
+		</th>
+	</tr>
+	<tr>
+		<td class="generaltextcell">
+			<table class="search_form_table" dir="rtl" border="1" style="border-collapse:collapse;margin: 0px auto;" cellspacing="3" cellpadding="2" bordercolor="#999999" align="center">
+				<tbody>
+					<form action="{% url work-list discipline.id %}" method="get">
+						{{ form }}
+						
+						<tr>
+							<th></th>
+							<td>
+								<input type="submit" value="חפש"/>
+							</td>
+						</tr>
+					</form>
+				</tbody>
+			</table>
+
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+	</tr>
+</table>
+
+
+
+
+
+
+
+{% endblock pagebody %}

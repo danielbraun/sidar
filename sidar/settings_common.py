@@ -12,6 +12,9 @@ SOUTH_TESTS_MIGRATE = False
 # DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+LOGIN_URL = '/'
+
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -163,6 +166,7 @@ INSTALLED_APPS = (
     # 'website',
     'bibliography',
     # 'storages',
+    'collection',
 )
 
 # A sample logging configuration. The only tangible logging

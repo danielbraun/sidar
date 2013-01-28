@@ -21,17 +21,6 @@ class GenericManager(models.Manager):
     def belonging_to_discipline(self, discipline, field):
         return self.filter(pk__in=Work.objects.filter(discipline=discipline).values(field).distinct())
 
-    def with_parents_as_tree(self, discipline, field):
-        tree = []
-        discipline_subjects = self.belonging_to_discipline(discipline, field)
-        parent_ids = discipline_subjects.filter(parent__isnull=False).values('parent_id').distinct()
-        for parent in self.filter(pk__in=parent_ids):
-            tree.append({
-                'parent': parent,
-                'children': self.filter(parent=parent).filter(pk__in=discipline_subjects.values('id'))
-            })
-        return tree
-
 
 class Discipline(CommonModel):
 

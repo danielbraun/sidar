@@ -7,19 +7,21 @@
 
 {% block pagebody %}
 
+{% regroup subject_list by parent as subject_groups %}
+
 <table class="generaltable subjects_list">
 	<tbody>
 		<tr>
-			{% for group in object_list %}
-			{% cycle "<td>" "" %}
+			{% for group in subject_groups %}
+			{% cycle "<td>" "" "" %}
 			<table class="generaltable">
 				<tbody>
 					<tr>
 						<th>
-							{{ group.parent }}
+							{{ group.grouper }}
 						</th>
 					</tr>
-					{% for subject in group.children %}
+					{% for subject in group.list %}
 					<tr>
 						<td>
 							<a href="{% url work-list discipline.id %}?subject={{ subject.id }}">
@@ -31,7 +33,7 @@
 					{% endfor %}
 				</tbody>
 			</table><br/>
-			{% cycle "" "</td>" %}
+			{% cycle "" "" "</td>" %}
 			{% endfor %}
 		</tr>
 	</tbody>

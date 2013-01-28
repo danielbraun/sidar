@@ -917,7 +917,12 @@ dd {
 
 /* general layout */
 .subjects_list .generaltable {
-	width:120px
+	width: 120px;
+}
+
+.subjects_list.generaltable {
+	width: 0;
+	margin: 0 auto;
 }
 
 .timeline_show_link {
@@ -1191,4 +1196,17 @@ dd {
 
 .collect #pagefooter {
 	width:590px
+}
+
+.search_form_table th{
+	background-color: #C5C4C3;
+	color: black;
+}
+
+#id_password, #id_username {
+	width: 157px;
+}
+
+#registration_form input {
+	width: 157px;
 }

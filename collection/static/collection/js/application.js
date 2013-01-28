@@ -1,0 +1,3 @@
+$(function() {
+	$('.collectable-update').ajaxForm();
+});

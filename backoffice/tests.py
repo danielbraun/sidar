@@ -2,7 +2,6 @@ from django.test import TestCase
 from django.test.client import Client
 
 from backoffice.models import Discipline
-
 from bibliography.models import BookCategory
 
 
@@ -51,3 +50,9 @@ class ViewTests(TestCase):
 
     def test_event_list(self):
         self.assertResponseOK('/discipline/1/event/')
+
+    def test_search_page_loads(self):
+        self.assertResponseOK('/discipline/1/search/')
+
+    def test_logged_in_user_shouldnt_be_a_guest(self):
+        self.client.login(username='user', password='password')

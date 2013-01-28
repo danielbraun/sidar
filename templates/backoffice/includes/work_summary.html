@@ -1,0 +1,34 @@
+<td class="preview_image_td">
+	<a href="{% url work-detail work.discipline.id work.id %}"><img src="{% if work.preview_image %}{% endif %}"><img src="images/spacer.png" class="spacer"></a>
+</td>
+<td class="preview_info_td">
+	<table class="generaltable">
+		<tbody>
+			<tr>
+				<td width="60">מעצב</td>
+				<td class="large"><strong>{{ work.designer.name }}</strong></td>
+			</tr>
+			<tr>
+				<td>Designer</td>
+				<td><strong>{{ work.designer.name_en }}</strong>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>נושא</td>
+				<td>{{ work.subjects.all|join:", " }}
+				</td>
+			</tr>
+			<tr>
+				<td nowrap>שם העבודה</td>
+				<td>{{ work.name }}</td>
+			</tr>
+			<tr>
+				<td>קטגוריה</td>
+				<td>{{ work.category }}</td>
+			</tr>
+			<tr>
+				<td>תאריך</td>
+				<td>{{ work.publish_date_as_text }}</td>
+			</tr>
+		</tbody>
+	</table>
+</td>

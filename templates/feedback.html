@@ -1,0 +1,30 @@
+
+<a href="javascript:displayFeedbackBox();" id="feedback_link" class="sidebar_linkitem" style="color:green;">טופס הערות</a>
+<div id="feedback" style="display:none;">
+	<div class="sidebar_block_title" style="display:block;margin-bottom:0px;">
+		טופס הערות
+		<a href="javascript:displayFeedbackBox();" style="position:absolute;left:3px;color:#ffffff;">X</a>
+	</div>
+	<div class="sidebar_block_content" style="background-color:#ffffff;text-decoration:none;padding-top:8px;">
+		<form method="post" name="feedback_form" action="/designers.php?pos=gd" target="_top"> 
+			<input type="hidden" value="gd" name="pos">
+			<input type="hidden" value="/designers.php?pos=gd" name="origin">
+			<table border="0" style="width:100%;display:inline;">
+				<tbody><tr>
+					<td>
+						אנא רישמו את ההערה על פי שנים | קטגוריה | נושאים | מעצבים, ופרטו את הבעיה.<br><br><strong>הערות:</strong>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p><textarea id="feedback-text" name="feedback-text"></textarea></p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="submit" name="subfeedback" class="feedback_submit" value="שליחה">
+					</td>
+				</tr></tbody></table>
+			</form>
+		</div>
+	</div>
