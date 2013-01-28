@@ -7,6 +7,9 @@ jQuery(document).ready(function() {
 			location.reload();
 		}
 	});
+
+
+	$("#collect_form").ajaxForm();
 	$("#collect_form a").click(function(e) {
 		e.preventDefault();
 		$("#collect_form").submit();
