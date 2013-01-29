@@ -1,8 +1,7 @@
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.sites.models import Site
 
 from backoffice.models import Discipline
-
-from django.contrib.auth.forms import UserCreationForm
 
 
 def default(request):
@@ -10,5 +9,6 @@ def default(request):
         'disciplines': Discipline.objects.all(),
         'login_form': AuthenticationForm(),
         'path': request.path,
-        'registration_form': UserCreationForm()
+        'registration_form': UserCreationForm(),
+        'site': Site.objects.get_current()
     }

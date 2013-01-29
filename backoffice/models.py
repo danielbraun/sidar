@@ -5,6 +5,8 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from imagekit.processors.crop import TrimBorderColor
 
+from django.contrib.sites.models import Site
+
 
 class CommonModel(models.Model):
     name = models.CharField(u'שם', max_length=255)
@@ -23,6 +25,18 @@ class GenericManager(models.Manager):
 
 
 class Discipline(CommonModel):
+    active = models.BooleanField(u'פעיל')
+    info = models.TextField(u'מידע על הדיסיפלינה')
+
+    def work_count(self):
+        return self.work_set.count()
+    work_count.short_description = u'מספר עבודות'
+
+    def short_name(self):
+        return u'ע.' + self.name
+
+    def long_name(self):
+        return u'עיצוב ' + self.name
 
     class Meta(CommonModel.Meta):
         verbose_name = u'דיסיפלינה'

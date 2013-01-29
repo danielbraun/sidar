@@ -8,6 +8,8 @@ from backoffice.forms import SearchForm
 from backoffice.models import Designer, Discipline, Work, Generation, Category, Subject
 from bibliography.models import Book, BookCategory
 
+from django.utils.translation import get_language
+
 
 class DisciplineMixin(object):
     def dispatch(self, *args, **kwargs):
@@ -25,28 +27,23 @@ class WorkListView(DisciplineMixin, ListView):
 
     def get_queryset(self):
         works = Work.objects.filter(discipline=self.discipline)
-        try:
-            works = works.filter(designer=self.request.GET['designer'])
-        except:
-            pass
-        try:
-            works = works.filter(subjects=self.request.GET['subject'])
-        except:
-            pass
-        try:
-            works = works.filter(category=self.request.GET['category'])
-        except:
-            pass
+        designer = self.request.GET.get('designer')
+        subject = self.request.GET.get('subject')
+        category = self.request.GET.get('category')
+        if designer:
+            works = works.filter(designer=designer)
+        if subject:
+            works = works.filter(subjects=subject)
+        if category:
+            works = works.filter(category=category)
         return works
 
     def get_context_data(self, **kwargs):
         context = super(WorkListView, self).get_context_data(**kwargs)
-        try:
-            query = self.request.GET.copy()
+        query = self.request.GET.copy()
+        if query.get('page'):
             del query['page']
-            context['filters'] = query.urlencode()
-        except KeyError:
-            pass
+        context['filters'] = query.urlencode()
         return context
 
 
@@ -103,14 +100,14 @@ class CategoryListView(DisciplineMixin, ListView):
     model = Category
 
     def get_queryset(self):
-        return Category.objects.belonging_to_discipline(self.discipline, 'category').order_by('parent', 'name').exclude(parent=None)
+        return Category.objects.belonging_to_discipline(self.discipline, 'category').order_by('parent', 'name_he').exclude(parent=None)
 
 
 class SubjectListView(DisciplineMixin, ListView):
     model = Subject
 
     def get_queryset(self):
-        return Subject.objects.belonging_to_discipline(self.discipline, 'subjects').order_by('parent', 'name').exclude(parent=None)
+        return Subject.objects.belonging_to_discipline(self.discipline, 'subjects').order_by('parent', 'name_he').exclude(parent=None)
 
 
 class BookListView(DisciplineMixin, ListView):

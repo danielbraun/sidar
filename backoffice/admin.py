@@ -5,13 +5,17 @@ from modeltranslation.admin import TranslationAdmin
 from models import *
 
 
-models = [Discipline, Generation, Category, Subject]
+models = [Generation, Category, Subject]
 
 
 class TranslatedModelAdmin(TranslationAdmin):
-    search_fields = ['name']
+    search_fields = ['name_he']
     list_display = ('name_he', 'name_en')
     ordering = ('name_he',)
+
+
+class DisciplineAdmin(TranslationAdmin):
+    list_display = ('name_he', 'name_en', 'active', 'work_count')
 
 
 class WorkAdmin(TranslationAdmin):
@@ -34,6 +38,7 @@ class DesignerAdmin(TranslationAdmin):
 
 admin.site.register(Work, WorkAdmin)
 admin.site.register(Designer, DesignerAdmin)
+admin.site.register(Discipline, DisciplineAdmin)
 
 for model in models:
     admin.site.register(model, TranslatedModelAdmin)

@@ -16,6 +16,9 @@ class ViewTests(TestCase):
         self.client = Client()
         Discipline(name_en='g').save()
 
+    def test_about_page(self):
+        self.assertResponseOK('/discipline/1/about/')
+
     def test_homepage(self):
         self.assertResponseOK('/')
 

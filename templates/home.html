@@ -1,24 +1,27 @@
 {% extends "base.html" %}
-
+{% load flatpages %}
 
 {% block navigation %}
-
 <ul>
-	<li class="navitem_1">
-		<a href="{% url about %}">על המכון</a>
-	</li>
-	<li class="navitem_2">
-		<a href="{% url goals %}">מטרות המכון</a>
-	</li>
-
-	{% for object in disciplines %}
-	<li class="navitem_{{ forloop.counter|add:"2" }}">
-		<a href="{% url discipline-detail object.id %}">ע.{{ object }}</a>
+	{% get_flatpages as flatpages %}
+	{% for page in flatpages %}
+	<li class="navitem_{{ forloop.counter }}">
+		<a href="{% url django.contrib.flatpages.views.flatpage page.url%}">{{ page.title }}</a>
 	</li>
 	{% endfor %}
 
+	{% for object in disciplines %}
+	{% if object.active %}
+	<li class="navitem_{{ forloop.counter|add:"2" }}">	
+		<a href="{% url discipline-detail object.id %}"> {{ object.long_name }}</a>
+	</li>
+	{% else %}
+	<li class="navitem_disabled">
+		<a>{{ object.short_name }}</a>
+	</li>
+	{% endif %}
+	{% endfor %}
 </ul>
-
 {% endblock navigation %}
 
 
@@ -28,9 +31,9 @@
 <div style="height:122px;"></div><script type="text/javascript">
 
 var leftrightslide=new Array()
-			{% for work in object_list %}
-				leftrightslide[{{ forloop.counter0 }}]="<a href='{% url work-detail work.discipline.id work.id %}'><img src='' alt='{{ work.name }}' width='215' height='215' /><\/a>"
-			{% endfor %}
+{% for work in object_list %}
+leftrightslide[{{ forloop.counter0 }}]="<a href='{% url work-detail work.discipline.id work.id %}'><img src='' alt='{{ work.name }}' width='215' height='215' /><\/a>"
+{% endfor %}
 
 				//Specify gap between each image (use HTML):
 				var imagegap=" "

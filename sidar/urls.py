@@ -4,7 +4,6 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout, login
-from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
@@ -16,6 +15,7 @@ from collection.views import CollectView
 admin.autodiscover()
 
 discipline_urls = patterns('',
+                          (r'^about/$', DisciplineTemplateView.as_view(template_name='backoffice/discipline_about.html'), {}, 'discipline-about'),
                           (r'^article/$', DisciplineTemplateView.as_view(template_name='backoffice/article_list.html'), {}, "article-list"),
                           (r'^search/$', DisciplineSearchView.as_view(), {}, 'search'),
                           (r'^book/$', BookListView.as_view(), {}, 'book-list'),
@@ -34,26 +34,16 @@ discipline_urls = patterns('',
                            )
 
 
-site_urls = patterns('website.views',
-                    (r'^about/$', TemplateView.as_view(template_name='about.html'), {}, "about"),
-                    (r'^goals/$', TemplateView.as_view(template_name='goals.html'), {}, "goals"),
-                    (r'^discipline/(?P<discipline>\d+)/', include(discipline_urls)),
-                    (r'^collection/', include('collection.urls')),
-                    (r'^$', ListView.as_view(template_name="home.html", queryset=models.Work.objects.one_from_each_discipline()), {'works': models.Work.objects.one_from_each_discipline()}, "home"),
-                     )
-
 urlpatterns = patterns('',
-                       # Examples:
-                       # url(r'^$', 'sidar.views.home', name='home'),
-                       # url(r'^sidar/', include('sidar.foo.urls')),
-
-                       # Uncomment the admin/doc line below to enable admin documentation:
-                       url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+                       (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+                       # Deliberately no trailing slash after pages
+                       (r'^pages', include('django.contrib.flatpages.urls')),
                        (r'^logout/$', logout),
                        (r'^login/$', login),
-                       # Uncomment the next line to enable the admin:
-                       url(r'^admin/', include(admin.site.urls)),
-                       url(r'^', include(site_urls)),
+                       (r'^admin/', include(admin.site.urls)),
+                       (r'^discipline/(?P<discipline>\d+)/', include(discipline_urls)),
+                       (r'^collection/', include('collection.urls')),
+                       (r'^$', ListView.as_view(template_name="home.html", queryset=models.Work.objects.one_from_each_discipline()), {'works': models.Work.objects.one_from_each_discipline()}, "home"),
                        ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if not settings.DEBUG:
