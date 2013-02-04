@@ -5,8 +5,6 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from imagekit.processors.crop import TrimBorderColor
 
-from django.contrib.sites.models import Site
-
 
 class CommonModel(models.Model):
     name = models.CharField(u'שם', max_length=255)
@@ -114,8 +112,9 @@ class Work(CommonModel):
     category = models.ForeignKey("Category", verbose_name=u'קטגוריה', null=True)
     # Date related fields
     publish_date_as_text = models.CharField(u'תאריך כמלל', max_length=50, blank=True, null=True)
-    publish_date = models.DateField(verbose_name="תאריך הוצאה לאור", null=True)
-    date_accuracy_level = models.CharField(u'רמת דיוק תאריך', max_length=2, choices=DATE_ACCURACY_LEVELS, default=None, blank=True)
+    # publish_date = models.DateField(verbose_name="תאריך הוצאה לאור", null=True)
+    # date_accuracy_level = models.CharField(u'רמת דיוק תאריך', max_length=2, choices=DATE_ACCURACY_LEVELS, default=None, blank=True)
+    publish_year = models.IntegerField('שנת הוצאה לאור', null=True, blank=True, help_text=u'שנה לועזית')
     # Size related fields
     size_as_text = models.CharField(u'גודל כמלל', max_length=50, blank=True, null=True)
     height = models.DecimalField(u'גובה', max_digits=5, decimal_places=2, default=0)

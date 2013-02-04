@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, include
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
@@ -8,9 +8,10 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
 from backoffice import models
-from backoffice.views import DisciplineTemplateView, BookListView, DecadeListView, DesignerListView, CategoryListView, SubjectListView, WorkDetailView, WorkListView, DisciplineSearchView
+from backoffice.views import DisciplineTemplateView, DecadeListView, DesignerListView, CategoryListView, SubjectListView, WorkDetailView, WorkListView, DisciplineSearchView
 from collection.views import CollectView
 
+from bibliography.views import BookListView
 
 admin.autodiscover()
 
@@ -30,7 +31,7 @@ discipline_urls = patterns('',
                           (r'^work/(?P<pk>\d+)/$', WorkDetailView.as_view(), {}, "work-detail"),
                           (r'^work/(?P<pk>\d+)/collect/$', login_required(CollectView.as_view())),
                           (r'^work/$', WorkListView.as_view(), {}, "work-list"),
-                          (r'^$', DetailView.as_view(model=models.Discipline, template_name='website/discipline_detail.html', pk_url_kwarg='discipline'), {}, "discipline-detail"),
+                          (r'^$', DetailView.as_view(model=models.Discipline, pk_url_kwarg='discipline'), {}, "discipline-detail"),
                            )
 
 

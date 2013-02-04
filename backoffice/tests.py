@@ -57,5 +57,10 @@ class ViewTests(TestCase):
     def test_search_page_loads(self):
         self.assertResponseOK('/discipline/1/search/')
 
+    def test_search_ajax_request_returns_partial(self):
+        response = self.client.get('/discipline/1/search/', HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(200, response.status_code)
+        self.assertNotIn("<body", response.content)
+
     def test_logged_in_user_shouldnt_be_a_guest(self):
         self.client.login(username='user', password='password')

@@ -1,4 +1,6 @@
 {% extends "table.html" %}
+{% load date_tags %}
+
 
 {% block body_class %}years{% endblock body_class %}
 {% block maintitle %}שנים{% endblock maintitle %}
@@ -12,13 +14,21 @@
 {% for year in decades %}
 {% if forloop.first %}
 <tr>
-	<td class="rainbowcell rbcell_{{ forloop.counter }}">עד {{ year }} | </td>
+	<td class="rainbowcell rbcell_{{ forloop.counter }}">
+		<a href="{% url work-list discipline.id %}?until={{ year }}">
+			עד {{ year }} | עד {% hebrew_year year %}
+		</a>
+	</td>
 	<td></td>
 	<td></td>
 </tr>		
 {% endif %}
 <tr>
-	<td class="rainbowcell rbcell_{{ forloop.counter|add:"1" }}">{{ year }}-{{ year|add:"9" }} | </td>
+	<td class="rainbowcell rbcell_{{ forloop.counter|add:"1" }}">
+		<a href="{% url work-list discipline.id %}?from={{ year }}&until={{ year|add:'9' }}">
+			{{ year }}-{{ year|add:"9" }} | {% hebrew_year year %}
+		</a> 
+	</td>
 	<td></td>
 	<td></td>
 </tr>	

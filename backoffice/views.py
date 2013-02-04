@@ -6,10 +6,8 @@ from django.views.generic.list import ListView
 
 from backoffice.forms import SearchForm
 from backoffice.models import Designer, Discipline, Work, Generation, Category, Subject
-from bibliography.models import Book, BookCategory
 
-from django.utils.translation import get_language
-
+from django.http import Http404
 
 class DisciplineMixin(object):
     def dispatch(self, *args, **kwargs):
@@ -30,12 +28,23 @@ class WorkListView(DisciplineMixin, ListView):
         designer = self.request.GET.get('designer')
         subject = self.request.GET.get('subject')
         category = self.request.GET.get('category')
+        from_year = self.request.GET.get('from')
+        until_year = self.request.GET.get('until')
         if designer:
             works = works.filter(designer=designer)
         if subject:
             works = works.filter(subjects=subject)
         if category:
             works = works.filter(category=category)
+
+        try:
+            if from_year:
+                works = works.filter(publish_year__gte=int(from_year))
+            if until_year:
+                works = works.filter(publish_year__lte=int(until_year))
+        except ValueError:
+            raise Http404
+
         return works
 
     def get_context_data(self, **kwargs):
@@ -78,7 +87,7 @@ class DesignerListView(DisciplineMixin, ListView):
         for group in self.letter_groups:
             object_list.append({
                 'letters': group,
-                'designer_groups': [Designer.objects.belonging_to_discipline(self.discipline, 'designer').filter(name_he__startswith=unicode(letter, 'utf-8')) for letter in group]
+                'designer_groups': [Designer.objects.belonging_to_discipline(self.discipline, 'designer').filter(name_he__startswith=unicode(letter, 'utf-8')).exclude(generation=None) for letter in group]
             })
         return object_list
 
@@ -88,7 +97,7 @@ class DecadeListView(DisciplineMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
             context = super(DecadeListView, self).get_context_data(**kwargs)
-            context['decades'] = range(1890, 2030, 10)
+            context['decades'] = range(1890, 2040, 10)
             return context
 
 
@@ -110,29 +119,14 @@ class SubjectListView(DisciplineMixin, ListView):
         return Subject.objects.belonging_to_discipline(self.discipline, 'subjects').order_by('parent', 'name_he').exclude(parent=None)
 
 
-class BookListView(DisciplineMixin, ListView):
-
-    def get_queryset(self):
-        queryset = Book.objects.filter(discipline=self.discipline)
-        try:
-            self.category = BookCategory.objects.get(pk=self.args[0])
-            queryset = queryset.filter(category=self.category)
-        except IndexError:
-            pass
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super(BookListView, self).get_context_data(**kwargs)
-        try:
-            context['category'] = self.category
-        except AttributeError:
-            pass
-        return context
-
-
 class DisciplineSearchView(DisciplineMixin, FormView):
     form_class = SearchForm
     template_name = 'search.html'
+
+    def post(self, request, *args, **kwargs):
+        if self.request.is_ajax():
+            self.template_name = "backoffice/includes/search_form.html"
+        return super(DisciplineSearchView, self).post(args, kwargs)
 
     def get_form_kwargs(self):
         kwargs = super(DisciplineSearchView, self).get_form_kwargs()

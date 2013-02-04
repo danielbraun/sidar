@@ -5,10 +5,10 @@ from backoffice.models import Designer, Category, Subject
 
 
 class SearchForm(forms.Form):
-    designer = forms.ModelChoiceField(None, label=Designer._meta.verbose_name.title())
-    category = forms.ModelChoiceField(None, label=Category._meta.verbose_name.title())
-    subject = forms.ModelChoiceField(None, label=Subject._meta.verbose_name.title())
-    free_text = forms.CharField(label=u'חיפוש חופשי')
+    designer = forms.ModelChoiceField(None, label=Designer._meta.verbose_name.title(), required=False)
+    category = forms.ModelChoiceField(None, label=Category._meta.verbose_name.title(), required=False)
+    subject = forms.ModelChoiceField(None, label=Subject._meta.verbose_name.title(), required=False)
+    free_text = forms.CharField(label=u'חיפוש חופשי', required=False)
 
     def __init__(self, **kwargs):
         discipline = kwargs.pop('discipline')

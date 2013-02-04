@@ -1,42 +1,22 @@
 {% extends "backoffice/discipline_detail.html" %}
-
 {% block body_class %}subject{% endblock body_class %}
 {% block maintitle %}נושאים{% endblock maintitle %}
-
 {% block pagination %}{% endblock pagination %}
 
 {% block pagebody %}
-
 {% regroup subject_list by parent as subject_groups %}
-
 <table class="generaltable subjects_list">
 	<tbody>
 		<tr>
-			{% for group in subject_groups %}
-			{% cycle "<td>" "" "" %}
-			<table class="generaltable">
-				<tbody>
-					<tr>
-						<th>
-							{{ group.grouper }}
-						</th>
-					</tr>
-					{% for subject in group.list %}
-					<tr>
-						<td>
-							<a href="{% url work-list discipline.id %}?subject={{ subject.id }}">
-								<strong>{{ subject.name }}</strong>
-							</a>
-
-						</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table><br/>
-			{% cycle "" "" "</td>" %}
-			{% endfor %}
+			<td> {# this TD is actually a column in the subject table ... twisted #}
+				{% for group in subject_groups %}
+					{% include "backoffice/includes/subject_table.html" %}
+					{% if forloop.counter|divisibleby:2 and forloop.counter < 12 %}
+						</td><td>
+					{% endif %}
+				{% endfor %}
+			</td>
 		</tr>
 	</tbody>
 </table>
-
 {% endblock pagebody %}

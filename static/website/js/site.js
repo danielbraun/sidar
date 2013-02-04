@@ -15,6 +15,18 @@ jQuery(document).ready(function() {
 		$("#collect_form").submit();
 	});
 
+	var search_form = $("#search_form");
+	search_form.ajaxForm(function(response) {
+		$("#search_form tbody").html(response);
+		bind_search_form_selects();
+	});
+	bind_search_form_selects();
+	function bind_search_form_selects() {
+		$("#search_form select").change(function() {
+			search_form.submit();
+		});
+	}
+
 	// $('#open_collection_link').click(function(e) {
 	// 	e.preventDefault();
 	// 	show_collect_win();

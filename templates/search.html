@@ -13,20 +13,23 @@
 	</tr>
 	<tr>
 		<td class="generaltextcell">
-			<table class="search_form_table" dir="rtl" border="1" style="border-collapse:collapse;margin: 0px auto;" cellspacing="3" cellpadding="2" bordercolor="#999999" align="center">
-				<tbody>
-					<form action="{% url work-list discipline.id %}" method="get">
+			
+			<form action="{% url search discipline.id %}" method="post" id="search_form">
+				{% csrf_token %}
+				<table class="search_form_table" dir="rtl" border="1" style="border-collapse:collapse;margin: 0px auto;" cellspacing="3" cellpadding="2" bordercolor="#999999" align="center">
+					<tbody>
 						{{ form }}
-						
+					</tbody>
+					<tfoot>
 						<tr>
 							<th></th>
 							<td>
 								<input type="submit" value="חפש"/>
 							</td>
 						</tr>
-					</form>
-				</tbody>
-			</table>
+					</tfoot>
+				</table>
+			</form>
 
 		</td>
 	</tr>
