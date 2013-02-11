@@ -4,34 +4,50 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout, login
-from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
-from backoffice import models
-from backoffice.views import DisciplineTemplateView, DecadeListView, DesignerListView, CategoryListView, SubjectListView, WorkDetailView, WorkListView, DisciplineSearchView
+from backoffice import models, views
+from backoffice.views import DisciplineTemplateView, DesignerListView, WorkDetailView, DisciplineSearchView, DisciplineDetailView, WorkFieldListViewByDiscipline, WorkListView
+from bibliography.views import BookListView
 from collection.views import CollectView
 
-from bibliography.views import BookListView
 
 admin.autodiscover()
 
+work_detail = patterns('', (r'^work-(?P<work>\d+)/$', WorkListView.as_view(), {}, "work-detail"))
+
 discipline_urls = patterns('',
-                          (r'^about/$', DisciplineTemplateView.as_view(template_name='backoffice/discipline_about.html'), {}, 'discipline-about'),
+                          (r'^about/$', views.DisciplineTemplateView.as_view(template_name='backoffice/discipline_about.html'), {}, 'discipline-about'),
                           (r'^article/$', DisciplineTemplateView.as_view(template_name='backoffice/article_list.html'), {}, "article-list"),
                           (r'^search/$', DisciplineSearchView.as_view(), {}, 'search'),
+
                           (r'^book/$', BookListView.as_view(), {}, 'book-list'),
                           (r'^book/(\d+)/$', BookListView.as_view(), {}, 'book-list'),
+
                           (r'^event/$', DisciplineTemplateView.as_view(template_name='backoffice/event_list.html'), {}, "event-list"),
                           (r'^link/$', DisciplineTemplateView.as_view(template_name='backoffice/link_list.html'), {}, "link-list"),
                           (r'^video/$', DisciplineTemplateView.as_view(template_name='backoffice/video_list.html'), {}, "video-list"),
-                          (r'^decade/$', DecadeListView.as_view(), {}, "decade-list"),
+
+                          (r'^year/$', DisciplineTemplateView.as_view(template_name="backoffice/decade_list.html"), {}, "decade-list"),
+                          (r'^year/(?P<from>\d*)-(?P<until>\d*)/$', WorkListView.as_view(), {}, "decade-detail"),
+                          (r'^year/(?P<from>\d*)-(?P<until>\d*)/', include(work_detail)),
+                          # (r'^year/(\d*)-(\d*)/(?P<year>\d*)/$', WorkListViewByYearSpan.as_view(), {}, "exact_year"),
+
                           (r'^designer/$', DesignerListView.as_view(), {}, 'designer-list'),
-                          (r'^category/$', CategoryListView.as_view(), {}, 'category-list'),
-                          (r'^subject/$', SubjectListView.as_view(), {}, 'subject-list'),
-                          (r'^work/(?P<pk>\d+)/$', WorkDetailView.as_view(), {}, "work-detail"),
+                          (r'^designer/(?P<designer>\d+)/$', WorkListView.as_view(), {}, 'designer-detail'),
+                          (r'^designer/(?P<designer>\d+)/', include(work_detail)),
+
+                          (r'^category/$', WorkFieldListViewByDiscipline.as_view(model=models.Category), {'work_field': 'category'}, 'category-list'),
+                          (r'^category/(?P<category>\d+)/$', WorkListView.as_view(), {}, 'category-detail'),
+                          (r'^category/(?P<category>\d+)/', include(work_detail)),
+
+                          (r'^subject/$', WorkFieldListViewByDiscipline.as_view(model=models.Subject), {'work_field': 'subjects'}, 'subject-list'),
+                          (r'^subject/(?P<subject>\d+)/$', WorkListView.as_view(), {}, "subject-detail"),
+                          (r'^subject/(?P<subject>\d+)/', include(work_detail)),
+
+                          (r'^work-(?P<work>\d+)/$', WorkListView.as_view(), {}, "work-detail"),
                           (r'^work/(?P<pk>\d+)/collect/$', login_required(CollectView.as_view())),
-                          (r'^work/$', WorkListView.as_view(), {}, "work-list"),
-                          (r'^$', DetailView.as_view(model=models.Discipline, pk_url_kwarg='discipline'), {}, "discipline-detail"),
+                          (r'^$', DisciplineDetailView.as_view(pk_url_kwarg='discipline'), {}, "discipline-detail"),
                            )
 
 

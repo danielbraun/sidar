@@ -6,6 +6,13 @@ from imagekit.processors import ResizeToFit
 from imagekit.processors.crop import TrimBorderColor
 
 
+class FilterableByDesignerMixin(object):
+
+    def designers_by_discipline(self, discipline):
+        designer_ids = self.work_set.values_list('designer', flat=True).distinct()
+        return Designer.objects.filter(pk__in=designer_ids)
+
+
 class CommonModel(models.Model):
     name = models.CharField(u'שם', max_length=255)
 
@@ -142,8 +149,8 @@ class Country(CommonModel):
         verbose_name_plural = "מדינות"
 
 
-class Category(CommonModel):
-
+class Category(CommonModel, FilterableByDesignerMixin):
+    info = models.TextField(u'מידע על הקטגוריה')
     parent = models.ForeignKey('self', verbose_name=u'קטגורית על', blank=True, null=True)
     objects = GenericManager()
 
@@ -180,7 +187,7 @@ class Keyword(CommonModel):
         verbose_name_plural = u'מילות מפתח'
 
 
-class Subject(CommonModel):
+class Subject(CommonModel, FilterableByDesignerMixin):
     objects = GenericManager()
     parent = models.ForeignKey('self', verbose_name=u'נושא על', blank=True, null=True)
 

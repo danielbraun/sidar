@@ -1,17 +1,21 @@
 # -*- coding: utf-8 -*-
+from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
 
 from backoffice.forms import SearchForm
-from backoffice.models import Designer, Discipline, Work, Generation, Category, Subject
+from backoffice.models import Designer, Discipline, Work, Generation
 
-from django.http import Http404
+from backoffice.models import Subject
+
+from backoffice.models import Category
+
 
 class DisciplineMixin(object):
     def dispatch(self, *args, **kwargs):
-        self.discipline = Discipline.objects.get(pk=kwargs['discipline'])
+        self.discipline = get_object_or_404(Discipline, pk=kwargs['discipline'], active=True)
         return super(DisciplineMixin, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -25,35 +29,64 @@ class WorkListView(DisciplineMixin, ListView):
 
     def get_queryset(self):
         works = Work.objects.filter(discipline=self.discipline)
-        designer = self.request.GET.get('designer')
-        subject = self.request.GET.get('subject')
-        category = self.request.GET.get('category')
-        from_year = self.request.GET.get('from')
-        until_year = self.request.GET.get('until')
-        if designer:
-            works = works.filter(designer=designer)
-        if subject:
-            works = works.filter(subjects=subject)
-        if category:
-            works = works.filter(category=category)
+        filters = self.kwargs.copy()
 
-        try:
-            if from_year:
-                works = works.filter(publish_year__gte=int(from_year))
-            if until_year:
-                works = works.filter(publish_year__lte=int(until_year))
-        except ValueError:
-            raise Http404
+        self.designer = filters.get('designer')
+        self.subject = filters.get('subject')
+        self.category = filters.get('category')
+        self.from_year = filters.get('from')
+        self.until_year = filters.get('until')
 
-        return works
+        if self.designer:
+            self.designer = get_object_or_404(Designer, pk=self.designer)
+            works = works.filter(designer=self.designer)
+
+        if self.subject:
+            self.subject = get_object_or_404(Subject, pk=self.subject)
+            works = works.filter(subjects=self.subject)
+
+        if self.category:
+            self.category = get_object_or_404(Category, pk=self.category)
+            works = works.filter(category=self.category)
+
+        if self.from_year:
+            works = works.filter(publish_year__gte=self.from_year)
+
+        if self.until_year:
+            works = works.filter(publish_year__lte=self.until_year)
+
+        if self.from_year or self.until_year:
+            # works = works.order_by('publish_year')
+            pass
+        return works.order_by('id')
 
     def get_context_data(self, **kwargs):
         context = super(WorkListView, self).get_context_data(**kwargs)
-        query = self.request.GET.copy()
-        if query.get('page'):
-            del query['page']
-        context['filters'] = query.urlencode()
+        context['main_filter'] = self.kwargs.keys()[1]
+        context['designer'] = self.designer
+        context['category'] = self.category
+        context['subject'] = self.subject
+        context['from'] = self.from_year
+        context['until'] = self.until_year
+        if context['main_filter'] in ['from', 'until']:
+            context['main_filter'] = 'years'
+            context['available_years'] = self.get_queryset().values_list('publish_year', flat=True).distinct()
+        self.work = self.kwargs.get('work')
+        if self.work:
+            self.template_name = 'backoffice/work_detail.html'
+            self.work = get_object_or_404(self.get_queryset(), pk=self.work)
+            context['work'] = self.work
+            qs = self.get_queryset().filter(id__gt=self.work.id)
+            if qs:
+                context['next_work'] = qs[0]
+            qs = self.get_queryset().filter(id__lt=self.work.id).order_by('-id')
+            if qs:
+                context['previous_work'] = qs[0]
         return context
+
+
+class DisciplineDetailView(DisciplineMixin, DetailView):
+    model = Discipline
 
 
 class WorkDetailView(DisciplineMixin, DetailView):
@@ -92,31 +125,13 @@ class DesignerListView(DisciplineMixin, ListView):
         return object_list
 
 
-class DecadeListView(DisciplineMixin, TemplateView):
-    template_name = "backoffice/decade_list.html"
-
-    def get_context_data(self, **kwargs):
-            context = super(DecadeListView, self).get_context_data(**kwargs)
-            context['decades'] = range(1890, 2040, 10)
-            return context
-
-
 class DisciplineTemplateView(DisciplineMixin, TemplateView):
     pass
 
 
-class CategoryListView(DisciplineMixin, ListView):
-    model = Category
-
+class WorkFieldListViewByDiscipline(DisciplineMixin, ListView):
     def get_queryset(self):
-        return Category.objects.belonging_to_discipline(self.discipline, 'category').order_by('parent', 'name_he').exclude(parent=None)
-
-
-class SubjectListView(DisciplineMixin, ListView):
-    model = Subject
-
-    def get_queryset(self):
-        return Subject.objects.belonging_to_discipline(self.discipline, 'subjects').order_by('parent', 'name_he').exclude(parent=None)
+        return self.model.objects.belonging_to_discipline(self.discipline, self.kwargs['work_field']).order_by('parent', 'name_he').exclude(parent=None)
 
 
 class DisciplineSearchView(DisciplineMixin, FormView):

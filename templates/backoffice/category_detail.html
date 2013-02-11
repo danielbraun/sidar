@@ -1,0 +1,11 @@
+{% extends "backoffice/work_list.html" %}
+{% block body_class %}category{% endblock body_class %}
+
+{% block maintitle %}
+קטגוריות › {{ object }}
+{% endblock maintitle %}
+
+{% block sidebar_extensions %}
+	{% include "backoffice/sidebar_extensions/available_designers_in_category.html" %}
+	{% include "backoffice/sidebar_extensions/info.html" %}
+{% endblock sidebar_extensions %}

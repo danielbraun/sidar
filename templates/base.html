@@ -46,6 +46,9 @@
 
 			<div id="maintitle">
 				<strong>{% block maintitle %}{% endblock maintitle %}</strong>
+				{% if paginator %}
+					- {{ paginator.count }} תוצאות
+				{% endif %}
 			</div>
 			<div class="pagination">{% block pagination %}{% endblock pagination %}</div>
 			<div class="main_text_wrap">

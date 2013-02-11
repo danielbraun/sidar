@@ -1,0 +1,12 @@
+{% extends "includes/sidebar_extension.html" %}
+{% block title %}שנים זמינות{% endblock title %}
+{% block body %}
+
+<select onchange='document.location.href=this.options[this.selectedIndex].value;'>
+	<option></option>
+	{% for year in available_years %}
+		<option value="{% url decade-detail discipline.id year year %}">{{ year }}</option>
+	{% endfor %}
+</select>
+
+{% endblock body %}

@@ -1,0 +1,10 @@
+{% extends "includes/sidebar_extension.html" %}
+{% block title %}מעצבים בקטגוריה זו{% endblock title %}
+{% block body %}
+	<select onchange='document.location.href=this.options[this.selectedIndex].value;'>
+	<option value="{% url category-detail discipline.id object.id %}">כל המעצבים</option>
+	{% for designer in designer_list %}
+		<option value="{% url category-designer discipline.id object.id designer.id %}" {% if selected_designer == designer %}selected{% endif %}>{{ designer }}</option>
+	{% endfor %}
+</select>
+{% endblock body %}

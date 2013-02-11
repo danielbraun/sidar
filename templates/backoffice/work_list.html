@@ -1,49 +1,44 @@
 {% extends "backoffice/discipline_detail.html" %}
 
 {% block pagination %}
-<ul>
-	{% for page in paginator.page_range %}
-	{% if page == paginator.num_pages or page == 1  or page == page_obj.next_page_number or page == page_obj.previous_page_number or page == page_obj.number%}
-	<li {% if page == page_obj.number %} class="current">{{ page }}{% else %}>
-		<a href="?page={{ page }}&{{ filters }}">
-			{{ page }}
-		</a>
-		{% endif %}
-	</li>
+{% include "includes/pagination.html" %}
+{% endblock pagination %}
+
+{% block body_class %}{{ main_filter }}{% endblock body_class %}
+
+{% block maintitle %}
+	{% if main_filter == 'years' %}
+		שנים ›
+		{% if filters.from %}משנת {{ from }}{% endif %}
+		{% if filters.until %}עד {{ until }}{% endif %}
 	{% endif %}
-	{% endfor %}
-</ul>
-<div class="pagination_arrows">
-	{% if page_obj.has_previous %}
-	<a href="?page={{ page_obj.previous_page_number }}&{{ filters }}">
-		{% else %}
-		<a class="disabled">
-			{% endif %}
-			‹ הקודם</a>
-			| 
-			{% if page_obj.has_next %}
-			<a href="?page={{page_obj.next_page_number}}&{{filters}}">
-				{% else %}
-				<a class="disabled">
-					{% endif %}
-					הבא ›</a>
-				</div>
+	{% if main_filter == 'category' %}קטגוריות › {{ category }}{% endif %}
+	{% if main_filter == 'subject' %}נושאים › {{ subject }}{% endif %}
+	{% if main_filter == 'designer' %}מעצבים › {{ designer }}{% endif %}
+	
 
-				{% endblock pagination %}
+{% endblock maintitle %}
+
+{% block pagebody %}
+<table class="generaltable" cellspacing="2" border="1">
+	<tbody>
+		<tr>
+			{% for work in work_list %}
+				{% include "backoffice/includes/work_summary.html" %}
+				{% if forloop.last and not forloop.counter|divisibleby:2 %}
+					{% include "backoffice/includes/work_summary.html" with work=None%}
+				{% endif %}
+				{% if forloop.counter|divisibleby:2 %}</tr><tr>{% endif %}
+			{% endfor %}
+		</tr>
+	</tbody>
+</table>
+
+{% endblock pagebody %}
 
 
-				{% block pagebody %}
-
-				<div class="main_text_wrap">
-					<table class="generaltable" cellspacing="2" border="1">
-						<tbody>
-							{% for work in object_list %}
-							{% if forloop.counter0|divisibleby:2 %}<tr>{% endif %}
-							{% include "backoffice/includes/work_summary.html" with work=work %}
-						</td>
-						{% if forloop.counter|divisibleby:2 %}</tr>{% endif %}
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
-			{% endblock pagebody %}
+{% block sidebar_extensions %}
+	{% if not filters.from == filters.until %}
+		{% include "backoffice/sidebar_extensions/available_years.html" %}	
+	{% endif %}
+{% endblock sidebar_extensions %}

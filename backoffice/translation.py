@@ -1,7 +1,7 @@
 from modeltranslation.translator import translator, TranslationOptions
 from backoffice.models import *
 
-models = [Country, Category, Client, Technique, Collection, Subject, Generation, Keyword]
+models = [Country, Client, Technique, Collection, Subject, Generation, Keyword]
 
 
 class CommonModelTranslationOptions(TranslationOptions):
@@ -20,9 +20,12 @@ class WorkTranslationOptions(CommonModelTranslationOptions):
     # fields = ('name', 'description', 'publish_date_as_text', 'size_as_text')
     fields = ('name', 'description')
 
+
 translator.register(Designer, DesignerTranslationOptions)
 translator.register(Work, WorkTranslationOptions)
 translator.register(Discipline, DisciplineTranslationOptions)
+translator.register(Category, DisciplineTranslationOptions)
+
 
 for model in models:
     translator.register(model, CommonModelTranslationOptions)
