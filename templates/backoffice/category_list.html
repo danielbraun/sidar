@@ -15,7 +15,7 @@
 	<td class="rainbowcell rbcell_{{ forloop.counter }}">{{ group.grouper }}</td>
 	<td>
 		{% for category in group.list %}
-		<a href="{% url category-detail discipline.id category.id %}">{{ category }}</a>
+		<a href="{% url work-list discipline=discipline.id category=category.id %}">{{ category }}</a>
 		{% if not forloop.last %}-{% endif %}
 		{% endfor %}
 	</td>

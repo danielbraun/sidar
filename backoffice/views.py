@@ -43,10 +43,12 @@ class WorkListView(DisciplineMixin, ListView):
 
         if self.subject:
             self.subject = get_object_or_404(Subject, pk=self.subject)
+            self.subject.available_designers = self.subject.designers_by_discipline(self.discipline.id)
             works = works.filter(subjects=self.subject)
 
         if self.category:
             self.category = get_object_or_404(Category, pk=self.category)
+            self.category.available_designers = self.category.designers_by_discipline(self.discipline.id)
             works = works.filter(category=self.category)
 
         if self.from_year:

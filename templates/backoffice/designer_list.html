@@ -37,7 +37,7 @@
 					<tr>
 						<td class="designers_group_{{ designer.generation.id }}">
 							{% if designer.is_active %}
-								<a href="{% url designer-detail discipline.id designer.id %}" class="designer_type_{{ designer.generation.id }}">
+								<a href="{% url work-list discipline=discipline.id designer=designer.id %}" class="designer_type_{{ designer.generation.id }}">
 							{% else %}
 								<a class="disabled">
 							{% endif %}

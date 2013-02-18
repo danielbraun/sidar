@@ -41,4 +41,13 @@
 	{% if not filters.from == filters.until %}
 		{% include "backoffice/sidebar_extensions/available_years.html" %}	
 	{% endif %}
+
+	{% if main_filter == "category" %}
+		{% include "backoffice/sidebar_extensions/available_designers_in_category.html" %}
+	{% endif %}
+
+	{% if main_filter == "subject" %}
+		{% include "backoffice/sidebar_extensions/available_designers_in_subject.html" %}
+	{% endif %}
+
 {% endblock sidebar_extensions %}
