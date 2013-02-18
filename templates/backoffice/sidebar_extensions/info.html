@@ -1,11 +1,9 @@
 {% extends "includes/sidebar_extension.html" %}
 
-{% block title %}
-	{% if object.info %}{{ object }}{% endif %}
-{% endblock title %}
+{% block title %}{{ object }}{% endblock title %}
 
 {% block body %}
 	<p align="justify">
 		{{ object.info }}
-	</p>
+	</p>	
 {% endblock body %}

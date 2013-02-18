@@ -9,7 +9,7 @@ from imagekit.processors.crop import TrimBorderColor
 class FilterableByDesignerMixin(object):
 
     def designers_by_discipline(self, discipline):
-        designer_ids = self.work_set.values_list('designer', flat=True).distinct()
+        designer_ids = self.work_set.filter(discipline=discipline).values_list('designer', flat=True).distinct()
         return Designer.objects.filter(pk__in=designer_ids)
 
 
@@ -70,6 +70,10 @@ class Designer(CommonModel):
     def work_count(self):
         return self.work_set.count()
     work_count.short_description = u'מספר עבודות'
+
+    def available_categories_by_discipline(self, discipline):
+        category_ids = self.work_set.filter(discipline=discipline).values_list('category', flat=True).distinct()
+        return Category.objects.filter(pk__in=category_ids)
 
     objects = DesignerManager()
 
@@ -188,6 +192,7 @@ class Keyword(CommonModel):
 
 
 class Subject(CommonModel, FilterableByDesignerMixin):
+    info = models.TextField(u'מידע על הנושא')
     objects = GenericManager()
     parent = models.ForeignKey('self', verbose_name=u'נושא על', blank=True, null=True)
 

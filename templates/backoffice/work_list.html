@@ -9,8 +9,8 @@
 {% block maintitle %}
 	{% if main_filter == 'years' %}
 		שנים ›
-		{% if filters.from %}משנת {{ from }}{% endif %}
-		{% if filters.until %}עד {{ until }}{% endif %}
+		{% if from %}משנת {{ from }}{% endif %}
+		{% if until %}עד {{ until }}{% endif %}
 	{% endif %}
 	{% if main_filter == 'category' %}קטגוריות › {{ category }}{% endif %}
 	{% if main_filter == 'subject' %}נושאים › {{ subject }}{% endif %}
@@ -38,7 +38,7 @@
 
 
 {% block sidebar_extensions %}
-	{% if not filters.from == filters.until %}
+	{% if not from == until %}
 		{% include "backoffice/sidebar_extensions/available_years.html" %}	
 	{% endif %}
 
@@ -48,6 +48,18 @@
 
 	{% if main_filter == "subject" %}
 		{% include "backoffice/sidebar_extensions/available_designers_in_subject.html" %}
+	{% endif %}
+
+	{% if category.info %}
+		{% include "backoffice/sidebar_extensions/info.html" with object=category %}
+	{% endif %}
+
+	{% if subject.info %}
+		{% include "backoffice/sidebar_extensions/info.html" with object=subject %}
+	{% endif %}
+
+	{% if designer %}
+		{% include "backoffice/sidebar_extensions/designer.html" %}
 	{% endif %}
 
 {% endblock sidebar_extensions %}

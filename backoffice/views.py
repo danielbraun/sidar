@@ -29,16 +29,18 @@ class WorkListView(DisciplineMixin, ListView):
 
     def get_queryset(self):
         works = Work.objects.filter(discipline=self.discipline)
-        filters = self.kwargs.copy()
+        filters = self.kwargs
 
         self.designer = filters.get('designer')
         self.subject = filters.get('subject')
         self.category = filters.get('category')
         self.from_year = filters.get('from')
         self.until_year = filters.get('until')
+        self.year = filters.get('year')
 
         if self.designer:
             self.designer = get_object_or_404(Designer, pk=self.designer)
+            self.designer.available_categories = self.designer.available_categories_by_discipline(self.discipline)
             works = works.filter(designer=self.designer)
 
         if self.subject:
@@ -57,22 +59,28 @@ class WorkListView(DisciplineMixin, ListView):
         if self.until_year:
             works = works.filter(publish_year__lte=self.until_year)
 
-        if self.from_year or self.until_year:
-            # works = works.order_by('publish_year')
-            pass
+        if self.until_year or self.from_year:
+            self.available_years = works.values_list('publish_year', flat=True).distinct().order_by('publish_year')
+
+        if self.year:
+            works = works.filter(publish_year=self.year)
+            self.year = int(self.year)
+
         return works.order_by('id')
 
     def get_context_data(self, **kwargs):
         context = super(WorkListView, self).get_context_data(**kwargs)
-        context['main_filter'] = self.kwargs.keys()[1]
+        # context['main_filter'] = self.kwargs.keys()[1]
+        context['main_filter'] = self.kwargs.get('main_filter')
         context['designer'] = self.designer
         context['category'] = self.category
         context['subject'] = self.subject
         context['from'] = self.from_year
         context['until'] = self.until_year
-        if context['main_filter'] in ['from', 'until']:
+        context['year'] = self.year
+        if context['main_filter'] in ['from', 'until', 'year']:
             context['main_filter'] = 'years'
-            context['available_years'] = self.get_queryset().values_list('publish_year', flat=True).distinct()
+            context['available_years'] = self.available_years
         self.work = self.kwargs.get('work')
         if self.work:
             self.template_name = 'backoffice/work_detail.html'
@@ -88,7 +96,7 @@ class WorkListView(DisciplineMixin, ListView):
 
 
 class DisciplineDetailView(DisciplineMixin, DetailView):
-    model = Discipline
+    pass
 
 
 class WorkDetailView(DisciplineMixin, DetailView):

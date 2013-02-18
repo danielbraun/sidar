@@ -33,23 +33,25 @@ discipline_urls = patterns('',
                           (r'^video/$', DisciplineTemplateView.as_view(template_name='backoffice/video_list.html'), {}, "video-list"),
 
                           (r'^year/$', DisciplineTemplateView.as_view(template_name="backoffice/decade_list.html"), {}, "decade-list"),
-                          (r'^year/(?P<from>\d*)-(?P<until>\d*)/', include(work_urls)),
+                          (r'^year/(?P<from>\d*)-(?P<until>\d*)/', include(work_urls), {'main_filter': 'year'}),
+                          (r'^year/(?P<from>\d*)-(?P<until>\d*)/(?P<year>\d+)/', include(work_urls), {'main_filter': 'year'}),
 
                           (r'^designer/$', DesignerListView.as_view(), {}, 'designer-list'),
-                          (r'^designer/(?P<designer>\d+)/', include(work_urls)),
+                          (r'^designer/(?P<pk>\d+)/about/$', DisciplineDetailView.as_view(model=models.Designer), {}, "designer-detail"),
+                          (r'^designer/(?P<designer>\d+)/', include(work_urls), {'main_filter': 'designer'}),
                           # (r'^designer/(?P<designer>\d+)/category/(?P<category>\d+)/', include(work_urls)),
 
                           (r'^category/$', WorkFieldListViewByDiscipline.as_view(model=models.Category), {'work_field': 'category'}, 'category-list'),
-                          (r'^category/(?P<category>\d+)/', include(work_urls)),
-                          (r'^category/(?P<category>\d+)/designer/(?P<designer>\d+)/', include(work_urls)),
+                          (r'^category/(?P<category>\d+)/', include(work_urls), {'main_filter': 'category'}),
+                          (r'^category/(?P<category>\d+)/designer/(?P<designer>\d+)/', include(work_urls), {'main_filter': 'category'}),
 
                           (r'^subject/$', WorkFieldListViewByDiscipline.as_view(model=models.Subject), {'work_field': 'subjects'}, 'subject-list'),
-                          (r'^subject/(?P<subject>\d+)/', include(work_urls)),
-                          (r'^subject/(?P<subject>\d+)/designer/(?P<designer>\d+)/', include(work_urls)),
+                          (r'^subject/(?P<subject>\d+)/', include(work_urls), {'main_filter': 'subject'}),
+                          (r'^subject/(?P<subject>\d+)/designer/(?P<designer>\d+)/', include(work_urls), {'main_filter': 'subject'}),
 
                           (r'^work-(?P<work>\d+)/$', WorkListView.as_view(), {}, "work-detail"),
                           (r'^work/(?P<pk>\d+)/collect/$', login_required(CollectView.as_view())),
-                          (r'^$', DisciplineDetailView.as_view(pk_url_kwarg='discipline'), {}, "discipline-detail"),
+                          (r'^$', WorkListView.as_view(template_name="backoffice/discipline_detail.html"), {}, "discipline-detail"),
                            )
 
 

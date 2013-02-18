@@ -14,6 +14,9 @@
 					{% if forloop.counter|divisibleby:2 and forloop.counter < 12 %}
 						</td><td>
 					{% endif %}
+					{% if forloop.last and forloop.counter < 13 %}
+						<td><table class="generaltable"><tr><th>שונות</th></tr></table></td>
+					{% endif %}
 				{% endfor %}
 			</td>
 		</tr>

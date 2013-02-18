@@ -1,5 +1,18 @@
-{% extends "backoffice/work_list.html" %}
+{% extends "backoffice/discipline_detail.html" %}
 {% block body_class %}designer{% endblock body_class %}
-{% block maintitle %}
-מעצבים › {{ object }}
-{% endblock maintitle %}
+{% block maintitle %}דף מעצב › {{ designer }}{% endblock maintitle %}
+
+{% block pagination %}
+	<a href="{% url work-list discipline=discipline.id designer=designer.id %}">
+		‹ עבודות - {{ designer }}
+	</a>
+{% endblock pagination %}
+
+{% block pagebody %}
+	{% include "includes/textual.html" with title=designer body=designer.philosophy_summary side_image="sdfsdf" %}
+{% endblock pagebody %}
+
+{% block sidebar_extensions %}
+	{# {% include "backoffice/sidebar_extensions/available_categories_for_designer.html" %} #}
+{% endblock sidebar_extensions %}
+
