@@ -70,7 +70,6 @@ class WorkListView(DisciplineMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(WorkListView, self).get_context_data(**kwargs)
-        # context['main_filter'] = self.kwargs.keys()[1]
         context['main_filter'] = self.kwargs.get('main_filter')
         context['designer'] = self.designer
         context['category'] = self.category

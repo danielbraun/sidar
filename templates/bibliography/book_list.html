@@ -6,6 +6,12 @@
 		› {{ category }}
 	{% endif %}
 {% endblock maintitle %}
+
+{% block pagination %}
+	{% include "includes/pagination.html" %}
+{% endblock pagination %}
+
+
 {% block table_rows %}
 
 <tr>
@@ -31,3 +37,7 @@
 {% endfor %}
 
 {% endblock table_rows %}
+
+{% block sidebar_extensions %}
+	{% include "bibliography/sidebar_extensions/categories.html" %}
+{% endblock sidebar_extensions %}
