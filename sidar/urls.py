@@ -11,6 +11,8 @@ from backoffice.views import DisciplineTemplateView, DesignerListView, Disciplin
 from bibliography.views import BookListView
 from collection.views import CollectView
 
+from backoffice.views import SearchView
+from django.views.generic.base import TemplateView
 
 admin.autodiscover()
 
@@ -23,7 +25,7 @@ work_urls = patterns('',
 discipline_urls = patterns('',
                           (r'^about/$', views.DisciplineTemplateView.as_view(template_name='backoffice/discipline_about.html'), {}, 'discipline-about'),
                           (r'^article/$', DisciplineTemplateView.as_view(template_name='backoffice/article_list.html'), {}, "article-list"),
-                          (r'^search/$', DisciplineSearchView.as_view(), {}, 'search'),
+                          (r'^search/$', SearchView.as_view(), {}, 'search'),
 
                           (r'^book/$', BookListView.as_view(), {}, 'book-list'),
                           (r'^book/(\d+)/$', BookListView.as_view(), {}, 'book-list'),
@@ -56,6 +58,7 @@ discipline_urls = patterns('',
 
 
 urlpatterns = patterns('',
+                       (r'^new/$', TemplateView.as_view(template_name='next_gen/index.html')),
                        (r'^admin/doc/', include('django.contrib.admindocs.urls')),
                        # Deliberately no trailing slash after pages
                        (r'^pages', include('django.contrib.flatpages.urls')),

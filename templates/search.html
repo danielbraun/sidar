@@ -13,9 +13,7 @@
 	</tr>
 	<tr>
 		<td class="generaltextcell">
-			
-			<form action="{% url search discipline.id %}" method="post" id="search_form">
-				{% csrf_token %}
+			<form method="get">
 				<table class="search_form_table" dir="rtl" border="1" style="border-collapse:collapse;margin: 0px auto;" cellspacing="3" cellpadding="2" bordercolor="#999999" align="center">
 					<tbody>
 						{{ form }}
@@ -30,7 +28,6 @@
 					</tfoot>
 				</table>
 			</form>
-
 		</td>
 	</tr>
 	<tr>

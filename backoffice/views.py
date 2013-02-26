@@ -12,6 +12,8 @@ from backoffice.models import Subject
 
 from backoffice.models import Category
 
+from django.views.generic.base import View
+
 
 class DisciplineMixin(object):
     def dispatch(self, *args, **kwargs):
@@ -147,12 +149,21 @@ class DisciplineSearchView(DisciplineMixin, FormView):
     form_class = SearchForm
     template_name = 'search.html'
 
-    def post(self, request, *args, **kwargs):
-        if self.request.is_ajax():
-            self.template_name = "backoffice/includes/search_form.html"
-        return super(DisciplineSearchView, self).post(args, kwargs)
-
     def get_form_kwargs(self):
         kwargs = super(DisciplineSearchView, self).get_form_kwargs()
         kwargs['discipline'] = self.discipline
         return kwargs
+
+
+class SearchView(DisciplineMixin, TemplateView):
+    template_name = "search.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchView, self).get_context_data()
+        context['form'] = SearchForm(discipline=self.discipline)
+        if self.request.GET:
+            return WorkListView.as_view()(self.request, discipline=self.discipline.id)
+        else:
+            self.template_name = "search.html"
+        # WorkListView.as_view()
+        return context

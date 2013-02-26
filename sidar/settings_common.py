@@ -166,6 +166,7 @@ INSTALLED_APPS = (
     'bibliography',
     'collection',
     'django.contrib.flatpages',
+    'next_gen',
 )
 
 # A sample logging configuration. The only tangible logging
