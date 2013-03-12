@@ -4,15 +4,14 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout, login
+from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 
 from backoffice import models, views
-from backoffice.views import DisciplineTemplateView, DesignerListView, DisciplineSearchView, DisciplineDetailView, WorkFieldListViewByDiscipline, WorkListView
+from backoffice.views import DisciplineTemplateView, DesignerListView, DisciplineDetailView, WorkFieldListViewByDiscipline, WorkListView, SearchView
 from bibliography.views import BookListView
 from collection.views import CollectView
 
-from backoffice.views import SearchView
-from django.views.generic.base import TemplateView
 
 admin.autodiscover()
 

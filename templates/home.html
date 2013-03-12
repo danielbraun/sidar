@@ -12,7 +12,7 @@
 
 	{% for object in disciplines %}
 	{% if object.active %}
-	<li class="navitem_{{ forloop.counter|add:"2" }}">	
+	<li class="navitem_{{ forloop.counter|add:"2" }}">
 		<a href="{% url discipline-detail object.id %}"> {{ object.long_name }}</a>
 	</li>
 	{% else %}
@@ -120,6 +120,6 @@ leftrightslide[{{ forloop.counter0 }}]="<a href='{% url work-detail work.discipl
 				<br>
 				<strong>האתר ותכניו נמצאים בתהליך הקמה, ולכן ייתכנו בהם טעויות.</strong> נשמח לקבל כל הערה. <span>הכניסה לאתר חופשית. כדי להשתמש בדף האישי יש להירשם למערכת.</span>
 			</div>
-			
+
 
 			{% endblock pagebody %}

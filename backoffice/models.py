@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Count
+from django.db.models.signals import post_save
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from imagekit.processors.crop import TrimBorderColor
@@ -112,19 +114,25 @@ class Work(CommonModel):
 
     objects = WorkManager()
 
-    sidar_id = models.CharField(u'קוד עבודה', max_length=50, null=True, unique=True)
+    sidar_id = models.CharField(u'קוד עבודה', max_length=50, null=True, unique=True, blank=True)
     designer = models.ForeignKey('Designer', verbose_name=u'מעצב', null=True)
     raw_image = models.ImageField(u'תמונת מקור', upload_to='works', null=True)
-    fullscale_image = ImageSpecField(processors=[ResizeToFit(width=600), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
-    midsize_image = ImageSpecField(processors=[ResizeToFit(width=350), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
-    preview_image = ImageSpecField(processors=[ResizeToFit(width=100), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
+    processed_image = ImageSpecField(
+        processors=[ResizeToFit(width=350), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
+    # fullscale_image = ImageSpecField(
+    #     processors=[ResizeToFit(width=600), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
+    # midsize_image = ImageSpecField(
+    #     processors=[ResizeToFit(width=350), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
+    # preview_image = ImageSpecField(
+    #     processors=[ResizeToFit(width=100), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
     subjects = models.ManyToManyField("Subject", verbose_name=u'נושאים', null=True)
     discipline = models.ForeignKey("Discipline", verbose_name=u'תחום עיצוב', null=True)
     category = models.ForeignKey("Category", verbose_name=u'קטגוריה', null=True)
     # Date related fields
     publish_date_as_text = models.CharField(u'תאריך כמלל', max_length=50, blank=True, null=True)
     # publish_date = models.DateField(verbose_name="תאריך הוצאה לאור", null=True)
-    # date_accuracy_level = models.CharField(u'רמת דיוק תאריך', max_length=2, choices=DATE_ACCURACY_LEVELS, default=None, blank=True)
+    # date_accuracy_level = models.CharField(u'רמת דיוק תאריך', max_length=2,
+    # choices=DATE_ACCURACY_LEVELS, default=None, blank=True)
     publish_year = models.IntegerField('שנת הוצאה לאור', null=True, blank=True, help_text=u'שנה לועזית')
     # Size related fields
     size_as_text = models.CharField(u'גודל כמלל', max_length=50, blank=True, null=True)
@@ -133,9 +141,9 @@ class Work(CommonModel):
     depth = models.DecimalField(u'עומק (תלת-מימדי)', max_digits=5, decimal_places=2, default=0)
 
     client = models.ForeignKey('Client', verbose_name=u'לקוח', null=True)
-    techniques = models.ManyToManyField('Technique', verbose_name=u'טכניקות')
-    collections = models.ManyToManyField('Collection', verbose_name=u'מאוספים')
-    keywords = models.ManyToManyField('Keyword', verbose_name=u'מילות מפתח')
+    techniques = models.ManyToManyField('Technique', verbose_name=u'טכניקות', blank=True)
+    collections = models.ManyToManyField('Collection', verbose_name=u'מאוספים', blank=True)
+    keywords = models.ManyToManyField('Keyword', verbose_name=u'מילות מפתח', blank=True)
     description = models.TextField(u'תיאור')
     country = models.ForeignKey("Country", verbose_name=u'מדינה', null=True, blank=True)
 
@@ -206,3 +214,21 @@ class Generation(CommonModel):
     class Meta(CommonModel.Meta):
         verbose_name = u'דור מעצבים'
         verbose_name_plural = u'דורות מעצבים'
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+
+    # Custom fields
+    in_charge_of_designers = models.ManyToManyField(Designer, verbose_name=u'אחראי על מעצבים')
+
+    class Meta:
+        verbose_name = u'פרופיל משתמש'
+        verbose_name_plural = u'פרופילי משתמש'
+
+
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+post_save.connect(create_user_profile, sender=User)

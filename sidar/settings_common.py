@@ -4,6 +4,8 @@
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 DEBUG = False
 
+AUTH_PROFILE_MODULE = 'backoffice.UserProfile'
+
 DBBACKUP_STORAGE = 'dbbackup.storage.filesystem_storage'
 DBBACKUP_FILESYSTEM_DIRECTORY = '~/Backup'
 SOUTH_TESTS_MIGRATE = False
@@ -77,7 +79,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = 'media/'
+
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.

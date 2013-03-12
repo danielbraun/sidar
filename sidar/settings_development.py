@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from sidar.settings_common import *
 import sys
+
+MEDIA_ROOT = 'media/'
 DEBUG = TEMPLATE_DEBUG = True
 PORTFOLIO_CSV_ROOT = u'/Volumes/m$/D/המכון לעיצוב/מחלקות עיצוב'
 DATABASES = {
