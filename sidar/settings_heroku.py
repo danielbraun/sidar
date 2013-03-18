@@ -1,7 +1,14 @@
 from sidar.settings_common import *
 
+import os
+
+if os.environ.get('DEBUG'):
+    DEBUG = TEMPLATE_DEBUG = True
+else:
+    DEBUG = TEMPLATE_DEBUG = False
+
 PORTFOLIO_CSV_ROOT = ''
-DEBUG = TEMPLATE_DEBUG = True
+
 DATABASES = {
     'default': {
         'ENGINE': '',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
