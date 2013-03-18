@@ -4,7 +4,6 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout, login
-from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 
 from backoffice import models, views
@@ -57,13 +56,13 @@ discipline_urls = patterns('',
 
 
 urlpatterns = patterns('',
-                       (r'^new/$', TemplateView.as_view(template_name='next_gen/index.html')),
                        (r'^admin/doc/', include('django.contrib.admindocs.urls')),
                        # Deliberately no trailing slash after pages
                        (r'^pages', include('django.contrib.flatpages.urls')),
                        (r'^logout/$', logout),
                        (r'^login/$', login),
                        (r'^admin/', include(admin.site.urls)),
+                       (r'^sidar_admin/', include('sidar_admin.urls')),
                        (r'^discipline/(?P<discipline>\d+)/', include(discipline_urls)),
                        (r'^collection/', include('collection.urls')),
                        (r'^$', ListView.as_view(template_name="home.html", queryset=models.Work.objects.one_from_each_discipline()), {'works': models.Work.objects.one_from_each_discipline()}, "home"),

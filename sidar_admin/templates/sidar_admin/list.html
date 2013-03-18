@@ -1,0 +1,11 @@
+{% extends "sidar_admin/base.html" %}
+
+{% block contents %}
+
+<div class="row">
+	{% for object in object_list %}
+	{% include "sidar_admin/includes/square.html" %}
+	{% endfor %}
+</div>
+
+{% endblock contents %}

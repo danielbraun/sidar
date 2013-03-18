@@ -1,3 +1,32 @@
+
+
+#header {
+	background-color: #015893;
+}
+
+#site-name {
+	color: white !important;
+	font-size: 14px !important;
+	margin: 2px 0px !important;
+	font-weight: bold !important;
+}
+
+h1 {
+	font-size: 14px !important;
+	font-weight: bold;
+	color: black;
+}
+
+a:hover, a:link, a:visited {
+	color: #015893;
+}
+
+.actions {
+	height: 34px;
+}
+
+
+/*
 #sidar_header {
 	border-bottom: 1px solid black;
 	height: 35px;
@@ -8,7 +37,7 @@
 }
 
 #sidar_header img {
-	/*height: 30px;*/
+	height: 30px;
 	vertical-align: middle;
 }
 
@@ -34,4 +63,4 @@
 
 .clear {
 	clear: both;
-}
+}*/

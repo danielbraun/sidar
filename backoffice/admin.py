@@ -6,6 +6,8 @@ from modeltranslation.admin import TranslationAdmin
 
 import models
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.admin.sites import AdminSite
+from django.contrib.sites.models import Site
 
 
 regular_models = [models.Generation, models.Category, models.Subject]
@@ -28,11 +30,11 @@ class WorkAdmin(TranslationAdmin):
     admin_thumbnail.short_description = u'תצוגה מקדימה'
 
     filter_horizontal = ['subjects', 'keywords']
-    list_display = ('id', 'name', 'designer', 'discipline', 'admin_thumbnail')
+    list_display = ('name', 'designer', 'discipline', 'admin_thumbnail')
     # list_editable = ('designer',)
     # list_display = ('size_as_text', 'client', 'publish_date_as_text',)
-    ordering = ('name_he',)
-    # list_filter = ('discipline', 'category', 'designer',)
+    ordering = ('-id',)
+    list_filter = ('discipline', 'category', 'designer',)
 
     def queryset(self, request):
         qs = super(WorkAdmin, self).queryset(request)
@@ -53,14 +55,15 @@ class UserProfileInline(admin.StackedInline):
 
 
 class UserAdmin(UserAdmin):
+    search_fields = ()
+    list_filter = ()
     inlines = (UserProfileInline, )
-
-    def __init__(self, *args, **kwargs):
-        super(UserAdmin, self).__init__(*args, **kwargs)
-        self.list_display += ('get_designers',)
+    list_display = ('username', 'first_name', 'last_name', 'email', 'is_active', 'is_staff', 'is_superuser', 'get_designers')
 
     def get_designers(self, instance):
-        return instance.get_profile().in_charge_of_designers.all()
+        names = [item.name for item in instance.get_profile().in_charge_of_designers.all()]
+        return ', '.join(names)
+    get_designers.short_description = u'מעצבים בטיפול'
 
 
 admin.site.register(models.Work, WorkAdmin)

@@ -1,0 +1,6 @@
+<a href="{{ object.id }}/">
+	<div class="span5th square" style="background-image:url('{% block image_url %}{% if object.photo %}{{ object.photo.url }}{% endif %}{% endblock image_url %}');">
+		<h4>{% block caption %}{{ object }}{% endblock caption %}</h4>
+		<h5>{% block subcaption %}{% endblock subcaption %}</h5>
+	</div>
+</a>

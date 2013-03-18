@@ -1,0 +1,24 @@
+{% extends "sidar_admin/base.html" %}
+{% block contents %}
+
+<div class="row">
+	<table class="span2x5th">
+		<form method="post">
+			{% csrf_token %}
+			{{ form.as_table }}
+			<tr>
+				<td></td>
+				<td>
+					<button type="submit" class="btn btn-primary">שמור שינויים</button>
+					<button type="button" class="btn">ביטול</button>
+				</td>
+			</tr>
+		</form>
+	</table>
+
+
+</div>
+
+
+
+{% endblock contents %}
