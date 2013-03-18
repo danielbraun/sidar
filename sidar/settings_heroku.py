@@ -1,6 +1,6 @@
 from sidar.settings_common import *
 
-
+PORTFOLIO_CSV_ROOT = ''
 DEBUG = TEMPLATE_DEBUG = True
 DATABASES = {
     'default': {
