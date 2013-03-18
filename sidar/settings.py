@@ -1,7 +1,7 @@
 import socket
+import os
 
-
-if 'heroku' in socket.gethostname():
+if 'heroku' in os.environ['PATH']:
     from sidar.settings_heroku import *
     print "Using heroku server settings."
 elif socket.gethostname() == "design25":
