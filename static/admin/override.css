@@ -25,15 +25,6 @@
 	height: 172px;
 }
 
-.span2x5th {
-	width: 344px;
-	height: 344px;
-}
-
-.container {
-	margin-top: 12px;
-}
-
 .language {
 	/*padding-right: 0 !important;*/
 	padding-left: 0 !important;
@@ -47,6 +38,10 @@
 .sidar-horizontal-logo {
 	margin-bottom:7px;
 	margin-top:7px;
+}
+
+.sidar-heading {
+	margin-top: 12px;
 }
 
 .sidar-heading span {
@@ -72,7 +67,21 @@
 }
 
 .square {
+	background-color: #EEEEEE;
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
+	height: 162px;
+	width: 162px;
+}
+
+#header {
+	background-color: black;
+	color: white;
+	text-align: center;
+	width: 100%;
+}
+
+#user-tools {
+	float:left;
 }

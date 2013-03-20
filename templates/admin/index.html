@@ -1,18 +1,17 @@
 {% extends "admin/base_site.html" %}
 {% load i18n admin_static %}
+{% load url from future %}
+
 
 {% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
 
 {% block coltype %}colMS{% endblock %}
 
 
-
-{% block breadcrumbs %}{% endblock %}
-
 {% block content_title %}{% endblock content_title %}
 
 {% block content %}
-<div class="row">
+	<ul class="thumbnails">
 	{% if app_list %}
 		{% for app in app_list %}
 			{% for model in app.models %}
@@ -23,7 +22,8 @@
 				{% endif %}
 			{% endfor %}
 		{% endfor %}
-</div>
+	</ul>
+
 	{% else %}
 		<p>{% trans "You don't have permission to edit anything." %}</p>
 	{% endif %}

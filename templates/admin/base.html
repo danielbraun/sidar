@@ -18,38 +18,40 @@
     <div class="container">
 
         {% if not is_popup %}
-        <!-- Header -->
-        <div id="header">
-            <div id="branding">
-                {% block branding %}{% endblock %}
-            </div>
-            {% if user.is_active and user.is_staff %}
-            <div id="user-tools">
-                {% trans 'Welcome,' %}
-                <strong>{% filter force_escape %}{% firstof user.first_name user.username %}{% endfilter %}</strong>.
-                {% block userlinks %}
-                {% url 'django-admindocs-docroot' as docsroot %}
-                {% if docsroot %}
-                <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
+            <!-- Header -->
+            <div id="header">
+                <span id="branding">מכון שנקר
+                    {% block branding %}{% endblock %}
+                </span>
+                {% if user.is_active and user.is_staff %}
+                <div id="user-tools">
+                    {% trans 'Welcome,' %}
+                    <strong>{% filter force_escape %}{% firstof user.first_name user.username %}{% endfilter %}</strong>.
+                    {% block userlinks %}
+                    {% url 'django-admindocs-docroot' as docsroot %}
+                    {% if docsroot %}
+                    <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
+                    {% endif %}
+                    <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
+                    <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
+                    {% endblock %}
+                </div>
                 {% endif %}
-                <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
-                <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
-                {% endblock %}
+                {% block nav-global %}{% endblock %}
             </div>
-            {% endif %}
-            {% block nav-global %}{% endblock %}
-        </div>
-        <!-- END Header -->
-        {% include "sidar_admin/header.html" %}
-        {% include "sidar_admin/navigation.html" %}
-        <div class="clearfix"></div>
+            <!-- END Header -->
+            {% include "sidar_admin/header.html" %}
+            {% include "sidar_admin/navigation.html" %}
+            <div class="clearfix"></div>
 
-        {% block breadcrumbs %}
-        <div class="breadcrumbs">
-            <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-            {% if title %} &rsaquo; {{ title }}{% endif %}
-        </div>
-        {% endblock %}
+            {% block breadcrumbs %}
+            <ul class="breadcrumb">
+                <li><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></li>
+                <li>
+                    {% if title %} <span class="divider">/</span> {{ title }}{% endif %}
+                </li>
+            </ul>
+            {% endblock %}
         {% endif %}
 
         {% block messages %}
