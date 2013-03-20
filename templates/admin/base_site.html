@@ -1,0 +1,18 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block extrastyle %}
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/override.css">
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}bootstrap/css/bootstrap.rtl.css">
+	<script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/jquery-1.8.0.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap-rtl.js"></script>
+
+{% endblock extrastyle %}
+
+{% block title %}{% trans 'ניהול מכון שנקר' %}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

@@ -79,6 +79,7 @@ class Designer(CommonModel):
 
     objects = DesignerManager()
 
+    generation = models.ForeignKey("Generation", verbose_name="שייך לדור", null=True)
     photo = models.ImageField(u'תמונת מעצב', upload_to="images/", blank=True)
     birth_year = models.IntegerField(u'שנת לידה', blank=True, null=True)
     death_year = models.IntegerField(u'שנת מוות', blank=True, null=True)
@@ -86,7 +87,6 @@ class Designer(CommonModel):
     philosophy_summary = models.TextField(u'תקציר פילוסופיה', blank=True)
     philosophy = models.FileField(u'קובץ פילוסופיה', upload_to="pdf/", blank=True)
     is_active = models.BooleanField(u'פעיל/ה', default=False)
-    generation = models.ForeignKey("Generation", verbose_name="שייך לדור", null=True)
 
     class Meta(CommonModel.Meta):
         verbose_name = "מעצב"

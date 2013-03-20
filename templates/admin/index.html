@@ -1,0 +1,31 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content_title %}{% endblock content_title %}
+
+{% block content %}
+<div class="row">
+	{% if app_list %}
+		{% for app in app_list %}
+			{% for model in app.models %}
+				{% if model.admin_url %}
+					{% include "sidar_admin/includes/square.html" with object=model link=model.admin_url caption_prefix="ניהול " %}
+				{% else %}
+					{{ model.name }}
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+</div>
+	{% else %}
+		<p>{% trans "You don't have permission to edit anything." %}</p>
+	{% endif %}
+</div>
+{% endblock %}

@@ -10,6 +10,7 @@ from backoffice import models, views
 from backoffice.views import DisciplineTemplateView, DesignerListView, DisciplineDetailView, WorkFieldListViewByDiscipline, WorkListView, SearchView
 from bibliography.views import BookListView
 from collection.views import CollectView
+from django.views.generic.base import TemplateView
 
 
 admin.autodiscover()
@@ -59,6 +60,7 @@ urlpatterns = patterns('',
                        (r'^admin/doc/', include('django.contrib.admindocs.urls')),
                        # Deliberately no trailing slash after pages
                        (r'^pages', include('django.contrib.flatpages.urls')),
+                       (r'^new/$', TemplateView.as_view(template_name="new/index.html")),
                        (r'^logout/$', logout),
                        (r'^login/$', login),
                        (r'^admin/', include(admin.site.urls)),

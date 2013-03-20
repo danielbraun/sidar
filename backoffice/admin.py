@@ -6,11 +6,9 @@ from modeltranslation.admin import TranslationAdmin
 
 import models
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.admin.sites import AdminSite
-from django.contrib.sites.models import Site
 
 
-regular_models = [models.Generation, models.Category, models.Subject]
+regular_models = [models.Generation, models.Category, models.Subject, models.Country]
 
 
 class TranslatedModelAdmin(TranslationAdmin):

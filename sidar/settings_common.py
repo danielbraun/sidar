@@ -46,10 +46,15 @@ TIME_ZONE = 'Asia/Jerusalem'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'he'
 
+# LANGUAGES = (
+#     ('he', u'Hebrew'),
+#     ('en', u'English'),
+#     # ('ar', u'Arabic'), Disable this comment to enable Arabic translation
+# )
+gettext = lambda s: s
 LANGUAGES = (
-    ('he', u'Hebrew'),
-    ('en', u'English'),
-    ('ar', u'Arabic'),
+    ('he', gettext('Hebrew')),
+    ('en', gettext('English')),
 )
 
 MODELTRANSLATION_TRANSLATION_REGISTRY = 'backoffice.translation'
@@ -122,6 +127,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    # 'django.middleware.locale.LocaleMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -159,6 +165,7 @@ INSTALLED_APPS = (
     'collection',
     'django.contrib.flatpages',
     'sidar_admin',
+
 )
 
 # A sample logging configuration. The only tangible logging
