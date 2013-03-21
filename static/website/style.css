@@ -1069,7 +1069,7 @@ dd {
 	width:235px;
 	height:215px;
 	position:absolute;
-	top:162px;
+	top:152px;
 	right:0
 }
 
@@ -1109,6 +1109,7 @@ dd {
 }
 
 #homepage_subintro_div {
+	margin-top: 207px;
 	font-size:12px;
 	padding:4px;
 	height:46px

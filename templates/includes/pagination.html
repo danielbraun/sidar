@@ -1,15 +1,16 @@
 <ul>
 	{% for page in paginator.page_range %}
-	{% if page == paginator.num_pages or page == 1  or page == page_obj.next_page_number or page == page_obj.previous_page_number or page == page_obj.number%}
-	<li {% if page == page_obj.number %} class="current">{{ page }}{% else %}>
-		<a href="?page={{ page }}">
-			{{ page }}
-		</a>
+		{% if page == paginator.num_pages or page == 1  or page == page_obj.next_page_number or page == page_obj.previous_page_number or page == page_obj.number%}
+			<li {% if page == page_obj.number %} class="current">{{ page }}{% else %}>
+				<a href="?page={{ page }}">
+					{{ page }}
+				</a>
+				{% endif %}
+			</li>
 		{% endif %}
-	</li>
-	{% endif %}
 	{% endfor %}
 </ul>
+
 <div class="pagination_arrows">
 	{% if page_obj.has_previous %}
 		<a href="?page={{ page_obj.previous_page_number }}">
@@ -17,7 +18,7 @@
 		<a class="disabled">
 	{% endif %}
 	‹ הקודם</a>
-		| 
+		|
 	{% if page_obj.has_next %}
 		<a href="?page={{page_obj.next_page_number}}">
 	{% else %}

@@ -25,6 +25,12 @@
 	height: 172px;
 }
 
+.span2x5h {
+	width: 364px;
+	height: 364px;
+}
+
+
 .language {
 	/*padding-right: 0 !important;*/
 	padding-left: 0 !important;

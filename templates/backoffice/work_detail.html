@@ -2,6 +2,11 @@
 {% block maintitle %}{{ work.designer }}{% endblock maintitle %}
 {% block body_class %}designer{% endblock body_class %}
 
+{% block sidebar_extensions %}
+	{% include "backoffice/sidebar_extensions/designer.html" %}
+{% endblock sidebar_extensions %}
+
+
 {% block pagination %}
 	<a href="../">חזרה לתוצאות החיפוש</a>
 	<div class="pagination_arrows">
@@ -11,7 +16,7 @@
 		<a class="disabled">
 			{% endif %}
 			‹ הקודם</a>
-			| 
+			|
 			{% if next_work %}
 			<a href="../work-{{ next_work.id }}">
 				{% else %}
@@ -140,7 +145,7 @@
 								Technique
 							</td>
 							<td>
-								
+
 							</td>
 						</tr>
 						<tr>

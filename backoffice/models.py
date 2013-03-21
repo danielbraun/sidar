@@ -96,11 +96,14 @@ class Designer(CommonModel):
 class WorkManager(models.Manager):
     def one_from_each_discipline(self):
         works = []
-        for discipline in Discipline.objects.all():
-            try:
-                works.append(discipline.work_set.order_by('?')[0])
-            except IndexError:
-                pass
+        i = 0
+        while i < 10:
+            for discipline in Discipline.objects.filter(active=True):
+                try:
+                    works.append(discipline.work_set.filter(designer__isnull=False).order_by('?')[0])
+                    i = i + 1
+                except IndexError:
+                    pass
         return works
 
 

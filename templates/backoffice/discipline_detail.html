@@ -24,14 +24,16 @@
 {% endblock maintitle %}
 
 {% block pagebody %}
+	<div style="height:108px;"></div>
 	{% include "backoffice/work_marquee.html" %}
+	<div style="height:270px;"></div>
 {% endblock pagebody %}
 
 
 {% block sidebar %}
 	<a href="{% url search discipline.id %}" id="sidebar_searchlink">חיפוש מתקדם</a>
 	{% block collection_section %}
-		{% include "collection/sidebar_section.html" %}	
+		{% include "collection/sidebar_section.html" %}
 	{% endblock collection_section %}
 	{% block sidebar_extensions %}{% endblock sidebar_extensions %}
 {% endblock sidebar %}

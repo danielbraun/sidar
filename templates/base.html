@@ -46,10 +46,13 @@
 
 			<div id="maintitle">
 				<strong>{% block maintitle %}{% endblock maintitle %}</strong>
-				{% if paginator %}
-					- {{ paginator.count }} תוצאות
-				{% endif %}
+				{% block result_number %}
+					{% if paginator %}
+						- {{ paginator.count }} תוצאות
+					{% endif %}
+				{% endblock result_number %}
 			</div>
+
 			<div class="pagination">{% block pagination %}{% endblock pagination %}</div>
 			<div class="main_text_wrap">
 				{% block pagebody %}{% endblock pagebody %}

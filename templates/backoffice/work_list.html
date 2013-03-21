@@ -15,7 +15,7 @@
 	{% if main_filter == 'category' %}קטגוריות › {{ category }}{% endif %}
 	{% if main_filter == 'subject' %}נושאים › {{ subject }}{% endif %}
 	{% if main_filter == 'designer' %}מעצבים › {{ designer }}{% endif %}
-	
+
 
 {% endblock maintitle %}
 
@@ -39,7 +39,7 @@
 
 {% block sidebar_extensions %}
 	{% if not from == until %}
-		{% include "backoffice/sidebar_extensions/available_years.html" %}	
+		{% include "backoffice/sidebar_extensions/available_years.html" %}
 	{% endif %}
 
 	{% if main_filter == "category" %}

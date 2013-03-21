@@ -44,14 +44,16 @@
             {% include "sidar_admin/navigation.html" %}
             <div class="clearfix"></div>
 
-            {% block breadcrumbs %}
+
             <ul class="breadcrumb">
+                {% block breadcrumbs %}
                 <li><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></li>
                 <li>
                     {% if title %} <span class="divider">/</span> {{ title }}{% endif %}
                 </li>
+                {% endblock %}
             </ul>
-            {% endblock %}
+
         {% endif %}
 
         {% block messages %}
