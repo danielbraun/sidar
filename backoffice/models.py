@@ -98,10 +98,10 @@ class WorkManager(models.Manager):
         works = []
         i = 0
         while i < 10:
+            i = i + 1
             for discipline in Discipline.objects.filter(active=True):
                 try:
                     works.append(discipline.work_set.filter(designer__isnull=False).order_by('?')[0])
-                    i = i + 1
                 except IndexError:
                     pass
         return works
