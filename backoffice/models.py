@@ -138,7 +138,7 @@ class Work(CommonModel):
     # choices=DATE_ACCURACY_LEVELS, default=None, blank=True)
     publish_year = models.IntegerField('שנת הוצאה לאור', null=True, blank=True, help_text=u'שנה לועזית')
     # Size related fields
-    size_as_text = models.CharField(u'גודל כמלל', max_length=50, blank=True, null=True)
+    size_as_text = models.CharField(u'גודל כמלל', max_length=128, blank=True, null=True)
     height = models.DecimalField(u'גובה', max_digits=5, decimal_places=2, default=0)
     width = models.DecimalField(u'רוחב', max_digits=5, decimal_places=2, default=0)
     depth = models.DecimalField(u'עומק (תלת-מימדי)', max_digits=5, decimal_places=2, default=0)
