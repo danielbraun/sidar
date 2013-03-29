@@ -3,18 +3,18 @@
 {% block body_class %}designer{% endblock body_class %}
 
 {% block maintitle %}
-<strong>רשימת מעצבים</strong>
+רשימת מעצבים
 <small>רשימה פוטנציאלית ראשונית בלבד</small>
 
 {% endblock maintitle %}
 
 
 {% block pagination %}
-<small>מקרא צבעים: 
+<small>מקרא צבעים:
 	<strong>
 		{% for generation in generations %}
 		<span class="designer_type_{{ generation.id }}">{{ generation }}</span>
-		{% endfor %}	
+		{% endfor %}
 	</strong>
 </small>
 {% endblock pagination %}

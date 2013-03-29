@@ -3,7 +3,7 @@
 {% block body_class %}designer{% endblock body_class %}
 
 {% block sidebar_extensions %}
-	{% include "backoffice/sidebar_extensions/designer.html" %}
+	{% include "backoffice/sidebar_extensions/designer.html" with designer=work.designer%}
 {% endblock sidebar_extensions %}
 
 

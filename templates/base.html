@@ -25,7 +25,7 @@
 			</div>
 			<div class="clearboth"></div>
 			<div id="header_sidebar">
-				<a href="{% url home %}" class="posindex_link"></a>
+				<a href="{% if discipline %}{% url discipline-detail discipline.id %}{% else %}{% url home %}{% endif %}" class="posindex_link"></a>
 				<a href="{% url home %}" class="mainindex_link"></a>
 				<form id="deciplineform" action="" method="post">
 					<select name="select" onchange="window.location.href=this.value">
