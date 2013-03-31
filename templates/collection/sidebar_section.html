@@ -9,7 +9,7 @@
 		אורח/ת
 		{% endif %}
 	</div>
-	
+
 	{% if user.is_authenticated and work %}
 	<form method="post" action="collect/" id="collect_form">
 		{% csrf_token %}
@@ -32,7 +32,7 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<td></td> 
+							<td></td>
 							<td>
 								<div style="text-align:justify;padding-top:8px;padding-bottom:8px;">
 									הדף האישי מאפשר איסוף עבודות, הוספת מלל ושמירתן.
@@ -41,9 +41,9 @@
 							</td>
 						</tr>
 						<tr>
-							<td></td> 
+							<td></td>
 							<td>
-								<a>הרשמת משתמש חדש</a>
+								<a href="{% url register %}?next={{ path }}">הרשמת משתמש חדש</a>
 								<input type="submit" value="כניסה">
 							</td>
 						</tr>
@@ -57,9 +57,9 @@
 
 	{# {% include "feedback.html" %} #}
 
-	
-	
-	
+
+
+
 
 
 	<a class="sidebar_linkitem disabled" style="background-image:url({{ STATIC_URL }}website/images/social_icons.png);background-position:left center;background-repeat:no-repeat;">צ'אט (לא פעיל)</a>
@@ -68,7 +68,7 @@
 	{% if user.is_authenticated %}
 	<a href="{% url django.contrib.auth.views.logout %}?next={{ path }}" class="sidebar_linkitem" style="color:#C70000;">יציאה מהמערכת</a>
 	{% else %}
-	<a href="#" class="sidebar_linkitem disabled">יציאה מהמערכת</a>	
+	<a href="#" class="sidebar_linkitem disabled">יציאה מהמערכת</a>
 	{% endif %}
 
 </div>

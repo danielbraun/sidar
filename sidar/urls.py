@@ -11,6 +11,7 @@ from backoffice.views import DisciplineTemplateView, DesignerListView, Disciplin
 from bibliography.views import BookListView
 from collection.views import CollectView
 from django.views.generic.base import TemplateView
+from helpers.forms import RegistrationFormView
 
 
 admin.autodiscover()
@@ -75,12 +76,15 @@ urlpatterns = patterns('',
                       (r'^new/$', TemplateView.as_view(template_name="new/index.html")),
                       (r'^logout/$', logout),
                       (r'^login/$', login),
+                      (r'^register/$', RegistrationFormView.as_view(), {}, "register"),
                       (r'^admin/', include(admin.site.urls)),
                       (r'^sidar_admin/', include('sidar_admin.urls')),
                       (r'^discipline/(?P<discipline>\d+)/', include(discipline_urls)),
                       (r'^collection/', include('collection.urls')),
-                      (r'^$', ListView.as_view(template_name="home.html",
-                       queryset=models.Work.objects.one_from_each_discipline(), model=models.Work), {}, "home"),
+                      (r'^$', ListView.as_view(
+                                               template_name="home.html",
+                                               queryset=models.Work.objects.one_from_each_discipline(),
+                                               model=models.Work), {}, "home"),
                        ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if not settings.DEBUG:

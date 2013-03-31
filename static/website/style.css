@@ -310,3 +310,9 @@ border-bottom:2px solid #dbd8d2;
 .collect .preview_collectactions_td {width:200px;vertical-align:top;text-align:center;}
 .collect .preview_collectactions_td textarea {height:105px;width:200px;line-height:23px;font-family:arial;font-size:12px;border:none;overflow:hidden;background:url(images/textarea-bck1.gif);background-position:top right;}
 .collect #pagefooter {width:590px;}
+
+.errorlist { list-style: none;}
+.errorlist li {color: red;}
+
+form.registration th {text-align: left;}
+form.registration input {direction: ltr;}
