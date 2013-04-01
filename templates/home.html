@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load flatpages %}
-
+{% load backoffice_extras %}
 {% block navigation %}
 <ul>
 	{% get_flatpages as flatpages %}
@@ -30,7 +30,7 @@
 
 
 <div style="height:108px;"></div>
-{% include "backoffice/work_marquee.html" %}
+{% work_marquee %}
 <div id="homepage_intro_div">
 	<div class="shenkarlogo"></div>
 	<div class="verticallogo"></div>

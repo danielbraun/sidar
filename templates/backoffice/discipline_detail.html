@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load backoffice_extras %}
 {% block body_class %}pages{% endblock body_class %}
 
 {% block pos %}{{ discipline.name_en|first|lower }}d{% endblock pos %}
@@ -25,7 +25,7 @@
 
 {% block pagebody %}
 	<div style="height:108px;"></div>
-	{% include "backoffice/work_marquee.html" %}
+	{% work_marquee %}
 	<div style="height:270px;"></div>
 {% endblock pagebody %}
 
