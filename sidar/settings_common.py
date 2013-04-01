@@ -165,6 +165,7 @@ INSTALLED_APPS = (
     'collection',
     'django.contrib.flatpages',
     'sidar_admin',
+    'feedback',
 
 )
 

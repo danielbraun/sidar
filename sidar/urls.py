@@ -11,7 +11,7 @@ from backoffice.views import DisciplineTemplateView, DesignerListView, Disciplin
 from bibliography.views import BookListView
 from collection.views import CollectView
 from django.views.generic.base import TemplateView
-from helpers.forms import RegistrationFormView
+from helpers.views import RegistrationFormView
 
 
 admin.autodiscover()
@@ -73,6 +73,7 @@ urlpatterns = patterns('',
                       (r'^admin/doc/', include('django.contrib.admindocs.urls')),
                        # Deliberately no trailing slash after pages
                       (r'^pages', include('django.contrib.flatpages.urls')),
+                      (r'^feedback/', include('feedback.urls')),
                       (r'^new/$', TemplateView.as_view(template_name="new/index.html")),
                       (r'^logout/$', logout),
                       (r'^login/$', login),

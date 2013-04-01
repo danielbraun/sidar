@@ -55,7 +55,9 @@
 
 	{% endif %}
 
-	{# {% include "feedback.html" %} #}
+	{% if user.is_authenticated %}
+		{% include "feedback.html" %}
+	{% endif %}
 
 
 
