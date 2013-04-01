@@ -1,0 +1,26 @@
+{% extends "collection/collectable_list.html" %}
+
+{% block extra_js %}
+	{{ block.super }}
+	<script type="text/javascript" src="{{ STATIC_URL }}collection/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}collection/js/jquery.ui.sortable.min.js"></script>
+{% endblock extra_js %}
+
+{% block pagination %}
+	<a href="{% url collection-home %}">‹ חזרה לדף האיסוף</a>
+{% endblock pagination %}
+
+{% block pagebody %}
+	<form method="post">
+		{% csrf_token %}
+		<ul id="sortable" class="collection_sortable">
+			{% for item in collectable_list %}
+				<li>
+					<input type="hidden" name="collectable[]" value="{{ item.id }}">
+					<img src="sfghfgh" width="135">
+				</li>
+			{% endfor %}
+		</ul>
+		<div style="text-align:center;"><input type="submit" value="שמירה"></div>
+	</form>
+{% endblock pagebody %}

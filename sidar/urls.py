@@ -19,7 +19,8 @@ admin.autodiscover()
 
 work_urls = patterns('',
                     (r'^$', WorkListView.as_view(), {}, "work-list"),
-                    (r'^work-(?P<work>\d+)/$', WorkListView.as_view(), {}, "work-detail")
+                    (r'^work-(?P<work>\d+)/$', WorkListView.as_view(), {}, "work-detail"),
+                    (r'^work-(?P<pk>\d+)/collect/$', login_required(CollectView.as_view()))
                      )
 
 discipline_urls = patterns('',
@@ -63,7 +64,6 @@ discipline_urls = patterns('',
                               work_urls), {'main_filter': 'subject'}),
 
                            # (r'^work-(?P<work>\d+)/$', WorkListView.as_view(), {}, "work-detail"),
-                          (r'^work/(?P<pk>\d+)/collect/$', login_required(CollectView.as_view())),
                           (r'^$', WorkListView.as_view(
                               template_name="backoffice/discipline_home.html"), {}, "discipline-detail"),
                            )

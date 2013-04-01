@@ -5,6 +5,7 @@ from django.views.generic.edit import DeleteView
 
 from backoffice.models import Work
 from collection.models import Collectable
+from django.views.generic.list import ListView
 
 
 class CollectView(View):
@@ -42,4 +43,18 @@ class UpAction(View):
 class DownAction(View):
     def post(self, request, pk):
         Collectable.objects.get(pk=pk).move_down()
+        return HttpResponseRedirect(reverse('collection-home'))
+
+
+class SortableCollectableList(ListView):
+    model = Collectable
+    template_name = "collection/collectable_list_sortable.html"
+
+    def post(self, request):
+        i = 1
+        for item_id in self.request.POST.getlist('collectable[]'):
+            collectable = Collectable.objects.get(pk=item_id, user=self.request.user)
+            collectable.position = i
+            collectable.save()
+            i += 1
         return HttpResponseRedirect(reverse('collection-home'))

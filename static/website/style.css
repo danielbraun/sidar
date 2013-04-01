@@ -316,3 +316,11 @@ border-bottom:2px solid #dbd8d2;
 
 form.registration th {text-align: left;}
 form.registration input {direction: ltr;}
+
+.collection_sortable { list-style: none; width: 100%; }
+.collection_sortable li {
+	display: inline-block;
+	margin: 1px;
+	border: lightgray solid 1px;
+	cursor: move;
+}
