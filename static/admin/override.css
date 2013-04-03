@@ -91,3 +91,15 @@
 #user-tools {
 	float:left;
 }
+
+#content-main {
+	float: none !important;
+}
+
+#changelist table tbody td, #changelist table tbody th {
+	border-left: 0 !important;
+}
+
+/*.object-tools {
+	list-style-type: none;
+}*/

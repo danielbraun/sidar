@@ -9,10 +9,11 @@ from django.contrib.auth.admin import UserAdmin
 
 
 regular_models = [models.Generation, models.Category, models.Subject, models.Country]
-
+TranslationAdmin.actions_on_bottom = True
+TranslationAdmin.actions_on_top = False
 
 class TranslatedModelAdmin(TranslationAdmin):
-    search_fields = ['name_he']
+    # search_fields = ['name_he']
     list_display = ('name_he', 'name_en')
     ordering = ('name_he',)
 
