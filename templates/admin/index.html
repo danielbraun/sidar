@@ -11,19 +11,19 @@
 {% block content_title %}{% endblock content_title %}
 
 {% block content %}
-	<ul class="thumbnails">
-		{% if app_list %}
-			{% for app in app_list %}
-				{% for model in app.models %}
-					{% if model.admin_url %}
-						{% include "sidar_admin/includes/square.html" with object=model link=model.admin_url caption_prefix="ניהול " %}
-					{% else %}
-						{{ model.name }}
-					{% endif %}
-				{% endfor %}
+	{% if app_list %}
+		{% for app in app_list %}
+		<ul class="thumbnails">
+			{% for model in app.models %}
+				{% if model.admin_url %}
+					{% include "sidar_admin/includes/square.html" with object=model link=model.admin_url caption_prefix="ניהול " %}
+				{% else %}
+					{{ model.name }}
+				{% endif %}
 			{% endfor %}
-	</ul>
-		{% else %}
-			<p>{% trans "You don't have permission to edit anything." %}</p>
-		{% endif %}
+			</ul>
+		{% endfor %}
+	{% else %}
+		<p>{% trans "You don't have permission to edit anything." %}</p>
+	{% endif %}
 {% endblock %}
