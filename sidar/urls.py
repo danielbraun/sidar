@@ -7,7 +7,7 @@ from django.contrib.auth.views import logout, login
 from django.views.generic.list import ListView
 
 from backoffice import models, views
-from backoffice.views import DisciplineTemplateView, DesignerListView, DisciplineDetailView, WorkFieldListViewByDiscipline, WorkListView, SearchView
+from backoffice.views import DesignerDetailView, DisciplineTemplateView, DesignerListView, WorkFieldListViewByDiscipline, WorkListView, SearchView
 from bibliography.views import BookListView
 from collection.views import CollectView
 from django.views.generic.base import TemplateView
@@ -46,8 +46,7 @@ discipline_urls = patterns('',
                           (r'^year/(?P<from>\d*)-(?P<until>\d*)/(?P<year>\d+)/', include(work_urls), {'main_filter': 'year'}),
 
                           (r'^designer/$', DesignerListView.as_view(), {}, 'designer-list'),
-                          (r'^designer/(?P<pk>\d+)/about/$', DisciplineDetailView.as_view(
-                              model=models.Designer), {}, "designer-detail"),
+                          (r'^designer/(?P<pk>\d+)/about/$', DesignerDetailView.as_view(), {}, "designer-detail"),
                           (r'^designer/(?P<designer>\d+)/', include(work_urls), {'main_filter': 'designer'}),
                            # (r'^designer/(?P<designer>\d+)/category/(?P<category>\d+)/', include(work_urls)),
 

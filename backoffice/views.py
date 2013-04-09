@@ -96,10 +96,6 @@ class WorkListView(DisciplineMixin, ListView):
         return context
 
 
-class DisciplineDetailView(DisciplineMixin, DetailView):
-    pass
-
-
 class WorkDetailView(DisciplineMixin, DetailView):
     model = Work
 
@@ -166,4 +162,13 @@ class SearchView(DisciplineMixin, TemplateView):
         else:
             self.template_name = "search.html"
         # WorkListView.as_view()
+        return context
+
+
+class DesignerDetailView(DisciplineMixin, DetailView):
+    model = Designer
+
+    def get_context_data(self, **kwargs):
+        context = super(DesignerDetailView, self).get_context_data()
+        context['designer'].available_categories = context['designer'].available_categories_by_discipline(self.discipline)
         return context
