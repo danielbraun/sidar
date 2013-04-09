@@ -96,10 +96,6 @@ class WorkListView(DisciplineMixin, ListView):
         return context
 
 
-class WorkDetailView(DisciplineMixin, DetailView):
-    model = Work
-
-
 class DesignerListView(DisciplineMixin, ListView):
     template_name = 'backoffice/designer_list.html'
 
