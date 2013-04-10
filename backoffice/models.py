@@ -46,8 +46,8 @@ class Discipline(CommonModel):
         return u'עיצוב ' + self.name
 
     class Meta(CommonModel.Meta):
-        verbose_name = u'דיסיפלינה'
-        verbose_name_plural = u'דיסיפלינות'
+        verbose_name = u'תחום עיצוב'
+        verbose_name_plural = u'תחומי עיצוב'
 
 
 class DesignerManager(GenericManager):
@@ -129,7 +129,7 @@ class Work(CommonModel):
     # preview_image = ImageSpecField(
     #     processors=[ResizeToFit(width=100), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
     subjects = models.ManyToManyField("Subject", verbose_name=u'נושאים', null=True)
-    discipline = models.ForeignKey("Discipline", verbose_name=u'תחום עיצוב', null=True)
+    discipline = models.ForeignKey("Discipline", verbose_name=u'תחום', null=True)
     category = models.ForeignKey("Category", verbose_name=u'קטגוריה', null=True)
     # Date related fields
     publish_date_as_text = models.CharField(u'תאריך כמלל', max_length=50, blank=True, null=True)

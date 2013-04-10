@@ -12,6 +12,7 @@ regular_models = [models.Generation, models.Category, models.Subject, models.Cou
 TranslationAdmin.actions_on_bottom = True
 TranslationAdmin.actions_on_top = False
 
+
 class TranslatedModelAdmin(TranslationAdmin):
     # search_fields = ['name_he']
     list_display = ('name_he', 'name_en')
@@ -29,7 +30,7 @@ class WorkAdmin(TranslationAdmin):
     admin_thumbnail.short_description = u'תצוגה מקדימה'
 
     filter_horizontal = ['subjects', 'keywords']
-    list_display = ('name', 'designer', 'discipline', 'admin_thumbnail')
+    list_display = ('sidar_id', 'name', 'designer', 'category', 'discipline', 'admin_thumbnail')
     # list_editable = ('designer',)
     # list_display = ('size_as_text', 'client', 'publish_date_as_text',)
     ordering = ('-id',)

@@ -104,6 +104,11 @@
 	margin-bottom: 0;
 }
 
-/*.object-tools {
-	list-style-type: none;
-}*/
+#changelist-filter h2, h3 {
+	line-height: normal;
+}
+#changelist-filter h2 {
+	margin-top: 0;
+	padding-bottom: 5px;
+}
+
