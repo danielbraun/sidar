@@ -12,6 +12,7 @@ from bibliography.views import BookListView
 from collection.views import CollectView
 from django.views.generic.base import TemplateView
 from helpers.views import RegistrationFormView
+from bibliography.views import BookListViewByCategory
 
 
 admin.autodiscover()
@@ -31,7 +32,7 @@ discipline_urls = patterns('',
                           (r'^search/$', SearchView.as_view(), {}, 'search'),
 
                           (r'^book/$', BookListView.as_view(), {}, 'book-list'),
-                          (r'^book/(\d+)/$', BookListView.as_view(), {}, 'book-list'),
+                          (r'^book/(\d+)/$', BookListViewByCategory.as_view(), {}, 'book-list'),
 
                           (r'^event/$', DisciplineTemplateView.as_view(
                               template_name='backoffice/event_list.html'), {}, "event-list"),
