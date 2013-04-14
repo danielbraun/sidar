@@ -77,6 +77,12 @@ class Designer(CommonModel):
         category_ids = self.work_set.filter(discipline=discipline).values_list('category', flat=True).distinct()
         return Category.objects.filter(pk__in=category_ids)
 
+    def photo_as_img(self):
+        if self.photo:
+            return u'<img src="%s" width="100"/>' % (self.photo.url)
+    photo_as_img.allow_tags = True
+    photo_as_img.short_description = u'תמונת מעצב'
+
     objects = DesignerManager()
 
     generation = models.ForeignKey("Generation", verbose_name="שייך לדור", null=True)

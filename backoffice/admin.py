@@ -11,6 +11,7 @@ from django.contrib.auth.admin import UserAdmin
 regular_models = [models.Generation, models.Category, models.Subject, models.Country]
 TranslationAdmin.actions_on_bottom = True
 TranslationAdmin.actions_on_top = False
+TranslationAdmin.ordering = ('name_he',)
 
 
 class TranslatedModelAdmin(TranslationAdmin):
@@ -44,10 +45,8 @@ class WorkAdmin(TranslationAdmin):
 
 
 class DesignerAdmin(TranslationAdmin):
-    # list_display = ('name_en', 'name_ar', 'main_discipline', 'work_count')
-    list_display = ('name_he', 'main_discipline', 'work_count', 'is_active')
-    # list_filter = ('main_discipline',)
-    ordering = ('name_he',)
+    list_display = ('name', 'main_discipline', 'generation', 'birth_year', 'work_count', 'is_active', 'photo_as_img')
+    list_filter = ('generation', 'is_active')
 
 
 class UserProfileInline(admin.StackedInline):
