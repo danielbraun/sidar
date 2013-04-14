@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from imagekit.processors.crop import TrimBorderColor
+from django.core.urlresolvers import reverse
 
 
 class FilterableByDesignerMixin(object):
@@ -162,6 +163,13 @@ class Work(CommonModel):
 
     def __unicode__(self):
         return self.sidar_id
+
+    def get_absolute_url(self):
+        return reverse('work-detail', kwargs={
+            'discipline': self.discipline.id,
+            'designer': self.designer.id,
+            'work': self.id
+        })
 
 
 class Country(CommonModel):
