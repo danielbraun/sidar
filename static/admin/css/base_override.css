@@ -1,0 +1,14 @@
+#user-tools {
+	float:left;
+}
+
+#content-main {
+	float: none !important;
+}
+
+#header {
+	background-color: black;
+	color: white;
+	text-align: center;
+	width: 100%;
+}

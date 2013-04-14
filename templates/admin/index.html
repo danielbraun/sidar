@@ -16,7 +16,7 @@
 		<ul class="thumbnails">
 			{% for model in app.models %}
 				{% if model.admin_url %}
-					{% include "sidar_admin/includes/square.html" with object=model link=model.admin_url caption_prefix="ניהול " %}
+					{% include "next-gen/includes/square.html" with object=model link=model.admin_url caption_prefix="ניהול " %}
 				{% else %}
 					{{ model.name }}
 				{% endif %}

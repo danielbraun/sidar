@@ -30,9 +30,9 @@
 	height: 344px;
 }
 
-.container {
+/*.container {
 	margin-top: 12px;
-}
+}*/
 
 .language {
 	/*padding-right: 0 !important;*/
@@ -58,6 +58,10 @@
 	height:30px;
 }
 
+.sidar-heading {
+	margin-top: 12px;
+}
+
 .breadcrumb {
 	padding-right: 0;
 }
@@ -72,7 +76,14 @@
 }
 
 .square {
+	background-color: #EEEEEE;
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
+	height: 162px;
+	width: 162px;
+}
+
+.thumbnails {
+	margin-bottom: 0;
 }

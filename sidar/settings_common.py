@@ -164,7 +164,6 @@ INSTALLED_APPS = (
     'bibliography',
     'collection',
     'django.contrib.flatpages',
-    'sidar_admin',
     'feedback',
 
 )

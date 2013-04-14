@@ -78,7 +78,6 @@ urlpatterns = patterns('',
                       (r'^login/$', login),
                       (r'^register/$', RegistrationFormView.as_view(), {}, "register"),
                       (r'^admin/', include(admin.site.urls)),
-                      (r'^sidar_admin/', include('sidar_admin.urls')),
                       (r'^discipline/(?P<discipline>\d+)/', include(discipline_urls)),
                       (r'^collection/', include('collection.urls')),
                       (r'^$', ListView.as_view(
