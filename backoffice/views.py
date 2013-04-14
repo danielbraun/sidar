@@ -86,6 +86,7 @@ class WorkListView(DisciplineMixin, ListView):
         if self.work:
             self.template_name = 'backoffice/work_detail.html'
             self.work = get_object_or_404(self.get_queryset(), pk=self.work)
+            self.work.designer.available_categories = self.work.designer.available_categories_by_discipline(self.discipline)
             context['work'] = self.work
             qs = self.get_queryset().filter(id__gt=self.work.id)
             if qs:
