@@ -1,0 +1,7 @@
+#changelist-filter h2, h3 {
+	line-height: normal;
+}
+#changelist-filter h2 {
+	margin-top: 0;
+	padding-bottom: 4px;
+}

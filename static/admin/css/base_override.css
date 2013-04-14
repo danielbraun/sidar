@@ -1,5 +1,8 @@
 #user-tools {
 	float:left;
+	position: static;
+	padding: inherit;
+	font-size: inherit;
 }
 
 #content-main {
@@ -11,4 +14,19 @@
 	color: white;
 	text-align: center;
 	width: 100%;
+}
+
+ul li {
+	list-style-type: none;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+li, dt, dd {
+	font-size: inherit;
+}
+
+div.breadcrumbs {
+	background: none;
+	border: 0;
 }

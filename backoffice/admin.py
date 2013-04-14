@@ -29,7 +29,7 @@ class WorkAdmin(TranslationAdmin):
     admin_thumbnail = AdminThumbnail(image_field='processed_image')
     admin_thumbnail.short_description = u'תצוגה מקדימה'
 
-    filter_horizontal = ['subjects', 'keywords']
+    # filter_horizontal = ['subjects', 'keywords']
     list_display = ('sidar_id', 'name', 'designer', 'category', 'discipline', 'admin_thumbnail')
     # list_editable = ('designer',)
     # list_display = ('size_as_text', 'client', 'publish_date_as_text',)
