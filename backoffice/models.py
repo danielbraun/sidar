@@ -33,8 +33,8 @@ class GenericManager(models.Manager):
 
 
 class Discipline(CommonModel):
-    active = models.BooleanField(u'פעיל')
     info = models.TextField(u'מידע על הדיסיפלינה')
+    active = models.BooleanField(u'פעיל')
 
     def work_count(self):
         return self.work_set.count()
@@ -79,8 +79,10 @@ class Designer(CommonModel):
         return Category.objects.filter(pk__in=category_ids)
 
     def photo_as_img(self):
+        url = "asdasd"
         if self.photo:
-            return u'<img src="%s" width="100"/>' % (self.photo.url)
+            url = self.photo.url
+        return u'<img src="%s" class="thumbnail"/>' % (url)
     photo_as_img.allow_tags = True
     photo_as_img.short_description = u'תמונת מעצב'
 

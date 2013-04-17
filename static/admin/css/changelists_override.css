@@ -5,3 +5,9 @@
 	margin-top: 0;
 	padding-bottom: 4px;
 }
+
+td .thumbnail {
+	width: 100px;
+	height: 100px;
+	margin: 0 auto;
+}
