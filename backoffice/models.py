@@ -236,7 +236,7 @@ class UserProfile(models.Model):
 
     # Custom fields
     in_charge_of_designers = models.ManyToManyField(Designer, verbose_name=u'אחראי על מעצבים', blank=True)
-    portrait = models.ImageField(upload_to='portraits/', null=True)
+    # portrait = models.ImageField(upload_to='portraits/', null=True)
 
     class Meta:
         verbose_name = u'פרופיל משתמש'
