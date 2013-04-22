@@ -166,6 +166,7 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
     'feedback',
     'taggit',
+    'timeline',
 
 )
 

@@ -80,6 +80,7 @@ urlpatterns = patterns('',
                       (r'^admin/', include(admin.site.urls)),
                       (r'^discipline/(?P<discipline>\d+)/', include(discipline_urls)),
                       (r'^collection/', include('collection.urls')),
+                      (r'^timeline/', include('timeline.urls')),
                       (r'^$', ListView.as_view(
                                                template_name="home.html",
                                                queryset=models.Work.objects.one_from_each_discipline(),
