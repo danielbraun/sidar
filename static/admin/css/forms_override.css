@@ -33,6 +33,7 @@ p.help {
 
 label {
 	margin-bottom: inherit;
+	display: inherit;
 }
 
 .aligned label {
@@ -49,4 +50,8 @@ label {
 
 li {
 	line-height: 14px;
+}
+
+.add-another {
+	display: none;
 }

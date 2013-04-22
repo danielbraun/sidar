@@ -7,6 +7,7 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from imagekit.processors.crop import TrimBorderColor
 from django.core.urlresolvers import reverse
+from taggit.managers import TaggableManager
 
 
 class FilterableByDesignerMixin(object):
@@ -125,6 +126,7 @@ class Work(CommonModel):
     )
 
     objects = WorkManager()
+    tags = TaggableManager()
 
     sidar_id = models.CharField(u'קוד עבודה', max_length=50, null=True, unique=True, blank=True)
     designer = models.ForeignKey('Designer', verbose_name=u'מעצב', null=True)
@@ -145,19 +147,19 @@ class Work(CommonModel):
     # publish_date = models.DateField(verbose_name="תאריך הוצאה לאור", null=True)
     # date_accuracy_level = models.CharField(u'רמת דיוק תאריך', max_length=2,
     # choices=DATE_ACCURACY_LEVELS, default=None, blank=True)
-    publish_year = models.IntegerField('שנת הוצאה לאור', null=True, blank=True, help_text=u'שנה לועזית')
+    publish_year = models.IntegerField('שנה', null=True, blank=True, help_text=u'שנה לועזית')
     # Size related fields
     size_as_text = models.CharField(u'גודל כמלל', max_length=128, blank=True, null=True)
     height = models.DecimalField(u'גובה', max_digits=5, decimal_places=2, default=0)
     width = models.DecimalField(u'רוחב', max_digits=5, decimal_places=2, default=0)
-    depth = models.DecimalField(u'עומק (תלת-מימדי)', max_digits=5, decimal_places=2, default=0)
+    depth = models.DecimalField(u'עומק', max_digits=5, decimal_places=2, default=0)
 
     client = models.ForeignKey('Client', verbose_name=u'לקוח', null=True)
+    country = models.ForeignKey("Country", verbose_name=u'מדינה', null=True, blank=True)
     techniques = models.ManyToManyField('Technique', verbose_name=u'טכניקות', blank=True)
     collections = models.ManyToManyField('Collection', verbose_name=u'מאוספים', blank=True)
-    keywords = models.ManyToManyField('Keyword', verbose_name=u'מילות מפתח', blank=True)
+
     description = models.TextField(u'תיאור')
-    country = models.ForeignKey("Country", verbose_name=u'מדינה', null=True, blank=True)
 
     class Meta(CommonModel.Meta):
         verbose_name = "עבודה"
@@ -212,12 +214,6 @@ class Collection(CommonModel):
         verbose_name_plural = "אוספים"
 
 
-class Keyword(CommonModel):
-    class Meta(CommonModel.Meta):
-        verbose_name = u'מילת מפתח'
-        verbose_name_plural = u'מילות מפתח'
-
-
 class Subject(CommonModel, FilterableByDesignerMixin):
     info = models.TextField(u'מידע על הנושא')
     objects = GenericManager()
@@ -240,7 +236,7 @@ class UserProfile(models.Model):
 
     # Custom fields
     in_charge_of_designers = models.ManyToManyField(Designer, verbose_name=u'אחראי על מעצבים', blank=True)
-    # portrait = models.ImageField(upload_to='portraits/')
+    portrait = models.ImageField(upload_to='portraits/', null=True)
 
     class Meta:
         verbose_name = u'פרופיל משתמש'
