@@ -26,6 +26,15 @@ class DisciplineMixin(object):
         return context
 
 
+class DisciplineFilterMixin(DisciplineMixin):
+    def get_queryset(self):
+        return super(DisciplineFilterMixin, self).get_queryset().filter(discipline=self.discipline)
+
+
+class ListViewFilteredByDiscipline(DisciplineFilterMixin, ListView):
+    pass
+
+
 class WorkListView(DisciplineMixin, ListView):
     paginate_by = 10
 

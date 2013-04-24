@@ -24,6 +24,7 @@ work_urls = patterns('',
                      )
 
 discipline_urls = patterns('',
+                          (r'^timeline/', include('timeline.urls')),
                           (r'^about/$', views.DisciplineTemplateView.as_view(
                               template_name='backoffice/discipline_about.html'), {}, 'discipline-about'),
                           (r'^article/$', DisciplineTemplateView.as_view(
@@ -80,11 +81,10 @@ urlpatterns = patterns('',
                       (r'^admin/', include(admin.site.urls)),
                       (r'^discipline/(?P<discipline>\d+)/', include(discipline_urls)),
                       (r'^collection/', include('collection.urls')),
-                      (r'^timeline/', include('timeline.urls')),
                       (r'^$', ListView.as_view(
-                                               template_name="home.html",
-                                               queryset=models.Work.objects.one_from_each_discipline(),
-                                               model=models.Work), {}, "home"),
+                       template_name="home.html",
+                       queryset=models.Work.objects.one_from_each_discipline(),
+                       model=models.Work), {}, "home"),
                        ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if not settings.DEBUG:

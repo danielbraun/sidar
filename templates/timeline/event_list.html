@@ -1,0 +1,62 @@
+{% extends "table.html" %}
+{% load date_tags %}
+
+
+{% block body_class %}years{% endblock body_class %}
+{% block maintitle %}שנים{% endblock maintitle %}
+
+{% block sidebar_extensions %}
+<div id="changer"></div>
+{% endblock sidebar_extensions %}
+
+{% block table_rows %}
+<tr>
+	<th>שנים</th>
+	<th>מאורעות ואירועים היסטוריים</th>
+	<th>מאורעות ואירועים בעיצוב</th>
+	<th>מאורעות ואירועים ב{{ discipline.long_name }}</th>
+</tr>
+
+{% regroup event_list by get_decade as decade_list %}
+{% for decade in decade_list %}
+	<tr>
+		<td class="rainbowcell rbcell_{{ forloop.counter }}">
+			<a href="{% url work-list discipline=discipline.id from=decade.grouper until=decade.grouper|add:'9' %}">
+				{{ decade.grouper }}-{{ decade.grouper|add:"9"}}
+			</a>
+		</td>
+		<td></td>
+		<td></td>
+		<td></td>
+
+		<!--
+		<td>
+			<a class="timeline_show_link" onclick="document.getElementById('changer').innerHTML=document.getElementById('decade_{{ decade.grouper }}').innerHTML;">
+				{% for event in decade.list %}
+					{% if event.is_important and not event.discipline %}
+							{{ event.description|truncatewords:2 }}
+					{% endif %}
+				{% endfor %}
+				<div style="display:none;" id="decade_{{ decade.grouper }}">
+					{% include "timeline/sidebar_extensions/events_for_decade.html" %}
+				</div>
+				<img src="{{ STATIC_URL }}website/images/showmore.png" border="0">
+			</a>
+		</td>
+		<td>
+			<a class="timeline_show_link" onclick="document.getElementById('changer').innerHTML=document.getElementById('decade_{{ decade.grouper }}').innerHTML;">
+				{% for event in decade.list %}
+					{% if event.is_important and event.discipline %}
+							{{ event.description|truncatewords:2 }}
+					{% endif %}
+				{% endfor %}
+				<div style="display:none;" id="decade_{{ decade.grouper }}">
+					{% include "timeline/sidebar_extensions/events_for_decade.html" %}
+				</div>
+				<img src="{{ STATIC_URL }}website/images/showmore.png" border="0">
+			</a>
+		</td>-->
+	</tr>
+{% endfor %}
+
+{% endblock table_rows %}

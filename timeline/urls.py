@@ -1,5 +1,9 @@
-from django.conf.urls import patterns
-from django.conf.urls import url
+from django.conf.urls import patterns, url
+
+from .models import Event
+from timeline.views import EventList
+
+
 urlpatterns = patterns('',
-                       url(r'^$', ListViewByDiscipline.as_view(), name='timeline_event_list')
+                       url(r'^$', EventList.as_view(model=Event), name='timeline_event_list')
                        )
