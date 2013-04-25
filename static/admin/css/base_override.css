@@ -30,3 +30,15 @@ div.breadcrumbs {
 	background: none;
 	border: 0;
 }
+
+thead th {
+	background: url(../img/default-bg.gif) top left repeat-x;
+}
+
+thead th a:link, thead th a:visited, thead th {
+    color: white;
+}
+
+thead th.sorted, table thead th.sortable:hover {
+    background: #c5c5c5;
+}
