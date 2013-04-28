@@ -33,7 +33,7 @@ p.help {
 
 label {
 	margin-bottom: inherit;
-	display: inherit;
+	display: inline;
 }
 
 .aligned label {
@@ -54,4 +54,9 @@ li {
 
 .add-another {
 	display: none;
+}
+
+p.datetime {
+	margin-left: 0;
+	margin-right: 106px;
 }

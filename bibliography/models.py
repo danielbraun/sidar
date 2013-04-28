@@ -27,7 +27,7 @@ class Book(models.Model):
     class Meta:
         verbose_name = u'ספר'
         verbose_name_plural = u'ספרים'
-        ordering = ['title']
+        ordering = ['author_as_text']
 
     def __unicode__(self):
         return self.title

@@ -42,3 +42,7 @@ thead th a:link, thead th a:visited, thead th {
 thead th.sorted, table thead th.sortable:hover {
     background: #c5c5c5;
 }
+
+h1, h2, h3, h4, h5, h6 {
+	line-height: inherit;
+}

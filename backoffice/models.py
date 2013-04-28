@@ -92,7 +92,7 @@ class Designer(CommonModel):
     generation = models.ForeignKey("Generation", verbose_name="שייך לדור", null=True)
     photo = models.ImageField(u'תמונת מעצב', upload_to="images/", blank=True)
     birth_year = models.IntegerField(u'שנת לידה', blank=True, null=True)
-    death_year = models.IntegerField(u'שנת מוות', blank=True, null=True)
+    death_year = models.IntegerField(u'שנת פטירה', blank=True, null=True)
     birth_country = models.ForeignKey("Country", verbose_name="מדינת לידה", default=None, null=True)
     philosophy_summary = models.TextField(u'תקציר פילוסופיה', blank=True)
     philosophy = models.FileField(u'קובץ פילוסופיה', upload_to="pdf/", blank=True)
@@ -183,8 +183,8 @@ class Country(CommonModel):
 
 
 class Category(CommonModel, FilterableByDesignerMixin):
-    info = models.TextField(u'מידע על הקטגוריה')
     parent = models.ForeignKey('self', verbose_name=u'קטגורית על', blank=True, null=True)
+    info = models.TextField(u'מידע על הקטגוריה')
     objects = GenericManager()
 
     class Meta(CommonModel.Meta):
@@ -215,9 +215,9 @@ class Collection(CommonModel):
 
 
 class Subject(CommonModel, FilterableByDesignerMixin):
+    parent = models.ForeignKey('self', verbose_name=u'נושא על', blank=True, null=True)
     info = models.TextField(u'מידע על הנושא')
     objects = GenericManager()
-    parent = models.ForeignKey('self', verbose_name=u'נושא על', blank=True, null=True)
 
     class Meta(CommonModel.Meta):
         verbose_name = "נושא"
