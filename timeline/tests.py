@@ -28,6 +28,8 @@ class EventTests(TestCase):
     def test_get_decade(self):
         e = Event.objects.create(year=1986)
         self.assertEqual(e.get_decade(), 1980)
+        e.year = 1800
+        self.assertEqual(e.get_decade(), 1890)
 
     def test_historical_change_from_discipline(self):
         e = Event.objects.create(year=1000, discipline=self.d, type=Event.DISCIPLINE)

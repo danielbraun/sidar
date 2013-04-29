@@ -20,40 +20,32 @@
 {% for decade in decade_list %}
 	<tr>
 		<td class="rainbowcell rbcell_{{ forloop.counter }}">
-			<a href="{% url work-list discipline=discipline.id from=decade.grouper until=decade.grouper|add:'9' %}">
-				{{ decade.grouper }}-{{ decade.grouper|add:"9"}}
-			</a>
-		</td>
-		<td></td>
-		<td></td>
-
-		<!--
-		<td>
-			<a class="timeline_show_link" onclick="document.getElementById('changer').innerHTML=document.getElementById('decade_{{ decade.grouper }}').innerHTML;">
-				{% for event in decade.list %}
-					{% if event.is_important and not event.discipline %}
-							{{ event.description|truncatewords:2 }}
-					{% endif %}
-				{% endfor %}
-				<div style="display:none;" id="decade_{{ decade.grouper }}">
-					{% include "timeline/sidebar_extensions/events_for_decade.html" %}
-				</div>
-				<img src="{{ STATIC_URL }}website/images/showmore.png" border="0">
+			{% if forloop.first %}
+				<a href="{% url work-list discipline=discipline.id from=0 until=decade.grouper %}">עד {{ decade.grouper }}
+			{% else %}
+				<a href="{% url work-list discipline=discipline.id from=decade.grouper until=decade.grouper|add:'9' %}">{{ decade.grouper }} - {{ decade.grouper|add:"9"}}
+			{% endif %}
+			| {% hebrew_year decade.grouper %}
 			</a>
 		</td>
 		<td>
-			<a class="timeline_show_link" onclick="document.getElementById('changer').innerHTML=document.getElementById('decade_{{ decade.grouper }}').innerHTML;">
+			<span style="cursor: help;" title="{% for event in decade.list %}{% if event.type == event.HISTORICAL %}{{ event.year }} - {{ event }}&#10;{% endif %}{% endfor %}">
 				{% for event in decade.list %}
-					{% if event.is_important and event.discipline %}
-							{{ event.description|truncatewords:2 }}
+					{% if event.is_important and event.type == event.HISTORICAL %}
+						{{ event|truncatewords:2 }}
 					{% endif %}
 				{% endfor %}
-				<div style="display:none;" id="decade_{{ decade.grouper }}">
-					{% include "timeline/sidebar_extensions/events_for_decade.html" %}
-				</div>
-				<img src="{{ STATIC_URL }}website/images/showmore.png" border="0">
-			</a>
-		</td>-->
+			</span>
+		</td>
+		<td>
+			<span style="cursor: help;" title="{% for event in decade.list %}{% if event.type != event.HISTORICAL %}{{ event.year }} - {{ event }}&#10;{% endif %}{% endfor %}">
+				{% for event in decade.list %}
+					{% if event.is_important and event.type != event.HISTORICAL %}
+						{{ event|truncatewords:2 }}
+					{% endif %}
+				{% endfor %}
+			</span>
+		</td>
 	</tr>
 {% endfor %}
 

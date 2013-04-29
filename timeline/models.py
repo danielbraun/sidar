@@ -22,6 +22,8 @@ class Event(models.Model):
     is_important = models.BooleanField(u'חשוב?')
 
     def get_decade(self):
+        if self.year < 1890:
+            return 1890
         return self.year - self.year % 10
 
     def save(self, *args, **kwargs):
