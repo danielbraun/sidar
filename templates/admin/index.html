@@ -11,19 +11,31 @@
 {% block content_title %}{% endblock content_title %}
 
 {% block content %}
-	{% if app_list %}
-		{% for app in app_list %}
-		<ul class="thumbnails">
-			{% for model in app.models %}
-				{% if model.admin_url %}
-					{% include "next-gen/includes/square.html" with object=model link=model.admin_url caption_prefix="ניהול " %}
-				{% else %}
-					{{ model.name }}
-				{% endif %}
-			{% endfor %}
-			</ul>
-		{% endfor %}
-	{% else %}
-		<p>{% trans "You don't have permission to edit anything." %}</p>
-	{% endif %}
+{% if app_list %}
+<ul class="thumbnails">
+	{% for app in app_list %}
+	<li class="span5th">
+		<div class="thumbnail">
+			<div class="square">
+				{{ app.name }}
+				<ul>
+					{% for model in app.models %}
+						<li>
+						{% if model.admin_url %}
+							<a href="{{ model.admin_url }}">ניהול {{ model.name }}</a>
+						{% else %}
+							ניהול {{ model.name }}
+						{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</li>
+
+	{% endfor %}
+</ul>
+{% else %}
+<p>{% trans "You don't have permission to edit anything." %}</p>
+{% endif %}
 {% endblock %}
