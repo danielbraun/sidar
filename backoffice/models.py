@@ -126,7 +126,7 @@ class Work(CommonModel):
     )
 
     objects = WorkManager()
-    tags = TaggableManager()
+    tags = TaggableManager(u'מילות מפתח')
 
     sidar_id = models.CharField(u'קוד עבודה', max_length=50, null=True, unique=True, blank=True)
     designer = models.ForeignKey('Designer', verbose_name=u'מעצב', null=True)

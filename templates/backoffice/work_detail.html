@@ -185,10 +185,7 @@
 								מילות מפתח
 							</td>
 							<td>
-								{% for keyword in work.keywords.all %}
-									<a href="">
-										{{ keyword }}</a>{% if not forloop.last %},{% endif %}
-								{% endfor %}
+								{{ work.tags.all|join:", " }}
 							</td>
 						</tr>
 						<tr>
