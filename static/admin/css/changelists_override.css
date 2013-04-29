@@ -11,3 +11,11 @@ td .thumbnail {
 	height: 100px;
 	margin: 0 auto;
 }
+
+.actions {
+	display: none;
+}
+
+.results~.actions {
+	display: inherit;
+}
