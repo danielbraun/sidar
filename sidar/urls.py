@@ -4,15 +4,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout, login
+from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 
 from backoffice import models, views
 from backoffice.views import DesignerDetailView, DisciplineTemplateView, DesignerListView, WorkFieldListViewByDiscipline, WorkListView, SearchView
-from bibliography.views import BookListView
 from collection.views import CollectView
-from django.views.generic.base import TemplateView
 from helpers.views import RegistrationFormView
-from bibliography.views import BookListViewByCategory
 
 
 admin.autodiscover()
@@ -26,14 +24,14 @@ work_urls = patterns('',
 
 discipline_urls = patterns('',
                           (r'^timeline/', include('timeline.urls')),
+
+                          (r'^book/', include('bibliography.urls')),
+
                           (r'^about/$', views.DisciplineTemplateView.as_view(
                               template_name='backoffice/discipline_about.html'), {}, 'discipline-about'),
                           (r'^article/$', DisciplineTemplateView.as_view(
                               template_name='backoffice/article_list.html'), {}, "article-list"),
                           (r'^search/$', SearchView.as_view(), {}, 'search'),
-
-                          (r'^book/$', BookListView.as_view(), {}, 'book-list'),
-                          (r'^book/(\d+)/$', BookListViewByCategory.as_view(), {}, 'book-list'),
 
                           (r'^event/$', DisciplineTemplateView.as_view(
                               template_name='backoffice/event_list.html'), {}, "event-list"),
