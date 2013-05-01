@@ -8,6 +8,7 @@ from imagekit.processors import ResizeToFit
 from imagekit.processors.crop import TrimBorderColor
 from django.core.urlresolvers import reverse
 from taggit.managers import TaggableManager
+from tinymce.models import HTMLField
 
 
 class FilterableByDesignerMixin(object):
@@ -34,7 +35,8 @@ class GenericManager(models.Manager):
 
 
 class Discipline(CommonModel):
-    info = models.TextField(u'מידע על הדיסיפלינה')
+    # info = models.TextField(u'מידע על הדיסיפלינה')
+    info = HTMLField()
     active = models.BooleanField(u'פעיל')
 
     def work_count(self):
@@ -94,7 +96,7 @@ class Designer(CommonModel):
     birth_year = models.IntegerField(u'שנת לידה', blank=True, null=True)
     death_year = models.IntegerField(u'שנת פטירה', blank=True, null=True)
     birth_country = models.ForeignKey("Country", verbose_name="מדינת לידה", default=None, null=True)
-    philosophy_summary = models.TextField(u'תקציר פילוסופיה', blank=True)
+    philosophy_summary = HTMLField(u'תקציר פילוסופיה', blank=True)
     philosophy = models.FileField(u'קובץ פילוסופיה', upload_to="pdf/", blank=True)
     is_active = models.BooleanField(u'פעיל/ה', default=False)
 

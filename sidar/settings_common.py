@@ -167,6 +167,8 @@ INSTALLED_APPS = (
     'feedback',
     'taggit',
     'timeline',
+    'tinymce',
+    'flatpages_tinymce',
 
 )
 

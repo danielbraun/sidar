@@ -74,6 +74,7 @@ urlpatterns = patterns('',
                        # Deliberately no trailing slash after pages
                       (r'^pages', include('django.contrib.flatpages.urls')),
                       (r'^feedback/', include('feedback.urls')),
+                      (r'^tinymce/', include('tinymce.urls')),
                       (r'^new/$', TemplateView.as_view(template_name="new/index.html")),
                       (r'^logout/$', logout),
                       (r'^login/$', login),
