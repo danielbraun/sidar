@@ -34,7 +34,7 @@
 			<span style="cursor: help;" title="{% for event in decade.list %}{% if event.type == event.HISTORICAL %}{{ event.year }} - {{ event }}&#10;{% endif %}{% endfor %}">
 				{% for event in decade.list %}
 					{% if event.is_important and event.type == event.HISTORICAL %}
-						{{ event|truncatewords:2 }}
+						{{ event.description|truncatewords:2|slice:"0:-4" }},
 					{% endif %}
 				{% endfor %}
 			</span>
@@ -43,7 +43,7 @@
 			<span style="cursor: help;" title="{% for event in decade.list %}{% if event.type != event.HISTORICAL %}{{ event.year }} - {{ event }}&#10;{% endif %}{% endfor %}">
 				{% for event in decade.list %}
 					{% if event.is_important and event.type != event.HISTORICAL %}
-						{{ event|truncatewords:2 }}
+						{{ event.description|truncatewords:2|slice:"0:-4" }},
 					{% endif %}
 				{% endfor %}
 			</span>
