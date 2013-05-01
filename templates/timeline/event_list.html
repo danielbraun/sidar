@@ -12,8 +12,8 @@
 {% block table_rows %}
 <tr>
 	<th>שנים</th>
-	<th>מאורעות ואירועים היסטוריים</th>
-	<th>מאורעות ואירועים ב{{ discipline.long_name }}</th>
+	<th style="width:42%;">מאורעות ואירועים היסטוריים</th>
+	<th style="width:42%;">מאורעות ואירועים ב{{ discipline.long_name }}</th>
 </tr>
 
 {% regroup event_list by get_decade as decade_list %}
@@ -21,11 +21,13 @@
 	<tr>
 		<td class="rainbowcell rbcell_{{ forloop.counter }}">
 			{% if forloop.first %}
-				<a href="{% url work-list discipline=discipline.id from=0 until=decade.grouper %}">עד {{ decade.grouper }}
+				<a href="{% url work-list discipline=discipline.id from=0 until=decade.grouper|add:10 %}">עד {{ decade.grouper|add:10 }}
+					| {% hebrew_year decade.grouper|add:10 %}
 			{% else %}
 				<a href="{% url work-list discipline=discipline.id from=decade.grouper until=decade.grouper|add:'9' %}">{{ decade.grouper }} - {{ decade.grouper|add:"9"}}
+					| {% hebrew_year decade.grouper %}
 			{% endif %}
-			| {% hebrew_year decade.grouper %}
+
 			</a>
 		</td>
 		<td>
@@ -37,7 +39,7 @@
 				{% endfor %}
 			</span>
 		</td>
-		<td>
+		<td style="">
 			<span style="cursor: help;" title="{% for event in decade.list %}{% if event.type != event.HISTORICAL %}{{ event.year }} - {{ event }}&#10;{% endif %}{% endfor %}">
 				{% for event in decade.list %}
 					{% if event.is_important and event.type != event.HISTORICAL %}

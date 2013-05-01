@@ -14,7 +14,7 @@ class Event(models.Model):
     DISCIPLINE = 'DIS'
 
     TYPE_CHOICES = (
-        (HISTORICAL, u'הסטורי'),
+        (HISTORICAL, u'היסטורי'),
         (DESIGN, u'עיצוב'),
         (DISCIPLINE, u'תחום עיצוב'),
     )
@@ -22,8 +22,8 @@ class Event(models.Model):
     is_important = models.BooleanField(u'חשוב?')
 
     def get_decade(self):
-        if self.year < 1890:
-            return 1890
+        if self.year < 1880:
+            return 1870
         return self.year - self.year % 10
 
     def save(self, *args, **kwargs):
@@ -32,8 +32,8 @@ class Event(models.Model):
         return super(Event, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name = u'אירוע הסטורי'
-        verbose_name_plural = u'אירועים הסטוריים'
+        verbose_name = u'אירוע היסטורי'
+        verbose_name_plural = u'אירועים היסטוריים'
         ordering = ('year',)
 
     def __unicode__(self):

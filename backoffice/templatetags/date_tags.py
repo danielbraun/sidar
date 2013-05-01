@@ -7,6 +7,7 @@ register = template.Library()
 @register.simple_tag
 def hebrew_year(gregorian_year):
     values = {
+        1880: u'ר"מ',
         1890: u'ר"נ',
         1900: u'ר"ס',
         1910: u'ר"ע',
