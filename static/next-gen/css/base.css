@@ -80,8 +80,23 @@
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
-	height: 162px;
-	width: 162px;
+	height: 152px;
+	width: 152px;
+	padding-top: 10px;
+	padding-right: 10px;
+	font-size: 11px;
+}
+.square ul {
+	margin: 0;
+}
+
+.square h1 {
+	font-size: 12px;
+	font-weight: bold;
+	margin: 0;
+	margin-bottom: 1em;
+	padding: 0;
+	line-height: 1em;
 }
 
 .thumbnails {
