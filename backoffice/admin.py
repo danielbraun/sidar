@@ -8,7 +8,7 @@ import models
 from django.contrib.auth.admin import UserAdmin
 
 
-regular_models = [models.Generation, models.Category, models.Subject, models.Country]
+regular_models = [models.Generation, models.Category, models.Subject, models.Country, models.Collector]
 TranslationAdmin.actions_on_bottom = True
 TranslationAdmin.actions_on_top = False
 TranslationAdmin.ordering = ('name_he',)

@@ -201,9 +201,8 @@
 								מאוסף
 							</td>
 							<td>
-								{% for catalog in work.catalogs.all %}
-									<a href="">
-										{{ catalog.name }}</a>{% if not forloop.last %},{% endif %}
+								{% for collector in work.of_collections.all %}
+									<a href="{{ collector.homepage }}">{{ collector }}</a>{% if not forloop.last %},{% endif %}
 								{% endfor %}
 							</td>
 						</tr>

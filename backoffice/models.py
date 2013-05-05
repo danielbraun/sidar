@@ -105,6 +105,21 @@ class Designer(CommonModel):
         verbose_name_plural = "מעצבים"
 
 
+class Collector(CommonModel):
+    photo = models.ImageField(u'תמונת אספן', upload_to="images/", blank=True)
+    birth_year = models.IntegerField(u'שנת לידה', blank=True, null=True)
+    death_year = models.IntegerField(u'שנת פטירה', blank=True, null=True)
+    homepage = models.URLField(u'אתר בית', blank=True)
+    birth_country = models.ForeignKey("Country", verbose_name="מדינת לידה", default=None, null=True)
+    philosophy_summary = HTMLField(u'תקציר פילוסופיה', blank=True)
+    philosophy = models.FileField(u'קובץ פילוסופיה', upload_to="pdf/", blank=True)
+    is_active = models.BooleanField(u'פעיל/ה', default=False)
+
+    class Meta(CommonModel.Meta):
+        verbose_name = u'אספן'
+        verbose_name_plural = u'אספנים'
+
+
 class WorkManager(models.Manager):
     def one_from_each_discipline(self):
         works = []
@@ -159,7 +174,8 @@ class Work(CommonModel):
     client = models.ForeignKey('Client', verbose_name=u'לקוח', null=True)
     country = models.ForeignKey("Country", verbose_name=u'מדינה', null=True, blank=True)
     techniques = models.ManyToManyField('Technique', verbose_name=u'טכניקות', blank=True)
-    collections = models.ManyToManyField('Collection', verbose_name=u'מאוספים', blank=True)
+    of_collections = models.ManyToManyField('Collector', verbose_name=u'מאוספים',
+                                            blank=True, related_name='work_collections')
 
     description = models.TextField(u'תיאור')
 
@@ -206,14 +222,6 @@ class Technique(CommonModel):
     class Meta(CommonModel.Meta):
         verbose_name = "טכניקה"
         verbose_name_plural = "טכניקות"
-
-
-class Collection(CommonModel):
-    homepage = models.URLField(u'אתר בית')
-
-    class Meta(CommonModel.Meta):
-        verbose_name = "אוסף"
-        verbose_name_plural = "אוספים"
 
 
 class Subject(CommonModel, FilterableByDesignerMixin):
