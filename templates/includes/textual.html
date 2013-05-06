@@ -8,7 +8,7 @@
 	<tr>
 		<td class="generaltextcell">
 			<img src="{{ side_image }}" style="float: left;">
-			{{ body|linebreaks }}
+			{% autoescape off %}{{ body }}{% endautoescape %}
 		</td>
 	</tr>
 	<tr>
