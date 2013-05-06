@@ -9,6 +9,7 @@ from imagekit.processors.crop import TrimBorderColor
 from django.core.urlresolvers import reverse
 from taggit.managers import TaggableManager
 from tinymce.models import HTMLField
+from django_countries import CountryField
 
 
 class FilterableByDesignerMixin(object):
@@ -65,6 +66,12 @@ class DesignerManager(GenericManager):
 
 class Designer(CommonModel):
 
+    def get_absolute_url(self):
+        return reverse('designer-detail', kwargs={
+            'discipline': self.main_discipline().id,
+            'pk': self.id,
+        })
+
     def main_discipline(self):
         try:
             key = self.work_set.values('discipline').annotate(dcount=Count('discipline')).order_by('-dcount')[0]['discipline']
@@ -95,7 +102,7 @@ class Designer(CommonModel):
     photo = models.ImageField(u'תמונת מעצב', upload_to="images/", blank=True)
     birth_year = models.IntegerField(u'שנת לידה', blank=True, null=True)
     death_year = models.IntegerField(u'שנת פטירה', blank=True, null=True)
-    birth_country = models.ForeignKey("Country", verbose_name="מדינת לידה", default=None, null=True)
+    birth_country = CountryField(u'מדינת לידה', null=True, blank=True, default='IL')
     philosophy_summary = HTMLField(u'תקציר פילוסופיה', blank=True)
     philosophy = models.FileField(u'קובץ פילוסופיה', upload_to="pdf/", blank=True)
     is_active = models.BooleanField(u'פעיל/ה', default=False)
@@ -110,7 +117,7 @@ class Collector(CommonModel):
     birth_year = models.IntegerField(u'שנת לידה', blank=True, null=True)
     death_year = models.IntegerField(u'שנת פטירה', blank=True, null=True)
     homepage = models.URLField(u'אתר בית', blank=True)
-    birth_country = models.ForeignKey("Country", verbose_name="מדינת לידה", default=None, null=True)
+    birth_country = CountryField(u'מדינת לידה', null=True, blank=True, default='IL')
     philosophy_summary = HTMLField(u'תקציר פילוסופיה', blank=True)
     philosophy = models.FileField(u'קובץ פילוסופיה', upload_to="pdf/", blank=True)
     is_active = models.BooleanField(u'פעיל/ה', default=False)
@@ -171,8 +178,8 @@ class Work(CommonModel):
     width = models.DecimalField(u'רוחב', max_digits=5, decimal_places=2, default=0)
     depth = models.DecimalField(u'עומק', max_digits=5, decimal_places=2, default=0)
 
-    client = models.ForeignKey('Client', verbose_name=u'לקוח', null=True)
-    country = models.ForeignKey("Country", verbose_name=u'מדינה', null=True, blank=True)
+    client = models.ForeignKey('Client', verbose_name=u'לקוח', null=True, blank=True)
+    country = CountryField(u'מדינה', null=True, blank=True, default='IL')
     techniques = models.ManyToManyField('Technique', verbose_name=u'טכניקות', blank=True)
     of_collections = models.ManyToManyField('Collector', verbose_name=u'מאוספים',
                                             blank=True, related_name='work_collections')
@@ -192,12 +199,6 @@ class Work(CommonModel):
             'designer': self.designer.id,
             'work': self.id
         })
-
-
-class Country(CommonModel):
-    class Meta(CommonModel.Meta):
-        verbose_name = "מדינה"
-        verbose_name_plural = "מדינות"
 
 
 class Category(CommonModel, FilterableByDesignerMixin):

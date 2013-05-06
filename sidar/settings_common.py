@@ -169,6 +169,7 @@ INSTALLED_APPS = (
     'timeline',
     'tinymce',
     'flatpages_tinymce',
+    'django_countries',
 
 )
 

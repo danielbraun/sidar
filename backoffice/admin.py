@@ -8,7 +8,7 @@ import models
 from django.contrib.auth.admin import UserAdmin
 
 
-regular_models = [models.Generation, models.Category, models.Subject, models.Country, models.Collector]
+regular_models = [models.Generation, models.Category, models.Subject, models.Collector]
 TranslationAdmin.actions_on_bottom = True
 TranslationAdmin.actions_on_top = False
 TranslationAdmin.ordering = ('name_he',)
@@ -45,7 +45,7 @@ class WorkAdmin(TranslationAdmin):
 
 
 class DesignerAdmin(TranslationAdmin):
-    list_display = ('name', 'main_discipline', 'generation', 'birth_year', 'work_count', 'is_active', 'photo_as_img')
+    list_display = ('name', 'main_discipline', 'generation', 'birth_year', 'work_count', 'is_active')
     list_filter = ('generation', 'is_active')
 
 

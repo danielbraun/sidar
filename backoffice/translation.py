@@ -1,7 +1,7 @@
 from modeltranslation.translator import translator, TranslationOptions
 from backoffice.models import *
 
-models = [Country, Client, Technique, Subject, Generation]
+models = [Client, Technique, Subject, Generation]
 
 
 class CommonModelTranslationOptions(TranslationOptions):
