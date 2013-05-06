@@ -8,7 +8,7 @@ import models
 from django.contrib.auth.admin import UserAdmin
 
 
-regular_models = [models.Generation, models.Category, models.Subject, models.Collector]
+regular_models = [models.Generation, models.Collector]
 TranslationAdmin.actions_on_bottom = True
 TranslationAdmin.actions_on_top = False
 TranslationAdmin.ordering = ('name_he',)
@@ -65,6 +65,12 @@ class UserAdmin(UserAdmin):
     get_designers.short_description = u'מעצבים בטיפול'
 
 
+class CategorySubjectModelAdmin(TranslationAdmin):
+    list_display = ['name', 'parent', 'main_discipline', 'info']
+    list_filter = ['parent']
+
+admin.site.register(models.Category, CategorySubjectModelAdmin)
+admin.site.register(models.Subject, CategorySubjectModelAdmin)
 admin.site.register(models.Work, WorkAdmin)
 admin.site.register(models.Designer, DesignerAdmin)
 admin.site.register(models.Discipline, DisciplineAdmin)

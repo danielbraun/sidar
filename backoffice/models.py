@@ -64,14 +64,7 @@ class DesignerManager(GenericManager):
         return result
 
 
-class Designer(CommonModel):
-
-    def get_absolute_url(self):
-        return reverse('designer-detail', kwargs={
-            'discipline': self.main_discipline().id,
-            'pk': self.id,
-        })
-
+class MainDisciplineMethodMixin(object):
     def main_discipline(self):
         try:
             key = self.work_set.values('discipline').annotate(dcount=Count('discipline')).order_by('-dcount')[0]['discipline']
@@ -79,6 +72,14 @@ class Designer(CommonModel):
             return None
         return Discipline.objects.get(id=key)
     main_discipline.short_description = u'תחום עיצוב עיקרי'
+
+
+class Designer(CommonModel, MainDisciplineMethodMixin):
+    def get_absolute_url(self):
+        return reverse('designer-detail', kwargs={
+            'discipline': self.main_discipline().id,
+            'pk': self.id,
+        })
 
     def work_count(self):
         return self.work_set.count()
@@ -201,7 +202,7 @@ class Work(CommonModel):
         })
 
 
-class Category(CommonModel, FilterableByDesignerMixin):
+class Category(CommonModel, FilterableByDesignerMixin, MainDisciplineMethodMixin):
     parent = models.ForeignKey('self', verbose_name=u'קטגורית על', blank=True, null=True)
     info = models.TextField(u'מידע על הקטגוריה')
     objects = GenericManager()
@@ -225,7 +226,7 @@ class Technique(CommonModel):
         verbose_name_plural = "טכניקות"
 
 
-class Subject(CommonModel, FilterableByDesignerMixin):
+class Subject(CommonModel, FilterableByDesignerMixin, MainDisciplineMethodMixin):
     parent = models.ForeignKey('self', verbose_name=u'נושא על', blank=True, null=True)
     info = models.TextField(u'מידע על הנושא')
     objects = GenericManager()
