@@ -158,12 +158,6 @@ class Work(CommonModel):
     raw_image = models.ImageField(u'תמונת מקור', upload_to='works', null=True)
     processed_image = ImageSpecField(
         processors=[ResizeToFit(width=350), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
-    # fullscale_image = ImageSpecField(
-    #     processors=[ResizeToFit(width=600), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
-    # midsize_image = ImageSpecField(
-    #     processors=[ResizeToFit(width=350), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
-    # preview_image = ImageSpecField(
-    #     processors=[ResizeToFit(width=100), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
     subjects = models.ManyToManyField("Subject", verbose_name=u'נושאים', null=True)
     discipline = models.ForeignKey("Discipline", verbose_name=u'תחום', null=True)
     category = models.ForeignKey("Category", verbose_name=u'קטגוריה', null=True)
@@ -179,9 +173,11 @@ class Work(CommonModel):
     width = models.DecimalField(u'רוחב', max_digits=5, decimal_places=2, default=0)
     depth = models.DecimalField(u'עומק', max_digits=5, decimal_places=2, default=0)
 
-    client = models.ForeignKey('Client', verbose_name=u'לקוח', null=True, blank=True)
+    # client = models.ForeignKey('Client', verbose_name=u'לקוח', null=True, blank=True)
+    client = models.CharField(u'לקוח', max_length=255)
     country = CountryField(u'מדינה', null=True, blank=True, default='IL')
-    techniques = models.ManyToManyField('Technique', verbose_name=u'טכניקות', blank=True)
+    # techniques = models.ManyToManyField('Technique', verbose_name=u'טכניקות', blank=True)
+    technique = models.CharField(u'טכניקה', max_length=255)
     of_collections = models.ManyToManyField('Collector', verbose_name=u'מאוספים',
                                             blank=True, related_name='work_collections')
 
@@ -210,20 +206,6 @@ class Category(CommonModel, FilterableByDesignerMixin, MainDisciplineMethodMixin
     class Meta(CommonModel.Meta):
         verbose_name = "קטגוריה"
         verbose_name_plural = "קטגוריות"
-
-
-class Client(CommonModel):
-
-    class Meta(CommonModel.Meta):
-        verbose_name = "לקוח"
-        verbose_name_plural = "לקוחות"
-
-
-class Technique(CommonModel):
-
-    class Meta(CommonModel.Meta):
-        verbose_name = "טכניקה"
-        verbose_name_plural = "טכניקות"
 
 
 class Subject(CommonModel, FilterableByDesignerMixin, MainDisciplineMethodMixin):
