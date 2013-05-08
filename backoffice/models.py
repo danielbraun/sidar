@@ -157,7 +157,7 @@ class Work(CommonModel):
     designer = models.ForeignKey('Designer', verbose_name=u'מעצב', null=True)
     raw_image = models.ImageField(u'תמונת מקור', upload_to='works', null=True)
     processed_image = ImageSpecField(
-        processors=[ResizeToFit(width=350), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
+        processors=[ResizeToFit(width=400), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
     subjects = models.ManyToManyField("Subject", verbose_name=u'נושאים', null=True)
     discipline = models.ForeignKey("Discipline", verbose_name=u'תחום', null=True)
     category = models.ForeignKey("Category", verbose_name=u'קטגוריה', null=True)
