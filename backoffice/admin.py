@@ -25,17 +25,12 @@ class DisciplineAdmin(TranslationAdmin):
 
 
 class WorkAdmin(TranslationAdmin):
-    # search_fields = ['designer__name_he', 'category__name_he', ]
-    # list_display = ('__unicode__', 'designer', 'category', 'admin_thumbnail',)
     admin_thumbnail = AdminThumbnail(image_field='processed_image')
     admin_thumbnail.short_description = u'תצוגה מקדימה'
-
-    # filter_horizontal = ['subjects', 'keywords']
     list_display = ('sidar_id', 'name', 'designer', 'category', 'discipline', 'admin_thumbnail')
-    # list_editable = ('designer',)
-    # list_display = ('size_as_text', 'client', 'publish_date_as_text',)
     ordering = ('-id',)
     list_filter = ('discipline', 'category', 'designer',)
+    filter_horizontal = ['subjects']
 
     def queryset(self, request):
         qs = super(WorkAdmin, self).queryset(request)

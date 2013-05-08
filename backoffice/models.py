@@ -153,35 +153,35 @@ class Work(CommonModel):
     objects = WorkManager()
     tags = TaggableManager(u'מילות מפתח')
 
-    sidar_id = models.CharField(u'קוד עבודה', max_length=50, null=True, unique=True, blank=True)
+    sidar_id = models.CharField(u'קוד עבודה', max_length=50, unique=True, blank=True)
     designer = models.ForeignKey('Designer', verbose_name=u'מעצב', null=True)
     raw_image = models.ImageField(u'תמונת מקור', upload_to='works', null=True)
     processed_image = ImageSpecField(
-        processors=[ResizeToFit(width=400), TrimBorderColor(sides=('t', 'r', 'b', 'l'))], image_field='raw_image')
-    subjects = models.ManyToManyField("Subject", verbose_name=u'נושאים', null=True)
+        processors=[ResizeToFit(width=400),
+                    TrimBorderColor(sides=('t', 'r', 'b', 'l'))],
+        image_field='raw_image')
     discipline = models.ForeignKey("Discipline", verbose_name=u'תחום', null=True)
     category = models.ForeignKey("Category", verbose_name=u'קטגוריה', null=True)
+    of_collections = models.ManyToManyField('Collector', verbose_name=u'מאוספים',
+                                            related_name='work_collections')
+    subjects = models.ManyToManyField("Subject", verbose_name=u'נושאים', blank=True)
     # Date related fields
-    publish_date_as_text = models.CharField(u'תאריך כמלל', max_length=50, blank=True, null=True)
+    publish_date_as_text = models.CharField(u'תאריך כמלל', max_length=50, blank=True)
     # publish_date = models.DateField(verbose_name="תאריך הוצאה לאור", null=True)
     # date_accuracy_level = models.CharField(u'רמת דיוק תאריך', max_length=2,
     # choices=DATE_ACCURACY_LEVELS, default=None, blank=True)
     publish_year = models.IntegerField('שנה', null=True, blank=True, help_text=u'שנה לועזית')
     # Size related fields
-    size_as_text = models.CharField(u'גודל כמלל', max_length=128, blank=True, null=True)
-    height = models.DecimalField(u'גובה', max_digits=5, decimal_places=2, default=0)
-    width = models.DecimalField(u'רוחב', max_digits=5, decimal_places=2, default=0)
-    depth = models.DecimalField(u'עומק', max_digits=5, decimal_places=2, default=0)
+    size_as_text = models.CharField(u'גודל כמלל', max_length=128, blank=True)
+    height = models.DecimalField(u'גובה', max_digits=5, decimal_places=2, default=0, blank=True)
+    width = models.DecimalField(u'רוחב', max_digits=5, decimal_places=2, default=0, blank=True)
+    depth = models.DecimalField(u'עומק', max_digits=5, decimal_places=2, default=0, blank=True)
 
-    # client = models.ForeignKey('Client', verbose_name=u'לקוח', null=True, blank=True)
-    client = models.CharField(u'לקוח', max_length=255)
+    client = models.CharField(u'לקוח', max_length=255, blank=True)
     country = CountryField(u'מדינה', null=True, blank=True, default='IL')
-    # techniques = models.ManyToManyField('Technique', verbose_name=u'טכניקות', blank=True)
-    technique = models.CharField(u'טכניקה', max_length=255)
-    of_collections = models.ManyToManyField('Collector', verbose_name=u'מאוספים',
-                                            blank=True, related_name='work_collections')
+    technique = models.CharField(u'טכניקה', max_length=255, blank=True)
 
-    description = models.TextField(u'תיאור')
+    description = models.TextField(u'תיאור', blank=True)
 
     class Meta(CommonModel.Meta):
         verbose_name = "עבודה"
