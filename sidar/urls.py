@@ -71,7 +71,6 @@ discipline_urls = patterns('',
 urlpatterns = patterns('',
                       (r'^admin/doc/', include('django.contrib.admindocs.urls')),
                        # Deliberately no trailing slash after pages
-                      (r'^pages', include('django.contrib.flatpages.urls')),
                       (r'^feedback/', include('feedback.urls')),
                       (r'^tinymce/', include('tinymce.urls')),
                       (r'^new/$', TemplateView.as_view(template_name="new/index.html")),
@@ -85,6 +84,7 @@ urlpatterns = patterns('',
                        template_name="home.html",
                        queryset=models.Work.objects.one_from_each_discipline(),
                        model=models.Work), {}, "home"),
+                      (r'^', include('django.contrib.flatpages.urls')),
                        ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if not settings.DEBUG:

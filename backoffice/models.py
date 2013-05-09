@@ -50,6 +50,9 @@ class Discipline(CommonModel):
     def long_name(self):
         return u'עיצוב ' + self.name
 
+    def get_absolute_url(self):
+        return reverse('discipline-about', kwargs={'discipline': self.id})
+
     class Meta(CommonModel.Meta):
         verbose_name = u'תחום עיצוב'
         verbose_name_plural = u'תחומי עיצוב'
@@ -207,6 +210,12 @@ class Category(CommonModel, FilterableByDesignerMixin, MainDisciplineMethodMixin
         verbose_name = "קטגוריה"
         verbose_name_plural = "קטגוריות"
 
+    def get_absolute_url(self):
+        return reverse('work-list', kwargs={
+            'discipline': self.main_discipline().id,
+            'category': self.id,
+        })
+
 
 class Subject(CommonModel, FilterableByDesignerMixin, MainDisciplineMethodMixin):
     parent = models.ForeignKey('self', verbose_name=u'נושא על', blank=True, null=True)
@@ -216,6 +225,12 @@ class Subject(CommonModel, FilterableByDesignerMixin, MainDisciplineMethodMixin)
     class Meta(CommonModel.Meta):
         verbose_name = "נושא"
         verbose_name_plural = "נושאים"
+
+    def get_absolute_url(self):
+        return reverse('work-list', kwargs={
+            'discipline': self.main_discipline().id,
+            'subject': self.id,
+        })
 
 
 class Generation(CommonModel):

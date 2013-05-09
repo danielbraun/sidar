@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.core.urlresolvers import reverse
 from backoffice.models import Discipline
 
 
@@ -30,6 +31,11 @@ class Event(models.Model):
         if self.type != self.DISCIPLINE:
             self.discipline = None
         return super(Event, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        if self.discipline:
+            return reverse('timeline_event_list',
+                           kwargs={'discipline': self.discipline.id})
 
     class Meta:
         verbose_name = u'אירוע היסטורי'
