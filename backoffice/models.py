@@ -153,7 +153,7 @@ class Work(CommonModel):
     objects = WorkManager()
     tags = TaggableManager(u'מילות מפתח')
 
-    sidar_id = models.CharField(u'קוד עבודה', max_length=50, unique=True, blank=True)
+    sidar_id = models.CharField(u'קוד עבודה', max_length=50, blank=True)
     designer = models.ForeignKey('Designer', verbose_name=u'מעצב', null=True)
     raw_image = models.ImageField(u'תמונת מקור', upload_to='works', null=True)
     processed_image = ImageSpecField(

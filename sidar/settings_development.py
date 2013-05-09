@@ -4,7 +4,7 @@ import sys
 
 MEDIA_ROOT = 'media/'
 DEBUG = TEMPLATE_DEBUG = True
-PORTFOLIO_CSV_ROOT = u'/Volumes/m$/D/המכון לעיצוב/מחלקות עיצוב'
+PORTFOLIO_CSV_ROOT = u'/Volumes/m$/D/מחלקות עיצוב'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
