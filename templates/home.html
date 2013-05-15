@@ -6,7 +6,7 @@
 	{% get_flatpages as flatpages %}
 	{% for page in flatpages %}
 	<li class="navitem_{{ forloop.counter }}">
-		<a href="{{ page.url }}">{{ page.title }}</a>
+		<a href="/pages{{ page.url }}">{{ page.title }}</a>
 	</li>
 	{% endfor %}
 

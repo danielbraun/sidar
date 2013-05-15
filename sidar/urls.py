@@ -84,7 +84,7 @@ urlpatterns = patterns('',
                        template_name="home.html",
                        queryset=models.Work.objects.one_from_each_discipline(),
                        model=models.Work), {}, "home"),
-                      (r'^', include('django.contrib.flatpages.urls')),
+                      (r'^pages/', include('django.contrib.flatpages.urls')),
                        ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if not settings.DEBUG:
