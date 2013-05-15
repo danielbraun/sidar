@@ -2,6 +2,7 @@ Django==1.4.1
 Fabric==1.5.1
 Pillow==1.7.8
 South==0.7.6
+boto==2.9.2
 distribute==0.6.30
 dj-database-url==0.2.1
 django-countries==1.5
@@ -10,7 +11,7 @@ django-flatpages-tinymce==0.1.1
 django-imagekit==2.0.1
 django-modeltranslation==0.6.1
 django-positions==0.4.3
-django-storages==1.1.5
+django-storages==1.1.8
 django-taggit==0.10a1
 django-tinymce==1.5.1
 docutils==0.10

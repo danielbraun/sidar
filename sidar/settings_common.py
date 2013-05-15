@@ -119,7 +119,7 @@ TEMPLATE_LOADERS = (
 
 TEMPLATE_CONTEXT_PROCESSORS += (
     'backoffice.context_processors.default',
-    )
+)
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -170,6 +170,7 @@ INSTALLED_APPS = (
     'tinymce',
     'flatpages_tinymce',
     'django_countries',
+    'storages',
 
 )
 
@@ -201,4 +202,3 @@ LOGGING = {
         },
     }
 }
-
