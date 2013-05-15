@@ -167,6 +167,7 @@ class Work(CommonModel):
     category = models.ForeignKey("Category", verbose_name=u'קטגוריה', null=True)
     of_collections = models.ManyToManyField('Collector', verbose_name=u'מאוספים',
                                             related_name='work_collections')
+    is_self_collected = models.BooleanField(u'מאוסף המעצב?')
     subjects = models.ManyToManyField("Subject", verbose_name=u'נושאים', blank=True)
     # Date related fields
     publish_date_as_text = models.CharField(u'תאריך כמלל', max_length=50, blank=True)

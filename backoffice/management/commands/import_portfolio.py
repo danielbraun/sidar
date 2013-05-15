@@ -1,14 +1,23 @@
 # -*- coding: utf-8 -*-
 from django.core.management.base import BaseCommand
-from backoffice.utils import all_portfolio_rows
-from backoffice.models import Work
-from backoffice.utils import remove_file_extension
 from html2text import html2text
-from backoffice.models import Discipline
-from backoffice.models import Designer
-from backoffice.utils import split_languages_from_string
-from backoffice.models import Category
-from backoffice.models import Subject
+
+from backoffice.models import Work, Discipline, Designer, Category, Subject
+from backoffice.utils import all_portfolio_rows, remove_file_extension, split_languages_from_string
+from backoffice.models import Collector
+
+
+def match_is_self_collected(designer, collector):
+    reversed_collector = ' '.join(collector.split()[::-1])
+    if designer == collector or designer in collector or reversed_collector == designer:
+        return True
+    return False
+
+
+def match_collector(designer, collector):
+    if collector and not match_is_self_collected(designer, collector):
+        return [Collector.objects.get_or_create(name_he=html2text(collector).strip())[0]]
+    return []
 
 
 def match_discipline(row):
@@ -42,6 +51,10 @@ def match_country(field):
         if couple[0] in field:
             return couple[1]
     return None
+
+
+def match_technique(technique):
+    return html2text(technique).strip()
 
 
 def match_category(field):
@@ -83,6 +96,10 @@ class Command(BaseCommand):
                 size_as_text=row.get(u'גודל', ''),
                 publish_date_as_text=row.get(u'תאריך', ''),
                 client=row.get(u'לקוח', ''),
+                technique=match_technique(row.get(u'טכניקה', '')),
+                is_self_collected=match_is_self_collected(
+                    row.get(u'מעצב', ''),
+                    row.get(u'מאוסף', ''))
             )
             try:
                 w.publish_year = int(w.publish_date_as_text)
@@ -90,10 +107,11 @@ class Command(BaseCommand):
                 pass
 
             w.subjects = match_subject(row.get(u'נושא'))
+            w.of_collections = match_collector(row.get(u'מעצב', ''),
+                                               row.get(u'מאוסף', ''))
 
             for keyword in [keyword.strip() for keyword in html2text(row.get(u'מילות מפתח', '')).split(',')]:
                 if keyword:
                     w.tags.add(keyword)
 
-            # Add collection
             w.save()
