@@ -81,30 +81,27 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for row in all_portfolio_rows():
-            try:
-                w = Work.objects.create(
-                    name_he=row.get(u'שם העבודה', ''),
-                    name_en=row.get('Document Title', ''),
-                    sidar_id=remove_file_extension(row['Filename']),
-                    description_he=html2text(row.get(u'תאור', '')),
-                    description_en=html2text(row.get(u'Description', '')),
-                    discipline=match_discipline(row),
-                    country=match_country(row.get(u'ארץ', '')),
-                    designer=Designer.objects.get_or_create(
-                        name_he=row.get(u'מעצב', ''),
-                        defaults={'name_en': row.get('Designer', '')})[0],
-                    category=match_category(row.get(u'קטגוריה')),
-                    size_as_text=row.get(u'גודל', ''),
-                    publish_date_as_text=row.get(u'תאריך', ''),
-                    publish_year=int(row.get(u'תאריך', '')),
-                    client=row.get(u'לקוח', ''),
-                    technique=match_technique(row.get(u'טכניקה', '')),
-                    is_self_collected=match_is_self_collected(
-                        row.get(u'מעצב', ''),
-                        row.get(u'מאוסף', ''))
-                )
-            except ValueError:
-                pass
+            w = Work.objects.create(
+                name_he=row.get(u'שם העבודה', ''),
+                name_en=row.get('Document Title', ''),
+                sidar_id=remove_file_extension(row['Filename']),
+                description_he=html2text(row.get(u'תאור', '')),
+                description_en=html2text(row.get(u'Description', '')),
+                discipline=match_discipline(row),
+                country=match_country(row.get(u'ארץ', '')),
+                designer=Designer.objects.get_or_create(
+                    name_he=row.get(u'מעצב', ''),
+                    defaults={'name_en': row.get('Designer', '')})[0],
+                category=match_category(row.get(u'קטגוריה')),
+                size_as_text=row.get(u'גודל', ''),
+                publish_date_as_text=row.get(u'תאריך', ''),
+                publish_year=int(row.get(u'תאריך', ''))if row.get(u'תאריך', '').isdigit() else None,
+                client=row.get(u'לקוח', ''),
+                technique=match_technique(row.get(u'טכניקה', '')),
+                is_self_collected=match_is_self_collected(
+                    row.get(u'מעצב', ''),
+                    row.get(u'מאוסף', ''))
+            )
             w.subjects = match_subject(row.get(u'נושא'))
             w.of_collections = match_collector(row.get(u'מעצב', ''),
                                                row.get(u'מאוסף', ''))
@@ -112,4 +109,3 @@ class Command(BaseCommand):
             for keyword in [keyword.strip() for keyword in html2text(row.get(u'מילות מפתח', '')).split(',')]:
                 if keyword:
                     w.tags.add(keyword)
-
