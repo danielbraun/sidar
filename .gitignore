@@ -11,3 +11,4 @@ local_settings.py
 .ropeproject
 sqlite3.db-journal
 Thumbs.db
+*.swp
