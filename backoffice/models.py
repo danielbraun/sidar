@@ -66,6 +66,9 @@ class DesignerManager(GenericManager):
                 result.append(designer)
         return result
 
+    def with_counts(self):
+        return self.annotate(Count('work'))
+
 
 class MainDisciplineMethodMixin(object):
     def main_discipline(self):
@@ -84,10 +87,6 @@ class Designer(CommonModel, MainDisciplineMethodMixin):
             'pk': self.id,
         })
 
-    def work_count(self):
-        return self.work_set.count()
-    work_count.short_description = u'מספר עבודות'
-
     def available_categories_by_discipline(self, discipline):
         category_ids = self.work_set.filter(discipline=discipline).values_list('category', flat=True).distinct()
         return Category.objects.filter(pk__in=category_ids)
@@ -101,7 +100,6 @@ class Designer(CommonModel, MainDisciplineMethodMixin):
     photo_as_img.short_description = u'תמונת מעצב'
 
     objects = DesignerManager()
-
     generation = models.ForeignKey("Generation", verbose_name="שייך לדור", null=True)
     photo = models.ImageField(u'תמונת מעצב', upload_to="images/", blank=True)
     birth_year = models.IntegerField(u'שנת לידה', blank=True, null=True)

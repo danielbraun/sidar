@@ -8,7 +8,7 @@ import models
 from django.contrib.auth.admin import UserAdmin
 
 
-regular_models = [models.Generation, models.Collector]
+regular_models = [models.Generation]
 TranslationAdmin.actions_on_bottom = True
 TranslationAdmin.actions_on_top = False
 TranslationAdmin.ordering = ('name_he',)
@@ -29,7 +29,7 @@ class WorkAdmin(TranslationAdmin):
     admin_thumbnail.short_description = u'תצוגה מקדימה'
     list_display = ('sidar_id', 'name', 'designer', 'category', 'discipline', 'admin_thumbnail')
     ordering = ('-id',)
-    list_filter = ('discipline', 'category', 'designer',)
+    list_filter = ('discipline', 'category', 'designer', 'of_collections')
     filter_horizontal = ['subjects']
 
     def queryset(self, request):
@@ -40,8 +40,21 @@ class WorkAdmin(TranslationAdmin):
 
 
 class DesignerAdmin(TranslationAdmin):
-    list_display = ('name', 'main_discipline', 'generation', 'birth_year', 'work_count', 'is_active')
+    list_display = ('name', 'main_discipline', 'generation', 'birth_year', 'is_active', 'show_work_count', )
     list_filter = ('generation', 'is_active')
+    ordering = ['-work__count']
+
+    def queryset(self, request):
+        return models.Designer.objects.with_counts()
+
+    def show_work_count(self, instance):
+        return instance.work__count
+    show_work_count.admin_order_field = 'work__count'
+    show_work_count.short_description = u'מספר עבודות'
+
+
+class CollectorAdmin(TranslationAdmin):
+    list_display = ('name',)
 
 
 class UserProfileInline(admin.StackedInline):
@@ -69,6 +82,7 @@ admin.site.register(models.Subject, CategorySubjectModelAdmin)
 admin.site.register(models.Work, WorkAdmin)
 admin.site.register(models.Designer, DesignerAdmin)
 admin.site.register(models.Discipline, DisciplineAdmin)
+admin.site.register(models.Collector, CollectorAdmin)
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
