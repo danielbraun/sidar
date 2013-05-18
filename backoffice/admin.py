@@ -3,12 +3,12 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from imagekit.admin import AdminThumbnail
 from modeltranslation.admin import TranslationAdmin
+from django.db.models import Count
 
 import models
 from django.contrib.auth.admin import UserAdmin
 
 
-regular_models = [models.Generation]
 TranslationAdmin.actions_on_bottom = True
 TranslationAdmin.actions_on_top = False
 TranslationAdmin.ordering = ('name_he',)
@@ -20,8 +20,20 @@ class TranslatedModelAdmin(TranslationAdmin):
     ordering = ('name_he',)
 
 
-class DisciplineAdmin(TranslationAdmin):
-    list_display = ('name_he', 'name_en', 'active', 'work_count')
+class WithWorkCountField(object):
+    ordering = ['-work__count']
+
+    def queryset(self, request):
+        return super(WithWorkCountField, self).queryset(request).annotate(Count('work'))
+
+    def show_work_count(self, instance):
+        return instance.work__count
+    show_work_count.admin_order_field = 'work__count'
+    show_work_count.short_description = u'מספר עבודות'
+
+
+class DisciplineAdmin(WithWorkCountField, TranslationAdmin):
+    list_display = ('name_he', 'name_en', 'active', 'show_work_count')
 
 
 class WorkAdmin(TranslationAdmin):
@@ -39,18 +51,11 @@ class WorkAdmin(TranslationAdmin):
         return qs.filter(designer=request.user.get_profile().in_charge_of_designers.all())
 
 
-class DesignerAdmin(TranslationAdmin):
-    list_display = ('name', 'main_discipline', 'generation', 'birth_year', 'is_active', 'show_work_count', )
-    list_filter = ('generation', 'is_active')
-    ordering = ['-work__count']
-
-    def queryset(self, request):
-        return models.Designer.objects.with_counts()
-
-    def show_work_count(self, instance):
-        return instance.work__count
-    show_work_count.admin_order_field = 'work__count'
-    show_work_count.short_description = u'מספר עבודות'
+class DesignerAdmin(WithWorkCountField, TranslationAdmin):
+    list_display = (
+        'name', 'main_discipline', 'generation_as_choices',
+        'birth_year', 'is_active', 'show_work_count', )
+    list_filter = ('generation_as_choices', 'is_active')
 
 
 class CollectorAdmin(TranslationAdmin):
@@ -73,8 +78,8 @@ class UserAdmin(UserAdmin):
     get_designers.short_description = u'מעצבים בטיפול'
 
 
-class CategorySubjectModelAdmin(TranslationAdmin):
-    list_display = ['name', 'parent', 'main_discipline', 'info']
+class CategorySubjectModelAdmin(WithWorkCountField, TranslationAdmin):
+    list_display = ['name', 'parent', 'main_discipline', 'info', 'show_work_count']
     list_filter = ['parent']
 
 admin.site.register(models.Category, CategorySubjectModelAdmin)
@@ -85,6 +90,3 @@ admin.site.register(models.Discipline, DisciplineAdmin)
 admin.site.register(models.Collector, CollectorAdmin)
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
-
-for model in regular_models:
-    admin.site.register(model, TranslatedModelAdmin)

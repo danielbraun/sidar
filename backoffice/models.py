@@ -36,13 +36,8 @@ class GenericManager(models.Manager):
 
 
 class Discipline(CommonModel):
-    # info = models.TextField(u'מידע על הדיסיפלינה')
     info = HTMLField()
     active = models.BooleanField(u'פעיל')
-
-    def work_count(self):
-        return self.work_set.count()
-    work_count.short_description = u'מספר עבודות'
 
     def short_name(self):
         return u'ע.' + self.name
@@ -66,9 +61,6 @@ class DesignerManager(GenericManager):
                 result.append(designer)
         return result
 
-    def with_counts(self):
-        return self.annotate(Count('work'))
-
 
 class MainDisciplineMethodMixin(object):
     def main_discipline(self):
@@ -80,49 +72,50 @@ class MainDisciplineMethodMixin(object):
     main_discipline.short_description = u'תחום עיצוב עיקרי'
 
 
-class Designer(CommonModel, MainDisciplineMethodMixin):
+class DesignPersona(CommonModel):
+    photo = models.ImageField(u'דיוקן', upload_to="images/", blank=True)
+    birth_year = models.IntegerField(u'שנת לידה', blank=True, null=True)
+    death_year = models.IntegerField(u'שנת פטירה', blank=True, null=True)
+    birth_country = CountryField(u'מדינת לידה', null=True, blank=True, default='IL')
+    philosophy_summary = HTMLField(u'תקציר פילוסופיה', blank=True)
+    philosophy = models.FileField(u'קובץ פילוסופיה', upload_to="pdf/", blank=True)
+    is_active = models.BooleanField(u'מופיע ברשימה', default=False)
+
+    class Meta(CommonModel.Meta):
+        abstract = True
+
+    def available_categories_by_discipline(self, discipline):
+        category_ids = self.work_set.filter(discipline=discipline).values_list('category', flat=True).distinct()
+        return Category.objects.filter(pk__in=category_ids)
+
+
+class Designer(DesignPersona, MainDisciplineMethodMixin):
+    GENERATIONS = [
+        (1, u'דור המייסדים'),
+        (2, u'דור הביניים'),
+        (3, u'הדור הצעיר'),
+        (4, u'חינוך'),
+        (5, u'משרדים/סטודיו'),
+    ]
+
+    objects = DesignerManager()
+
+    generation_as_choices = models.IntegerField(u'שייך לדור', null=True,
+                                                choices=GENERATIONS)
+
     def get_absolute_url(self):
         return reverse('designer-detail', kwargs={
             'discipline': self.main_discipline().id,
             'pk': self.id,
         })
 
-    def available_categories_by_discipline(self, discipline):
-        category_ids = self.work_set.filter(discipline=discipline).values_list('category', flat=True).distinct()
-        return Category.objects.filter(pk__in=category_ids)
-
-    def photo_as_img(self):
-        url = "asdasd"
-        if self.photo:
-            url = self.photo.url
-        return u'<img src="%s" class="thumbnail"/>' % (url)
-    photo_as_img.allow_tags = True
-    photo_as_img.short_description = u'תמונת מעצב'
-
-    objects = DesignerManager()
-    generation = models.ForeignKey("Generation", verbose_name="שייך לדור", null=True)
-    photo = models.ImageField(u'תמונת מעצב', upload_to="images/", blank=True)
-    birth_year = models.IntegerField(u'שנת לידה', blank=True, null=True)
-    death_year = models.IntegerField(u'שנת פטירה', blank=True, null=True)
-    birth_country = CountryField(u'מדינת לידה', null=True, blank=True, default='IL')
-    philosophy_summary = HTMLField(u'תקציר פילוסופיה', blank=True)
-    philosophy = models.FileField(u'קובץ פילוסופיה', upload_to="pdf/", blank=True)
-    is_active = models.BooleanField(u'פעיל/ה', default=False)
-
     class Meta(CommonModel.Meta):
         verbose_name = "מעצב"
         verbose_name_plural = "מעצבים"
 
 
-class Collector(CommonModel):
-    photo = models.ImageField(u'תמונת אספן', upload_to="images/", blank=True)
-    birth_year = models.IntegerField(u'שנת לידה', blank=True, null=True)
-    death_year = models.IntegerField(u'שנת פטירה', blank=True, null=True)
+class Collector(DesignPersona):
     homepage = models.URLField(u'אתר בית', blank=True)
-    birth_country = CountryField(u'מדינת לידה', null=True, blank=True, default='IL')
-    philosophy_summary = HTMLField(u'תקציר פילוסופיה', blank=True)
-    philosophy = models.FileField(u'קובץ פילוסופיה', upload_to="pdf/", blank=True)
-    is_active = models.BooleanField(u'פעיל/ה', default=False)
 
     class Meta(CommonModel.Meta):
         verbose_name = u'אספן'
@@ -230,13 +223,6 @@ class Subject(CommonModel, FilterableByDesignerMixin, MainDisciplineMethodMixin)
             'discipline': self.main_discipline().id,
             'subject': self.id,
         })
-
-
-class Generation(CommonModel):
-
-    class Meta(CommonModel.Meta):
-        verbose_name = u'דור מעצבים'
-        verbose_name_plural = u'דורות מעצבים'
 
 
 class UserProfile(models.Model):

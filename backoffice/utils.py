@@ -96,7 +96,7 @@ def all_portfolio_rows():
                             try:
                                 row['Filename']
                             except KeyError:
-                                continue
+                                break
                             # Clean up all row fields
                             for key in row:
                                 row[key] = row[key].strip()

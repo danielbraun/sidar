@@ -6,13 +6,7 @@ from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
 
 from backoffice.forms import SearchForm
-from backoffice.models import Designer, Discipline, Work, Generation
-
-from backoffice.models import Subject
-
-from backoffice.models import Category
-
-from django.views.generic.base import View
+from backoffice.models import Designer, Discipline, Work, Subject, Category
 
 
 class DisciplineMixin(object):
@@ -125,7 +119,7 @@ class DesignerListView(DisciplineMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(DesignerListView, self).get_context_data(**kwargs)
-        context['generations'] = Generation.objects.all()
+        context['generations'] = Designer.GENERATIONS
         return context
 
     def get_queryset(self):
@@ -133,7 +127,7 @@ class DesignerListView(DisciplineMixin, ListView):
         for group in self.letter_groups:
             object_list.append({
                 'letters': group,
-                'designer_groups': [Designer.objects.belonging_to_discipline(self.discipline, 'designer').filter(name_he__startswith=unicode(letter, 'utf-8')).exclude(generation=None) for letter in group]
+                'designer_groups': [Designer.objects.belonging_to_discipline(self.discipline, 'designer').filter(name_he__startswith=unicode(letter, 'utf-8')).exclude(generation_as_choices=None) for letter in group]
             })
         return object_list
 

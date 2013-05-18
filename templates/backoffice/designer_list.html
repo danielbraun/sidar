@@ -12,8 +12,8 @@
 {% block pagination %}
 <small>מקרא צבעים:
 	<strong>
-		{% for generation in generations %}
-		<span class="designer_type_{{ generation.id }}">{{ generation }}</span>
+		{% for generation_id, generation_title in generations %}
+		<span class="designer_type_{{ generation_id }}">{{ generation_title }}</span>
 		{% endfor %}
 	</strong>
 </small>
@@ -35,9 +35,9 @@
 					{% for group in group.designer_groups %}
 					{% for designer in group %}
 					<tr>
-						<td class="designers_group_{{ designer.generation.id }}">
+						<td class="designers_group_{{ designer.generation_as_choices }}">
 							{% if designer.is_active %}
-								<a href="{% url work-list discipline=discipline.id designer=designer.id %}" class="designer_type_{{ designer.generation.id }}">
+								<a href="{% url work-list discipline=discipline.id designer=designer.id %}" class="designer_type_{{ designer.generation_as_choices }}">
 							{% else %}
 								<a class="disabled">
 							{% endif %}
