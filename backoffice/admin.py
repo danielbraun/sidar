@@ -43,6 +43,12 @@ class WorkAdmin(TranslationAdmin):
     ordering = ('-id',)
     list_filter = ('discipline', 'category', 'designer', 'of_collections')
     filter_horizontal = ['subjects']
+    readonly_fields = ['sidar_id', ]
+    fields = ['designer', 'name', 'sidar_id', 'category', 'tags', 'discipline',
+              'publish_date_as_text', 'publish_year', 'size_as_text', 'height',
+              'width', 'depth', 'country', 'technique', 'of_collections',
+              'is_self_collected', 'subjects', 'description',
+              ]
 
     def queryset(self, request):
         qs = super(WorkAdmin, self).queryset(request)
@@ -56,6 +62,9 @@ class DesignerAdmin(WithWorkCountField, TranslationAdmin):
         'name', 'main_discipline', 'generation_as_choices',
         'birth_year', 'is_active', 'show_work_count', )
     list_filter = ('generation_as_choices', 'is_active')
+    fields = ['name', 'birth_year', 'death_year',
+              'birth_country', 'generation_as_choices', 'photo', 'philosophy',
+              'is_active', 'philosophy_summary']
 
 
 class CollectorAdmin(TranslationAdmin):

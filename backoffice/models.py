@@ -77,9 +77,9 @@ class DesignPersona(CommonModel):
     birth_year = models.IntegerField(u'שנת לידה', blank=True, null=True)
     death_year = models.IntegerField(u'שנת פטירה', blank=True, null=True)
     birth_country = CountryField(u'מדינת לידה', null=True, blank=True, default='IL')
+    is_active = models.BooleanField(u'מופיע ברשימה', default=False)
     philosophy_summary = HTMLField(u'תקציר פילוסופיה', blank=True)
     philosophy = models.FileField(u'קובץ פילוסופיה', upload_to="pdf/", blank=True)
-    is_active = models.BooleanField(u'מופיע ברשימה', default=False)
 
     class Meta(CommonModel.Meta):
         abstract = True
@@ -137,13 +137,6 @@ class WorkManager(models.Manager):
 
 
 class Work(CommonModel):
-    DATE_ACCURACY_LEVELS = (
-        ('de', u'עשור'),
-        ('y', u'שנה'),
-        ('m', u'חודש'),
-        ('d', u'יום')
-    )
-
     objects = WorkManager()
     tags = TaggableManager(u'מילות מפתח')
 
