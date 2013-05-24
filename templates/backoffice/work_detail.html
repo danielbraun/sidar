@@ -177,7 +177,6 @@
 								ארץ
 							</td>
 							<td>
-								<img src="{{ work.country.flag }}">
 								{{ work.country.name }}
 							</td>
 						</tr>
@@ -205,6 +204,9 @@
 								{% for collector in work.of_collections.all %}
 									<a href="{{ collector.homepage }}">{{ collector }}</a>{% if not forloop.last %},{% endif %}
 								{% endfor %}
+								{% if work.is_self_collected %}
+									{{ work.designer }}
+								{% endif %}
 							</td>
 						</tr>
 					</tbody>
