@@ -11,7 +11,9 @@ from backoffice.models import Designer, Discipline, Work, Subject, Category
 
 class DisciplineMixin(object):
     def dispatch(self, *args, **kwargs):
-        self.discipline = get_object_or_404(Discipline, pk=kwargs['discipline'], active=True)
+        self.discipline = get_object_or_404(Discipline,
+                                            pk=kwargs['discipline'],
+                                            active=True)
         return super(DisciplineMixin, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -22,7 +24,9 @@ class DisciplineMixin(object):
 
 class DisciplineFilterMixin(DisciplineMixin):
     def get_queryset(self):
-        return super(DisciplineFilterMixin, self).get_queryset().filter(discipline=self.discipline)
+        return super(DisciplineFilterMixin, self)\
+            .get_queryset()\
+            .filter(discipline=self.discipline)
 
 
 class ListViewFilteredByDiscipline(DisciplineFilterMixin, ListView):
@@ -65,7 +69,10 @@ class WorkListView(DisciplineMixin, ListView):
             works = works.filter(publish_year__lte=self.until_year)
 
         if self.until_year or self.from_year:
-            self.available_years = works.values_list('publish_year', flat=True).distinct().order_by('publish_year')
+            self.available_years = works\
+                .values_list('publish_year', flat=True)\
+                .distinct()\
+                .order_by('publish_year')
 
         if self.year:
             works = works.filter(publish_year=self.year)
@@ -94,7 +101,8 @@ class WorkListView(DisciplineMixin, ListView):
             qs = self.get_queryset().filter(id__gt=self.work.id)
             if qs:
                 context['next_work'] = qs[0]
-            qs = self.get_queryset().filter(id__lt=self.work.id).order_by('-id')
+            qs = self.get_queryset().filter(id__lt=self.work.id)\
+                                    .order_by('-id')
             if qs:
                 context['previous_work'] = qs[0]
         return context
@@ -138,7 +146,9 @@ class DisciplineTemplateView(DisciplineMixin, TemplateView):
 
 class WorkFieldListViewByDiscipline(DisciplineMixin, ListView):
     def get_queryset(self):
-        return self.model.objects.belonging_to_discipline(self.discipline, self.kwargs['work_field']).order_by('parent', 'name_he').exclude(parent=None)
+        return self.model.objects.belonging_to_discipline(
+            self.discipline, self.kwargs['work_field']
+        ).order_by('parent', 'name_he').exclude(parent=None)
 
 
 class DisciplineSearchView(DisciplineMixin, FormView):
@@ -158,7 +168,8 @@ class SearchView(DisciplineMixin, TemplateView):
         context = super(SearchView, self).get_context_data()
         context['form'] = SearchForm(discipline=self.discipline)
         if self.request.GET:
-            return WorkListView.as_view()(self.request, discipline=self.discipline.id)
+            return WorkListView.as_view()(self.request,
+                                          discipline=self.discipline.id)
         else:
             self.template_name = "search.html"
         # WorkListView.as_view()

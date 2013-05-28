@@ -6,7 +6,8 @@ from backoffice.models import Discipline
 
 
 class Event(models.Model):
-    discipline = models.ForeignKey(Discipline, verbose_name=u'תחום עיצוב', blank=True, null=True)
+    discipline = models.ForeignKey(Discipline, verbose_name=u'תחום עיצוב',
+                                   blank=True, null=True)
     year = models.IntegerField(u'שנה')
     description = models.CharField(u'תיאור', max_length=255)
 
@@ -19,7 +20,8 @@ class Event(models.Model):
         (DESIGN, u'עיצוב'),
         (DISCIPLINE, u'תחום עיצוב'),
     )
-    type = models.CharField(u'סוג אירוע', max_length=3, choices=TYPE_CHOICES, default=HISTORICAL)
+    type = models.CharField(u'סוג אירוע', max_length=3, choices=TYPE_CHOICES,
+                            default=HISTORICAL)
     is_important = models.BooleanField(u'חשוב?')
 
     def get_decade(self):

@@ -5,7 +5,7 @@ from backoffice.models import Designer, Category, Subject
 
 
 class SearchForm(forms.Form):
-    designer = forms.ModelChoiceField(None, label=Designer._meta.verbose_name.title())
+    designer = forms.ModelChoiceField(None,label=Designer._meta.verbose_name.title())
     category = forms.ModelChoiceField(None, label=Category._meta.verbose_name.title())
     subject = forms.ModelChoiceField(None, label=Subject._meta.verbose_name.title())
     year_from = forms.IntegerField(label='משנת')

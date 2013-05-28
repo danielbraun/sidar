@@ -24,7 +24,9 @@ class WithWorkCountField(object):
     ordering = ['-work__count']
 
     def queryset(self, request):
-        return super(WithWorkCountField, self).queryset(request).annotate(Count('work'))
+        return super(WithWorkCountField, self)\
+            .queryset(request)\
+            .annotate(Count('work'))
 
     def show_work_count(self, instance):
         return instance.work__count
@@ -39,7 +41,8 @@ class DisciplineAdmin(WithWorkCountField, TranslationAdmin):
 class WorkAdmin(TranslationAdmin):
     admin_thumbnail = AdminThumbnail(image_field='processed_image')
     admin_thumbnail.short_description = u'תצוגה מקדימה'
-    list_display = ('sidar_id', 'name', 'designer', 'category', 'discipline', 'admin_thumbnail')
+    list_display = ('sidar_id', 'name', 'designer',
+                    'category', 'discipline', 'admin_thumbnail')
     ordering = ('-id',)
     list_filter = ('discipline', 'category', 'designer', 'of_collections')
     filter_horizontal = ['subjects']
@@ -54,7 +57,9 @@ class WorkAdmin(TranslationAdmin):
         qs = super(WorkAdmin, self).queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(designer=request.user.get_profile().in_charge_of_designers.all())
+        return qs.filter(
+            designer=request.user.get_profile().in_charge_of_designers.all()
+        )
 
 
 class DesignerAdmin(WithWorkCountField, TranslationAdmin):
@@ -79,16 +84,20 @@ class UserAdmin(UserAdmin):
     search_fields = ()
     list_filter = ()
     inlines = (UserProfileInline, )
-    list_display = ('username', 'first_name', 'last_name', 'email', 'is_active', 'is_staff', 'is_superuser', 'get_designers')
+    list_display = ('username', 'first_name', 'last_name', 'email',
+                    'is_active', 'is_staff', 'is_superuser', 'get_designers')
 
     def get_designers(self, instance):
-        names = [item.name for item in instance.get_profile().in_charge_of_designers.all()]
+        names = [
+            item.name for item in instance.get_profile().in_charge_of_designers.all()
+        ]
         return ', '.join(names)
     get_designers.short_description = u'מעצבים בטיפול'
 
 
 class CategorySubjectModelAdmin(WithWorkCountField, TranslationAdmin):
-    list_display = ['name', 'parent', 'main_discipline', 'info', 'show_work_count']
+    list_display = ['name', 'parent', 'main_discipline',
+                    'info', 'show_work_count']
     list_filter = ['parent']
 
 admin.site.register(models.Category, CategorySubjectModelAdmin)

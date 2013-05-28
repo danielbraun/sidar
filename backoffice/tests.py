@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.test import TestCase
+
+from backoffice.management.commands.import_portfolio import match_is_self_collected, match_collector, match_technique
 from backoffice.models import Discipline
 from bibliography.models import BookCategory
-from backoffice.management.commands.import_portfolio import match_is_self_collected
-from backoffice.management.commands.import_portfolio import match_collector
-from backoffice.management.commands.import_portfolio import match_technique
 
 
 class ViewTests(TestCase):
@@ -61,10 +60,18 @@ class ViewTests(TestCase):
 
 class ManagementCommandTests(TestCase):
     def test_match_is_self_collected(self):
-        self.assertEqual(match_is_self_collected(u'ריזינגר דן', u'ריזינגר דן'), True)
-        self.assertEqual(match_is_self_collected(u'גרוס עלי', u'עלי גרוס'), True)
-        self.assertEqual(match_is_self_collected(u'ריזינגר דן', u'מאוסף ריזינגר דן'), True)
-        self.assertEqual(match_is_self_collected(u'האחים שמיר', u'ציונות 2000'), False)
+        self.assertEqual(
+            match_is_self_collected(u'ריזינגר דן', u'ריזינגר דן'),
+            True)
+        self.assertEqual(
+            match_is_self_collected(u'גרוס עלי', u'עלי גרוס'),
+            True)
+        self.assertEqual(
+            match_is_self_collected(u'ריזינגר דן', u'מאוסף ריזינגר דן'),
+            True)
+        self.assertEqual(
+            match_is_self_collected(u'האחים שמיר', u'ציונות 2000'),
+            False)
 
     def test_match_collector(self):
         self.assertEqual(

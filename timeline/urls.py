@@ -5,5 +5,7 @@ from timeline.views import EventList
 
 
 urlpatterns = patterns('',
-                       url(r'^$', EventList.as_view(model=Event), name='timeline_event_list')
+                       url(r'^$',
+                           EventList.as_view(model=Event),
+                           name='timeline_event_list')
                        )

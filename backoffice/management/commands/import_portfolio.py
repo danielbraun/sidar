@@ -16,7 +16,10 @@ def match_is_self_collected(designer, collector):
 
 def match_collector(designer, collector):
     if collector and not match_is_self_collected(designer, collector):
-        return [Collector.objects.get_or_create(name_he=html2text(collector).strip())[0]]
+        return [Collector.objects.get_or_create(
+            name_he=html2text(collector).strip()
+        )[0]
+        ]
     return []
 
 
@@ -72,7 +75,9 @@ def match_subject(field):
     if field:
         for subject in html2text(field).split(','):
             if subject.strip():
-                subjects.append((Subject.objects.get_or_create(name_he=subject.strip()))[0])
+                subjects.append(
+                    (Subject.objects.get_or_create(name_he=subject.strip()))[0]
+                )
     return subjects
 
 

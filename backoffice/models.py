@@ -1,21 +1,23 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Count
 from django.db.models.signals import post_save
+from django_countries import CountryField
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from imagekit.processors.crop import TrimBorderColor
-from django.core.urlresolvers import reverse
 from taggit.managers import TaggableManager
 from tinymce.models import HTMLField
-from django_countries import CountryField
 
 
 class FilterableByDesignerMixin(object):
 
     def designers_by_discipline(self, discipline):
-        designer_ids = self.work_set.filter(discipline=discipline).values_list('designer', flat=True).distinct()
+        designer_ids = self.work_set.filter(discipline=discipline)\
+                                    .values_list('designer', flat=True)\
+                                    .distinct()
         return Designer.objects.filter(pk__in=designer_ids)
 
 
@@ -32,7 +34,11 @@ class CommonModel(models.Model):
 
 class GenericManager(models.Manager):
     def belonging_to_discipline(self, discipline, field):
-        return self.filter(pk__in=Work.objects.filter(discipline=discipline).values(field).distinct())
+        return self.filter(
+            pk__in=Work.objects.filter(discipline=discipline)
+                               .values(field)
+                               .distinct()
+        )
 
 
 class Discipline(CommonModel):
@@ -65,7 +71,9 @@ class DesignerManager(GenericManager):
 class MainDisciplineMethodMixin(object):
     def main_discipline(self):
         try:
-            key = self.work_set.values('discipline').annotate(dcount=Count('discipline')).order_by('-dcount')[0]['discipline']
+            key = self.work_set.values('discipline')\
+                               .annotate(dcount=Count('discipline'))\
+                               .order_by('-dcount')[0]['discipline']
         except IndexError:
             return None
         return Discipline.objects.get(id=key)
@@ -76,16 +84,20 @@ class DesignPersona(CommonModel):
     photo = models.ImageField(u'דיוקן', upload_to="images/", blank=True)
     birth_year = models.IntegerField(u'שנת לידה', blank=True, null=True)
     death_year = models.IntegerField(u'שנת פטירה', blank=True, null=True)
-    birth_country = CountryField(u'מדינת לידה', null=True, blank=True, default='IL')
+    birth_country = CountryField(u'מדינת לידה', null=True,
+                                 blank=True, default='IL')
     is_active = models.BooleanField(u'מופיע ברשימה', default=False)
     philosophy_summary = HTMLField(u'תקציר פילוסופיה', blank=True)
-    philosophy = models.FileField(u'קובץ פילוסופיה', upload_to="pdf/", blank=True)
+    philosophy = models.FileField(u'קובץ פילוסופיה',
+                                  upload_to="pdf/", blank=True)
 
     class Meta(CommonModel.Meta):
         abstract = True
 
     def available_categories_by_discipline(self, discipline):
-        category_ids = self.work_set.filter(discipline=discipline).values_list('category', flat=True).distinct()
+        category_ids = self.work_set.filter(discipline=discipline)\
+                                    .values_list('category', flat=True)\
+                                    .distinct()
         return Category.objects.filter(pk__in=category_ids)
 
 
@@ -130,7 +142,10 @@ class WorkManager(models.Manager):
             i = i + 1
             for discipline in Discipline.objects.filter(active=True):
                 try:
-                    works.append(discipline.work_set.filter(designer__isnull=False).order_by('?')[0])
+                    works.append(
+                        discipline.work_set.filter(designer__isnull=False)
+                                           .order_by('?')[0]
+                    )
                 except IndexError:
                     pass
         return works
@@ -147,23 +162,29 @@ class Work(CommonModel):
         processors=[ResizeToFit(width=400),
                     TrimBorderColor(sides=('t', 'r', 'b', 'l'))],
         image_field='raw_image')
-    discipline = models.ForeignKey("Discipline", verbose_name=u'תחום', null=True)
-    category = models.ForeignKey("Category", verbose_name=u'קטגוריה', null=True)
-    of_collections = models.ManyToManyField('Collector', verbose_name=u'מאוספים',
+    discipline = models.ForeignKey("Discipline",
+                                   verbose_name=u'תחום', null=True)
+    category = models.ForeignKey("Category",
+                                 verbose_name=u'קטגוריה', null=True)
+    of_collections = models.ManyToManyField('Collector',
+                                            verbose_name=u'מאוספים',
                                             related_name='work_collections')
     is_self_collected = models.BooleanField(u'מאוסף המעצב?')
-    subjects = models.ManyToManyField("Subject", verbose_name=u'נושאים', blank=True)
+    subjects = models.ManyToManyField("Subject",
+                                      verbose_name=u'נושאים', blank=True)
     # Date related fields
-    publish_date_as_text = models.CharField(u'תאריך כמלל', max_length=50, blank=True)
-    # publish_date = models.DateField(verbose_name="תאריך הוצאה לאור", null=True)
-    # date_accuracy_level = models.CharField(u'רמת דיוק תאריך', max_length=2,
-    # choices=DATE_ACCURACY_LEVELS, default=None, blank=True)
-    publish_year = models.IntegerField('שנה', null=True, blank=True, help_text=u'שנה לועזית')
+    publish_date_as_text = models.CharField(u'תאריך כמלל',
+                                            max_length=50, blank=True)
+    publish_year = models.IntegerField('שנה', null=True,
+                                       blank=True, help_text=u'שנה לועזית')
     # Size related fields
     size_as_text = models.CharField(u'גודל כמלל', max_length=128, blank=True)
-    height = models.DecimalField(u'גובה', max_digits=5, decimal_places=2, default=0, blank=True)
-    width = models.DecimalField(u'רוחב', max_digits=5, decimal_places=2, default=0, blank=True)
-    depth = models.DecimalField(u'עומק', max_digits=5, decimal_places=2, default=0, blank=True)
+    height = models.DecimalField(u'גובה', max_digits=5,
+                                 decimal_places=2, default=0, blank=True)
+    width = models.DecimalField(u'רוחב', max_digits=5,
+                                decimal_places=2, default=0, blank=True)
+    depth = models.DecimalField(u'עומק', max_digits=5,
+                                decimal_places=2, default=0, blank=True)
 
     client = models.CharField(u'לקוח', max_length=255, blank=True)
     country = CountryField(u'מדינה', null=True, blank=True, default='IL')
@@ -186,8 +207,10 @@ class Work(CommonModel):
         })
 
 
-class Category(CommonModel, FilterableByDesignerMixin, MainDisciplineMethodMixin):
-    parent = models.ForeignKey('self', verbose_name=u'קטגורית על', blank=True, null=True)
+class Category(CommonModel, FilterableByDesignerMixin,
+               MainDisciplineMethodMixin):
+    parent = models.ForeignKey('self', verbose_name=u'קטגורית על',
+                               blank=True, null=True)
     info = models.TextField(u'מידע על הקטגוריה')
     objects = GenericManager()
 
@@ -202,8 +225,10 @@ class Category(CommonModel, FilterableByDesignerMixin, MainDisciplineMethodMixin
         })
 
 
-class Subject(CommonModel, FilterableByDesignerMixin, MainDisciplineMethodMixin):
-    parent = models.ForeignKey('self', verbose_name=u'נושא על', blank=True, null=True)
+class Subject(CommonModel, FilterableByDesignerMixin,
+              MainDisciplineMethodMixin):
+    parent = models.ForeignKey('self', verbose_name=u'נושא על',
+                               blank=True, null=True)
     info = models.TextField(u'מידע על הנושא')
     objects = GenericManager()
 
@@ -222,7 +247,9 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
     # Custom fields
-    in_charge_of_designers = models.ManyToManyField(Designer, verbose_name=u'אחראי על מעצבים', blank=True)
+    in_charge_of_designers = models.ManyToManyField(Designer,
+                                                    verbose_name=(u'אחראי על מעצבים'),
+                                                    blank=True)
     # portrait = models.ImageField(upload_to='portraits/', null=True)
 
     class Meta:

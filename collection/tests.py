@@ -9,7 +9,9 @@ from collection.models import Collectable
 class ViewTests(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+        self.user = User.objects.create_user('john',
+                                             'lennon@thebeatles.com',
+                                             'johnpassword')
         self.client.login(username="john", password="johnpassword")
 
     def assertResponseOK(self, url):
@@ -23,7 +25,8 @@ class ViewTests(TestCase):
     def test_up_action(self):
         c1 = Collectable.objects.create(original_work_id=1, user=self.user)
         c2 = Collectable.objects.create(original_work_id=1, user=self.user)
-        response = self.client.post(reverse('collectable-up', kwargs={'pk': c2.id}))
+        response = self.client.post(reverse('collectable-up',
+                                            kwargs={'pk': c2.id}))
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Collectable.objects.get(pk=c2.id).position, 0)
         self.assertEqual(Collectable.objects.get(pk=c1.id).position, 1)
@@ -31,7 +34,8 @@ class ViewTests(TestCase):
     def test_down_action(self):
         c1 = Collectable.objects.create(original_work_id=1, user=self.user)
         c2 = Collectable.objects.create(original_work_id=1, user=self.user)
-        response = self.client.post(reverse('collectable-down', kwargs={'pk': c1.id}))
+        response = self.client.post(reverse('collectable-down',
+                                            kwargs={'pk': c1.id}))
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Collectable.objects.get(pk=c2.id).position, 0)
         self.assertEqual(Collectable.objects.get(pk=c1.id).position, 1)

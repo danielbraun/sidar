@@ -11,5 +11,6 @@ class MessageCreateView(CreateView):
 
     def form_valid(self, form):
         self.success_url = self.request.GET['next']
-        messages.success(self.request, self.success_message, extra_tags='feedback')
+        messages.success(self.request, self.success_message,
+                         extra_tags='feedback')
         return super(MessageCreateView, self).form_valid(form)
