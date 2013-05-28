@@ -171,6 +171,7 @@ INSTALLED_APPS = (
     'flatpages_tinymce',
     'django_countries',
     'storages',
+    'form_utils',
 
 )
 

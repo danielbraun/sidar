@@ -60,3 +60,14 @@ p.datetime {
 	margin-left: 0;
 	margin-right: 106px;
 }
+
+fieldset.module.aligned {
+	position: relative;
+}
+
+div br+img {
+	position: absolute;
+	left: 1em;
+	top: 1em;
+	width: 40%;
+}

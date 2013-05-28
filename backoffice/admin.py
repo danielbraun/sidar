@@ -4,8 +4,9 @@ from django.contrib.auth.models import User
 from imagekit.admin import AdminThumbnail
 from modeltranslation.admin import TranslationAdmin
 from django.db.models import Count
-
+from form_utils.widgets import ImageWidget
 import models
+from django.db.models import ImageField
 from django.contrib.auth.admin import UserAdmin
 
 
@@ -47,11 +48,15 @@ class WorkAdmin(TranslationAdmin):
     list_filter = ('discipline', 'category', 'designer', 'of_collections')
     filter_horizontal = ['subjects', 'of_collections']
     readonly_fields = ['sidar_id', ]
-    fields = ['designer', 'name', 'sidar_id', 'category', 'tags', 'discipline',
-              'publish_date_as_text', 'publish_year', 'size_as_text', 'height',
+    fields = ['raw_image', 'designer', 'name', 'sidar_id', 'category', 'tags',
+              'discipline', 'publish_date_as_text', 'publish_year',
+              'size_as_text', 'height',
               'width', 'depth', 'country', 'technique', 'of_collections',
               'is_self_collected', 'subjects', 'description',
               ]
+    formfield_overrides = {
+        ImageField: {'widget': ImageWidget()},
+    }
 
     def queryset(self, request):
         qs = super(WorkAdmin, self).queryset(request)
