@@ -151,10 +151,11 @@ class WorkManager(models.Manager):
         return works
 
 
-class Work(CommonModel):
+class Work(models.Model):
     objects = WorkManager()
     tags = TaggableManager(u'מילות מפתח')
 
+    name = models.CharField(u'שם העבודה', max_length=255)
     sidar_id = models.CharField(u'קוד עבודה', max_length=50, blank=True)
     designer = models.ForeignKey('Designer', verbose_name=u'מעצב', null=True)
     raw_image = models.ImageField(u'תמונת מקור', upload_to='works', null=True)
@@ -168,7 +169,8 @@ class Work(CommonModel):
                                  verbose_name=u'קטגוריה', null=True)
     of_collections = models.ManyToManyField('Collector',
                                             verbose_name=u'מאוספים',
-                                            related_name='work_collections')
+                                            related_name='work_collections',
+                                            blank=True)
     is_self_collected = models.BooleanField(u'מאוסף המעצב?')
     subjects = models.ManyToManyField("Subject",
                                       verbose_name=u'נושאים', blank=True)
@@ -195,6 +197,7 @@ class Work(CommonModel):
     class Meta(CommonModel.Meta):
         verbose_name = "עבודה"
         verbose_name_plural = "עבודות"
+        ordering = ['sidar_id', ]
 
     def __unicode__(self):
         return self.sidar_id

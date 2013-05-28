@@ -45,7 +45,7 @@ class WorkAdmin(TranslationAdmin):
                     'category', 'discipline', 'admin_thumbnail')
     ordering = ('-id',)
     list_filter = ('discipline', 'category', 'designer', 'of_collections')
-    filter_horizontal = ['subjects']
+    filter_horizontal = ['subjects', 'of_collections']
     readonly_fields = ['sidar_id', ]
     fields = ['designer', 'name', 'sidar_id', 'category', 'tags', 'discipline',
               'publish_date_as_text', 'publish_year', 'size_as_text', 'height',
