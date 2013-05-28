@@ -126,7 +126,7 @@ class Designer(DesignPersona, MainDisciplineMethodMixin):
         verbose_name_plural = "מעצבים"
 
 
-class Collector(DesignPersona):
+class Collector(DesignPersona, MainDisciplineMethodMixin):
     homepage = models.URLField(u'אתר בית', blank=True)
 
     class Meta(CommonModel.Meta):
@@ -169,7 +169,6 @@ class Work(models.Model):
                                  verbose_name=u'קטגוריה', null=True)
     of_collections = models.ManyToManyField('Collector',
                                             verbose_name=u'מאוספים',
-                                            related_name='work_collections',
                                             blank=True)
     is_self_collected = models.BooleanField(u'מאוסף המעצב?')
     subjects = models.ManyToManyField("Subject",

@@ -77,8 +77,10 @@ class DesignerAdmin(WithWorkCountField, TranslationAdmin):
               'is_active', 'philosophy_summary']
 
 
-class CollectorAdmin(TranslationAdmin):
-    list_display = ('name',)
+class CollectorAdmin(WithWorkCountField, TranslationAdmin):
+    list_display = ('name', 'main_discipline',
+                    'birth_year', 'is_active', 'show_work_count',)
+    list_filter = ['is_active', ]
 
 
 class UserProfileInline(admin.StackedInline):
