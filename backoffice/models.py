@@ -128,6 +128,7 @@ class Designer(DesignPersona, MainDisciplineMethodMixin):
 
 class Collector(DesignPersona, MainDisciplineMethodMixin):
     homepage = models.URLField(u'אתר בית', blank=True)
+    objects = GenericManager()
 
     class Meta(CommonModel.Meta):
         verbose_name = u'אספן'

@@ -25,6 +25,24 @@
 		<tr>
 			{% for group in object_list %}
 			{% cycle "<td>" "" %}
+
+			{% if forloop.first %}
+				<table class="generaltable">
+					<tbody>
+						<tr>
+							<th>אוספים</th>
+						</tr>
+						{% for collector in collectors %}
+							<tr>
+								<td>
+									<strong>{{ collector }}</strong>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% endif %}
+
 			<table class="generaltable">
 				<tbody>
 					<tr>

@@ -6,7 +6,7 @@ from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
 
 from backoffice.forms import SearchForm
-from backoffice.models import Designer, Discipline, Work, Subject, Category
+from backoffice.models import Designer, Discipline, Work, Subject, Category, Collector
 
 
 class DisciplineMixin(object):
@@ -128,6 +128,9 @@ class DesignerListView(DisciplineMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(DesignerListView, self).get_context_data(**kwargs)
         context['generations'] = Designer.GENERATIONS
+        context['collectors'] = Collector.objects\
+            .belonging_to_discipline(1, 'of_collections')\
+            .filter(is_active=True)
         return context
 
     def get_queryset(self):
