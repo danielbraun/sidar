@@ -81,15 +81,15 @@ class MainDisciplineMethodMixin(object):
 
 
 class DesignPersona(CommonModel):
-    photo = models.ImageField(u'דיוקן', upload_to="images/", blank=True)
     birth_year = models.IntegerField(u'שנת לידה', blank=True, null=True)
     death_year = models.IntegerField(u'שנת פטירה', blank=True, null=True)
     birth_country = CountryField(u'מדינת לידה', null=True,
                                  blank=True, default='IL')
-    is_active = models.BooleanField(u'מופיע ברשימה', default=False)
-    philosophy_summary = HTMLField(u'תקציר פילוסופיה', blank=True)
+    photo = models.ImageField(u'דיוקן', upload_to="images/", blank=True)
     philosophy = models.FileField(u'קובץ פילוסופיה',
                                   upload_to="pdf/", blank=True)
+    is_active = models.BooleanField(u'מופיע אוספים', default=False)
+    philosophy_summary = HTMLField(u'תקציר פילוסופיה', blank=True)
 
     class Meta(CommonModel.Meta):
         abstract = True

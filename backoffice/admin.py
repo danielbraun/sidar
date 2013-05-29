@@ -81,6 +81,8 @@ class CollectorAdmin(WithWorkCountField, TranslationAdmin):
     list_display = ('name', 'main_discipline',
                     'birth_year', 'is_active', 'show_work_count',)
     list_filter = ['is_active', ]
+    fields = ['name', 'birth_year', 'death_year', 'birth_country', 'homepage',
+              'photo', 'philosophy', 'is_active', 'philosophy_summary']
 
 
 class UserProfileInline(admin.StackedInline):
