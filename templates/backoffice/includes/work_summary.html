@@ -1,9 +1,9 @@
 <td class="preview_image_td">
 	{% if work %}
 	<a href="work-{{ work.id }}">
-		<img src="{% if work.preview_image %}{% endif %}">
-		<img src="images/spacer.png" class="spacer">
-	</a>	
+		<img src="{% if work.processed_image %}{{ work.processed_image.url }}{% endif %}">
+		<img src="{{ STATIC_URL }}website/images/spacer.png" class="spacer">
+	</a>
 	{% endif %}
 </td>
 <td class="preview_info_td">
