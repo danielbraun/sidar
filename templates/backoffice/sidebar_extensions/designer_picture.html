@@ -4,7 +4,8 @@
 
 {% block body %}
 	<a href="{% url designer-detail discipline.id designer.id %}">
-		<img src="skjdfsldkfj" width="178">
+		<img src="{% if designer.photo %}{{ designer.photo.url }}{% endif %}"
+		     width="178">
 	</a>
 
 {% endblock body %}

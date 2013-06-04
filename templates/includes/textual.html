@@ -7,7 +7,8 @@
 	</tr>
 	<tr>
 		<td class="generaltextcell">
-			<img src="{{ side_image }}" style="float: left;">
+			<img src="{% if side_image %}{{ side_image.url }}{% endif %}"
+			     style="float: left;">
 			{% autoescape off %}{{ body }}{% endautoescape %}
 		</td>
 	</tr>
