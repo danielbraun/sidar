@@ -19,3 +19,7 @@ td .thumbnail {
 .results~.actions {
 	display: inherit;
 }
+
+ul, ol {
+	margin: inherit;
+}
