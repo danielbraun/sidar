@@ -39,7 +39,13 @@ class DisciplineAdmin(WithWorkCountField, TranslationAdmin):
     list_display = ('name_he', 'name_en', 'active', 'show_work_count')
 
 
-class WorkAdmin(TranslationAdmin):
+class LargeImagePreviewInChangeForm(object):
+    formfield_overrides = {
+        ImageField: {'widget': ImageWidget()},
+    }
+
+
+class WorkAdmin(LargeImagePreviewInChangeForm, TranslationAdmin):
     admin_thumbnail = AdminThumbnail(image_field='processed_image')
     admin_thumbnail.short_description = u'תצוגה מקדימה'
     list_display = ('sidar_id', 'name', 'designer',
@@ -54,9 +60,6 @@ class WorkAdmin(TranslationAdmin):
               'width', 'depth', 'country', 'technique', 'of_collections',
               'is_self_collected', 'subjects', 'description',
               ]
-    formfield_overrides = {
-        ImageField: {'widget': ImageWidget()},
-    }
 
     def queryset(self, request):
         qs = super(WorkAdmin, self).queryset(request)
@@ -67,7 +70,8 @@ class WorkAdmin(TranslationAdmin):
         )
 
 
-class DesignerAdmin(WithWorkCountField, TranslationAdmin):
+class DesignerAdmin(LargeImagePreviewInChangeForm, WithWorkCountField,
+                    TranslationAdmin):
     list_display = (
         'name', 'main_discipline', 'generation_as_choices',
         'birth_year', 'is_active', 'show_work_count', )
@@ -77,7 +81,8 @@ class DesignerAdmin(WithWorkCountField, TranslationAdmin):
               'is_active', 'philosophy_summary']
 
 
-class CollectorAdmin(WithWorkCountField, TranslationAdmin):
+class CollectorAdmin(LargeImagePreviewInChangeForm,
+                     WithWorkCountField, TranslationAdmin):
     list_display = ('name', 'main_discipline',
                     'birth_year', 'is_active', 'show_work_count',)
     list_filter = ['is_active', ]

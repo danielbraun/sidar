@@ -2,13 +2,14 @@ Django==1.4.1
 Fabric==1.5.1
 Pillow==1.7.8
 South==0.7.6
+argparse==1.2.1
 boto==2.9.2
 distribute==0.6.30
 dj-database-url==0.2.1
 django-countries==1.5
 django-dbbackup==1.70
 django-flatpages-tinymce==0.1.1
-django-form-utils==0.2.0
+-e git+https://github.com/danielbraun/django-form-utils.git@72c3130fc769bf450d30d39b274a4c6e1739aab1#egg=django_form_utils-dev
 django-imagekit==2.0.1
 django-modeltranslation==0.6.1
 django-positions==0.4.3

@@ -67,7 +67,7 @@ fieldset.module.aligned {
 
 div br+img {
 	position: absolute;
-	left: 1em;
-	top: 1em;
+	left: 0;
+	top: 0;
 	width: 40%;
 }
