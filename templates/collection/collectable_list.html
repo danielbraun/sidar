@@ -51,13 +51,13 @@
 							<td style="text-align:center;">
 								<form method="post" action="{{ object.id }}/down/" style="display:inline;">
 									{% csrf_token %}
-									<input type="submit" value="▼" style="color:green;">
+									<input type="submit" value="▼" style="color:green;float:left;">
 								</form>
 
 
 								<form method="post" action="{% url collectable-up object.id %}" style="display:inline;">
 									{% csrf_token %}
-									<input type="submit" value="▲" style="color:green;">
+									<input type="submit" value="▲" style="color:green;float:left;">
 								</form>
 							</td>
 						</tr>
