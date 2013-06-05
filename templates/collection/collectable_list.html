@@ -35,6 +35,7 @@
 								<form method="post" action="{{ object.id }}/" class="collectable-update">
 									{% csrf_token %}
 									<textarea id="remarks-text" name="comments">{{ object.comments }}</textarea>
+									</form>
 								</td>
 							</tr>
 							<tr>
