@@ -17,12 +17,12 @@ class BookCategory(models.Model):
 
 
 class Book(models.Model):
-    title = models.CharField(u'כותרת', max_length=256)
-    discipline = models.ForeignKey(Discipline, verbose_name=u'תחום עיצוב')
-    category = models.ForeignKey(BookCategory, verbose_name=u'קטגוריה')
-    comments = models.CharField(u'הערות', max_length=256)
     author_as_text = models.CharField(u'מחבר/עורך/מאייר', max_length=256)
+    title = models.CharField(u'כותרת', max_length=256)
     publication_as_text = models.CharField(u'הוצאה/מקום/שנה', max_length=256)
+    category = models.ForeignKey(BookCategory, verbose_name=u'קטגוריה')
+    discipline = models.ForeignKey(Discipline, verbose_name=u'תחום עיצוב')
+    comments = models.CharField(u'הערות', max_length=256)
 
     class Meta:
         verbose_name = u'ספר'
