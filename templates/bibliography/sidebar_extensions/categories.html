@@ -1,12 +1,12 @@
 {% extends "includes/sidebar_extension.html" %}
 {% block title %}קטגוריות זמינות{% endblock title %}
 {% block body %}
-	
+
 	<select onchange='document.location.href=this.options[this.selectedIndex].value;'>
-		<option value={% url book-list discipline.id %}>כל הקטגוריות</option>
+		<option value={% url 'book-list' discipline.id %}>כל הקטגוריות</option>
 		{% for item in categories %}
 			<option
-				value="{% url book-list discipline.id item.id %}"
+				value="{% url 'book-list' discipline.id item.id %}"
 				{% if item == category %}selected{% endif %}
 			>
 				{{ item }}

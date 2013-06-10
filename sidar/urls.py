@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.conf.urls import patterns, include
+from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
@@ -28,7 +28,10 @@ discipline_urls = patterns(
     (r'^timeline/', include('timeline.urls')),
     (r'^book/', include('bibliography.urls')),
 
-    (r'^about/$', views.DisciplineTemplateView.as_view(template_name='backoffice/discipline_about.html'), {},'discipline-about'),
+    url(r'^about/$',
+        views.DisciplineTemplateView.as_view(
+            template_name='backoffice/discipline_about.html'),
+        name='discipline-about'),
     (r'^article/$', DisciplineTemplateView.as_view(template_name='backoffice/article_list.html'), {}, "article-list"),
     (r'^search/$', SearchView.as_view(), {}, 'search'),
 
@@ -43,6 +46,8 @@ discipline_urls = patterns(
     (r'^designer/$', DesignerListView.as_view(), {}, 'designer-list'),
     (r'^designer/(?P<pk>\d+)/about/$', DesignerDetailView.as_view(), {}, "designer-detail"),
     (r'^designer/(?P<designer>\d+)/', include(work_urls), {'main_filter': 'designer'}),
+
+    (r'^collector/(?P<collector>\d+)/', include(work_urls), {'main_filter': 'designer'}),
 
     (r'^category/$', WorkFieldListViewByDiscipline.as_view(model=models.Category), {'work_field': 'category'}, 'category-list'),
     (r'^category/(?P<category>\d+)/', include(work_urls), {'main_filter': 'category'}),
@@ -69,7 +74,11 @@ urlpatterns = patterns(
     (r'^admin/', include(admin.site.urls)),
     (r'^discipline/(?P<discipline>\d+)/', include(discipline_urls)),
     (r'^collection/', include('collection.urls')),
-    (r'^$', ListView.as_view(template_name="home.html", queryset=models.Work.objects.one_from_each_discipline(), model=models.Work), {}, "home"),
+    (r'^$', ListView.as_view(
+        template_name="home.html",
+        queryset=models.Work.objects.one_from_each_discipline(),
+        model=models.Work),
+    {}, "home"),
     (r'^pages/', include('django.contrib.flatpages.urls')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

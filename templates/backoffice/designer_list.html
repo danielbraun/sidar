@@ -35,7 +35,12 @@
 						{% for collector in collectors %}
 							<tr>
 								<td>
-									<strong>{{ collector }}</strong>
+									<strong>
+										<a href="{% url 'work-list' discipline=discipline.id collector=collector.id %}"
+										   style="color:black;">
+											{{ collector }}
+										</a>
+									</strong>
 								</td>
 							</tr>
 						{% endfor %}
@@ -55,7 +60,7 @@
 					<tr>
 						<td class="designers_group_{{ designer.generation_as_choices }}">
 							{% if designer.is_active %}
-								<a href="{% url work-list discipline=discipline.id designer=designer.id %}"
+								<a href="{% url 'work-list' discipline=discipline.id designer=designer.id %}"
 								   class="designer_type_{{ designer.generation_as_choices }}">
 							{% else %}
 								<a class="disabled">

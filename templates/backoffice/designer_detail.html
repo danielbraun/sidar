@@ -3,7 +3,7 @@
 {% block maintitle %}דף מעצב › {{ designer }}{% endblock maintitle %}
 
 {% block pagination %}
-	<a href="{% url work-list discipline=discipline.id designer=designer.id %}">
+	<a href="{% url 'work-list' discipline=discipline.id designer=designer.id %}">
 		‹ עבודות - {{ designer }}
 	</a>
 {% endblock pagination %}

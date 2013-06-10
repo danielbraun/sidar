@@ -19,22 +19,22 @@
 	<div id="pagewrap">
 		{% block header %}
 		<div id="pageheader">
-			<a id="logo" href="{% url home %}">מכון שנקר לתיעוד וחקר העיצוב בישראל | Shenkar Design Archive &amp; Research Center</a>
+			<a id="logo" href="{% url 'home' %}">מכון שנקר לתיעוד וחקר העיצוב בישראל | Shenkar Design Archive &amp; Research Center</a>
 
 			<div id="main_nav">
 				{% block navigation %}{% endblock navigation %}
 			</div>
 			<div class="clearboth"></div>
 			<div id="header_sidebar">
-				<a href="{% if discipline %}{% url discipline-detail discipline.id %}{% else %}{% url home %}{% endif %}" class="posindex_link"></a>
-				<a href="{% url home %}" class="mainindex_link"></a>
+				<a href="{% if discipline %}{% url 'discipline-detail' discipline.id %}{% else %}{% url 'home' %}{% endif %}" class="posindex_link"></a>
+				<a href="{% url 'home' %}" class="mainindex_link"></a>
 				<form id="deciplineform" action="" method="post">
 					<select name="select" onchange="window.location.href=this.value">
 						<option value="">
 							בחר/י תחום מיקוד
 						</option>
 						{% for object in disciplines %}
-						<option value="{% url discipline-detail object.id %}"{% if object.id == discipline.id %}selected{% endif %} {% if not object.active %}disabled{% endif %}>
+						<option value="{% url 'discipline-detail' object.id %}"{% if object.id == discipline.id %}selected{% endif %} {% if not object.active %}disabled{% endif %}>
 							{{ object.long_name }}
 						</option>
 						{% endfor %}
@@ -59,7 +59,7 @@
 				{% block pagebody %}{% endblock pagebody %}
 				<div id="pagefooter">
 					<p>
-						© {% now "Y" %} <a href="{% url home %}">מכון שנקר לתיעוד וחקר העיצוב בישראל</a>, כל הזכויות שמורות.
+						© {% now "Y" %} <a href="{% url 'home' %}">מכון שנקר לתיעוד וחקר העיצוב בישראל</a>, כל הזכויות שמורות.
 					</p>
 				</div>
 			</div>

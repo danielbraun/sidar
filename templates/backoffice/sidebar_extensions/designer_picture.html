@@ -3,7 +3,7 @@
 {% block id %}designer-seal{% endblock id %}
 
 {% block body %}
-	<a href="{% url designer-detail discipline.id designer.id %}">
+	<a href="{% url 'designer-detail' discipline.id designer.id %}">
 		<img src="{% if designer.photo %}{{ designer.photo.url }}{% endif %}"
 		     width="178">
 	</a>

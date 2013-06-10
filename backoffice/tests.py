@@ -4,6 +4,9 @@ from django.test import TestCase
 from backoffice.management.commands.import_portfolio import match_is_self_collected, match_collector, match_technique
 from backoffice.models import Discipline
 from bibliography.models import BookCategory
+from django.core.urlresolvers import reverse
+from backoffice.models import Collector
+from backoffice.models import Work
 
 
 class ViewTests(TestCase):
@@ -82,3 +85,28 @@ class ManagementCommandTests(TestCase):
     def test_match_technique(self):
         self.assertEqual(match_technique(u'תלת מימד&#44; קינטיקה'),
                          u'תלת מימד, קינטיקה')
+
+
+class WorkListViewTests(TestCase):
+    def setUp(self):
+        self.discipline = Discipline.objects.create(name_en='g', active=True)
+        self.collector = Collector.objects.create()
+        self.work = Work.objects.create(discipline=self.discipline)
+        self.work_with_a_collector = Work.objects.create(discipline=self.discipline)
+        self.work_with_a_collector.of_collections.add(self.collector)
+        self.collector_response = self.client.get(
+            reverse('work-list',
+                    kwargs={'discipline': self.discipline.id,
+                            'collector': self.collector.id})
+        )
+
+    def test_browse_by_collector(self):
+        """It should be possible to browse the works a of a collector."""
+        self.assertEqual(self.collector_response.status_code, 200)
+        self.assertIn(self.work_with_a_collector,
+                      self.collector_response.context['object_list'])
+
+    def test_filter_by_collector(self):
+        """It should display only the selected collector's works."""
+        self.assertNotIn(self.work,
+                         self.collector_response.context['object_list'])

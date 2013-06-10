@@ -41,6 +41,7 @@ class WorkListView(DisciplineMixin, ListView):
         filters = self.kwargs
 
         self.designer = filters.get('designer')
+        self.collector = filters.get('collector')
         self.subject = filters.get('subject')
         self.category = filters.get('category')
         self.from_year = filters.get('from')
@@ -51,6 +52,12 @@ class WorkListView(DisciplineMixin, ListView):
             self.designer = get_object_or_404(Designer, pk=self.designer)
             self.designer.available_categories = self.designer.available_categories_by_discipline(self.discipline)
             works = works.filter(designer=self.designer)
+
+        if self.collector:
+            self.collector = get_object_or_404(Collector, pk=self.collector)
+            self.designer = self.collector
+            self.designer.available_categories = self.designer.available_categories_by_discipline(self.discipline)
+            works = works.filter(of_collections=self.designer)
 
         if self.subject:
             self.subject = get_object_or_404(Subject, pk=self.subject)
@@ -84,6 +91,7 @@ class WorkListView(DisciplineMixin, ListView):
         context = super(WorkListView, self).get_context_data(**kwargs)
         context['main_filter'] = self.kwargs.get('main_filter')
         context['designer'] = self.designer
+        context['collector'] = self.collector
         context['category'] = self.category
         context['subject'] = self.subject
         context['from'] = self.from_year

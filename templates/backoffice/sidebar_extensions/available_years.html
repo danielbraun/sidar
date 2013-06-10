@@ -3,9 +3,9 @@
 {% block body %}
 
 <select onchange='document.location.href=this.options[this.selectedIndex].value;'>
-	<option value="{% url work-list discipline=discipline.id from=from until=until %}">כל השנים</option>
+	<option value="{% url 'work-list' discipline=discipline.id from=from until=until %}">כל השנים</option>
 	{% for item in available_years %}
-		<option value="{% url work-list discipline.id from until item %}" {% if year == item %}selected{% endif %}>
+		<option value="{% url 'work-list' discipline.id from until item %}" {% if year == item %}selected{% endif %}>
 			{{ item }}
 		</option>
 	{% endfor %}

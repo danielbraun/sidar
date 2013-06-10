@@ -6,7 +6,7 @@
 	<option></option>
 	{% for item in designer.available_categories %}
 		<option
-			value="{% url work-list discipline=discipline.id category=item.id designer=designer.id%}"
+			value="{% url 'work-list' discipline=discipline.id category=item.id designer=designer.id%}"
 			{% if item == category %}selected{% endif %}
 		>
 			{{ item }}

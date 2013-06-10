@@ -23,7 +23,7 @@
 
 
 	<div class="sidebar_block_content" style="background-color:#ffffff;text-decoration:none;padding-top:8px;">
-		<form method="post" action="{% url feedback-send %}?next={{ path }}">
+		<form method="post" action="{% url 'feedback-send' %}?next={{ path }}">
 			{% csrf_token %}
 			<table border="0" style="width:100%;display:inline;">
 				<tbody>

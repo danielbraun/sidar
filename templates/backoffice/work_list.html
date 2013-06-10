@@ -14,8 +14,10 @@
 	{% endif %}
 	{% if main_filter == 'category' %}קטגוריות › {{ category }}{% endif %}
 	{% if main_filter == 'subject' %}נושאים › {{ subject }}{% endif %}
-	{% if main_filter == 'designer' %}מעצבים › {{ designer }}{% endif %}
 
+	{% if main_filter == 'designer' and collector %}אספנים › {{ collector }}
+	{% elif main_filter == 'designer' and designer %}מעצבים › {{ designer }}
+	{% endif %}
 
 {% endblock maintitle %}
 
@@ -58,7 +60,7 @@
 		{% include "backoffice/sidebar_extensions/info.html" with object=subject %}
 	{% endif %}
 
-	{% if designer %}
+	{% if designer and not collector %}
 		{% include "backoffice/sidebar_extensions/designer.html" %}
 	{% endif %}
 

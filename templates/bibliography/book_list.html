@@ -27,10 +27,10 @@
 	<td>{{ book.title }}</td>
 	<td>{{ book.publication_as_text }}</td>
 	<td>
-		<a href="{% url book-list discipline.id book.category.id %}">
+		<a href="{% url 'book-list' discipline.id book.category.id %}">
 			{{ book.category }}
 		</a>
-		
+
 	</td>
 	<td>{{ book.comments }}</td>
 </tr>

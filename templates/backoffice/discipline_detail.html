@@ -6,16 +6,16 @@
 
 {% block navigation %}
 <ul>
-	<li class="navitem_1"><a href="{% url discipline-about discipline.id %}">עיצוב {{ discipline }}<span></span></a></li>
-	<li class="navitem_2"><a href="{% url timeline_event_list discipline.id %}">שנים<span></span></a></li>
-	<li class="navitem_3"><a href="{% url category-list discipline.id %}">קטגוריות<span></span></a></li>
-	<li class="navitem_4"><a href="{% url subject-list discipline.id %}">נושאים<span></span></a></li>
-	<li class="navitem_5"><a href="{% url designer-list discipline.id %}">מעצבים<span></span></a></li>
-	<li class="navitem_6"><a href="{% url article-list discipline.id %}">מאמרים<span></span></a></li>
-	<li class="navitem_7"><a href="{% url link-list discipline.id %}">קישורים<span></span></a></li>
-	<li class="navitem_8"><a href="{% url book-list discipline.id %}">ביבליוגרפיה<span></span></a></li>
-	<li class="navitem_9"><a href="{% url video-list discipline.id %}">סרטים<span></span></a></li>
-	<li class="navitem_10"><a href="{% url event-list discipline.id %}">ארועים<span></span></a></li>
+	<li class="navitem_1"><a href="{% url 'discipline-about' discipline.id %}">עיצוב {{ discipline }}<span></span></a></li>
+	<li class="navitem_2"><a href="{% url 'timeline_event_list' discipline.id %}">שנים<span></span></a></li>
+	<li class="navitem_3"><a href="{% url 'category-list' discipline.id %}">קטגוריות<span></span></a></li>
+	<li class="navitem_4"><a href="{% url 'subject-list' discipline.id %}">נושאים<span></span></a></li>
+	<li class="navitem_5"><a href="{% url 'designer-list' discipline.id %}">מעצבים<span></span></a></li>
+	<li class="navitem_6"><a href="{% url 'article-list' discipline.id %}">מאמרים<span></span></a></li>
+	<li class="navitem_7"><a href="{% url 'link-list' discipline.id %}">קישורים<span></span></a></li>
+	<li class="navitem_8"><a href="{% url 'book-list' discipline.id %}">ביבליוגרפיה<span></span></a></li>
+	<li class="navitem_9"><a href="{% url 'video-list' discipline.id %}">סרטים<span></span></a></li>
+	<li class="navitem_10"><a href="{% url 'event-list' discipline.id %}">ארועים<span></span></a></li>
 </ul>
 {% endblock navigation %}
 
@@ -31,7 +31,7 @@
 
 
 {% block sidebar %}
-	<a href="{% url search discipline.id %}" id="sidebar_searchlink">חיפוש מתקדם</a>
+	<a href="{% url 'search' discipline.id %}" id="sidebar_searchlink">חיפוש מתקדם</a>
 	{% block collection_section %}
 		{% include "collection/sidebar_section.html" %}
 	{% endblock collection_section %}

@@ -2,7 +2,7 @@
 
 var leftrightslide=new Array()
 {% for work in object_list %}
-leftrightslide[{{ forloop.counter0 }}]="<a href='{% url work-detail discipline=work.discipline.id designer=work.designer.id work=work.id %}'><img src='' alt='{{ work.name }}' width='{{ size }}px' height='{{ size }}px' /><\/a>"
+leftrightslide[{{ forloop.counter0 }}]="<a href='{% url 'work-detail' discipline=work.discipline.id designer=work.designer.id work=work.id %}'><img src='' alt='{{ work.name }}' width='{{ size }}px' height='{{ size }}px' /><\/a>"
 {% endfor %}
 
 				//Specify gap between each image (use HTML):

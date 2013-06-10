@@ -21,10 +21,10 @@
 	<tr>
 		<td class="rainbowcell rbcell_{{ forloop.counter }}">
 			{% if forloop.first %}
-				<a href="{% url work-list discipline=discipline.id from=0 until=decade.grouper|add:10 %}">עד {{ decade.grouper|add:10 }}
+				<a href="{% url 'work-list' discipline=discipline.id from=0 until=decade.grouper|add:10 %}">עד {{ decade.grouper|add:10 }}
 					| {% hebrew_year decade.grouper|add:10 %}
 			{% else %}
-				<a href="{% url work-list discipline=discipline.id from=decade.grouper until=decade.grouper|add:'9' %}">{{ decade.grouper }} - {{ decade.grouper|add:"9"}}
+				<a href="{% url 'work-list' discipline=discipline.id from=decade.grouper until=decade.grouper|add:'9' %}">{{ decade.grouper }} - {{ decade.grouper|add:"9"}}
 					| {% hebrew_year decade.grouper %}
 			{% endif %}
 

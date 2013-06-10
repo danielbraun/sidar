@@ -18,13 +18,13 @@
 	{% endif %}
 
 	{% if user.is_authenticated %}
-	<a href="javascript:void(show_collect_win('{% url collection-home %}'));" class="sidebar_linkitem" id="open_collection_link">פתח את הדף האישי</a>
+	<a href="javascript:void(show_collect_win('{% url 'collection-home' %}'));" class="sidebar_linkitem" id="open_collection_link">פתח את הדף האישי</a>
 	{% else %}
 	<a href="javascript:displayLoginBox();" id="personal_page_link" class="sidebar_linkitem">כניסה למערכת הדף האישי</a>
 	<div id="login" style="display:none;">
 		<div class="sidebar_block_title" style="display:block;margin-bottom:0px;">כניסה למערכת הדף האישי</div>
 		<div class="sidebar_block_content" style="background-color:#DDDFE1;text-decoration:none;padding-top:8px;">
-			<form method="post" name="login_form" id="login_form" action="{% url django.contrib.auth.views.login %}" target="_top">
+			<form method="post" name="login_form" id="login_form" action="{% url 'django.contrib.auth.views.login' %}" target="_top">
 				{% csrf_token %}
 				<table border="0" style="width:100%;display:inline;">
 					<tbody>
@@ -43,7 +43,7 @@
 						<tr>
 							<td></td>
 							<td>
-								<a href="{% url register %}?next={{ path }}">הרשמת משתמש חדש</a>
+								<a href="{% url 'register' %}?next={{ path }}">הרשמת משתמש חדש</a>
 								<input type="submit" value="כניסה">
 							</td>
 						</tr>
@@ -68,7 +68,7 @@
 
 
 	{% if user.is_authenticated %}
-	<a href="{% url django.contrib.auth.views.logout %}?next={{ path }}" class="sidebar_linkitem" style="color:#C70000;">יציאה מהמערכת</a>
+	<a href="{% url 'django.contrib.auth.views.logout' %}?next={{ path }}" class="sidebar_linkitem" style="color:#C70000;">יציאה מהמערכת</a>
 	{% else %}
 	<a href="#" class="sidebar_linkitem disabled">יציאה מהמערכת</a>
 	{% endif %}

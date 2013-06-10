@@ -10,7 +10,7 @@
 {% block pagination %}
 <a href="javascript:window.print()">הדפסה</a>
 |
-<a href="{% url collection-sortable-list %}">סדרן שקופיות</a>
+<a href="{% url 'collection-sortable-list' %}">סדרן שקופיות</a>
 
 {% endblock pagination %}
 
@@ -55,7 +55,7 @@
 								</form>
 
 
-								<form method="post" action="{% url collectable-up object.id %}" style="display:inline;">
+								<form method="post" action="{% url 'collectable-up' object.id %}" style="display:inline;">
 									{% csrf_token %}
 									<input type="submit" value="▲" style="color:green;">
 								</form>

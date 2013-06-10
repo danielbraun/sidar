@@ -13,7 +13,7 @@
 	{% for object in disciplines %}
 	{% if object.active %}
 	<li class="navitem_{{ forloop.counter|add:"2" }}">
-		<a href="{% url discipline-detail object.id %}"> {{ object.long_name }}</a>
+		<a href="{% url 'discipline-detail' object.id %}"> {{ object.long_name }}</a>
 	</li>
 	{% else %}
 	<li class="navitem_disabled">
