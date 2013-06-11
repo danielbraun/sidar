@@ -6,8 +6,8 @@ ol, ul {list-style:none;}
 blockquote, q {quotes:none;}
 blockquote:before, blockquote:after, q:before, q:after {content:'';content:none;}
 table {border-collapse:collapse;border-spacing:0;}
-select {font-family:arial;font-size:12px;width:100%;}
-
+select, input[type="text"] {font-family:arial;font-size:12px;width:100%;}
+input[type="text"] {width: 97%;}
 /* style.css */
 html {overflow-y:scroll;}
 body {font-size:12px;line-height:18px;color:#222222;background-color:#ffffff;font-family:Arial,sans-serif;}
@@ -30,7 +30,6 @@ h6 {font-size:12px;font-weight:bold;}
 
 h1 img, h2 img, h3 img, h4 img, h5 img, h6 img {margin:0;}
 
-p {margin:0 0 18px;}
 .left {float:left !important;}
 p .left {margin:18px 18px 18px 0;padding:0;}
 .right {float:right !important;}

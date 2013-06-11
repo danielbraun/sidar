@@ -1,21 +1,8 @@
-<!--<ul>
-	{% for page in paginator.page_range %}
-		{% if page == paginator.num_pages or page == 1  or page == page_obj.next_page_number or page == page_obj.previous_page_number or page == page_obj.number%}
-			<li {% if page == page_obj.number %} class="current">{{ page }}{% else %}>
-				<a href="?page={{ page }}">
-					{{ page }}
-				</a>
-				{% endif %}
-			</li>
-		{% endif %}
-	{% endfor %}
-</ul>
--->
-
+{% load urls %}
 עמוד:
 <select style="width:auto;margin:0px;" onchange="document.location.href=this.options[this.selectedIndex].value;">
 	{% for page in paginator.page_range %}
-		<option value="?page={{ page }}" {% if page == page_obj.number %}selected{% endif %}>{{ page }}</option>
+		<option value="{% add_params request.get_full_path page=page %}" {% if page == page_obj.number %}selected{% endif %}>{{ page }}</option>
 	{% endfor %}
 </select>
 
@@ -27,14 +14,14 @@
 
 <div class="pagination_arrows">
 	{% if page_obj.has_previous %}
-		<a href="?page={{ page_obj.previous_page_number }}">
+		<a href="{% add_params request.get_full_path page=page_obj.previous_page_number %}">
 	{% else %}
 		<a class="disabled">
 	{% endif %}
 	‹ הקודם</a>
 		|
 	{% if page_obj.has_next %}
-		<a href="?page={{page_obj.next_page_number}}">
+		<a href="{% add_params request.get_full_path page=page_obj.next_page_number %}">
 	{% else %}
 		<a class="disabled">
 	{% endif %}

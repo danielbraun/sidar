@@ -19,6 +19,7 @@
 	{% elif main_filter == 'designer' and designer %}מעצבים › {{ designer }}
 	{% endif %}
 
+	{% if filter.form %}חיפוש מתקדם{% endif %}
 {% endblock maintitle %}
 
 {% block pagebody %}
@@ -62,6 +63,10 @@
 
 	{% if designer and not collector %}
 		{% include "backoffice/sidebar_extensions/designer.html" %}
+	{% endif %}
+
+	{% if filter.form %}
+		{% include "backoffice/sidebar_extensions/work_filter.html" %}
 	{% endif %}
 
 {% endblock sidebar_extensions %}

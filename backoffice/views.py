@@ -7,6 +7,8 @@ from django.views.generic.list import ListView
 
 from backoffice.forms import SearchForm
 from backoffice.models import Designer, Discipline, Work, Subject, Category, Collector
+from .filters import WorkFilterSet
+from django_filters.views import FilterView
 
 
 class DisciplineMixin(object):
@@ -193,4 +195,31 @@ class DesignerDetailView(DisciplineMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(DesignerDetailView, self).get_context_data()
         context['designer'].available_categories = context['designer'].available_categories_by_discipline(self.discipline)
+        return context
+
+
+class WorkFilterView(DisciplineMixin, FilterView):
+    filterset_class = WorkFilterSet
+    template_name = "backoffice/work_list.html"
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Work.objects.filter(discipline=self.discipline)
+
+    def get_context_data(self, **kwargs):
+        context = super(WorkFilterView, self).get_context_data(**kwargs)
+        work_id = self.kwargs.get('work')
+        if work_id:
+            context['work'] = get_object_or_404(Work, pk=work_id)
+            self.template_name = "backoffice/work_detail.html"
+            work_list = list(self.filterset.qs)
+            work_index = work_list.index(context['work'])
+            try:
+                context['next_work'] = work_list[work_index + 1]
+            except IndexError:
+                context['next_work'] = None
+            if work_index > 0:
+                context['previous_work'] = work_list[work_index - 1]
+            else:
+                context['previous_work'] = None
         return context

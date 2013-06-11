@@ -1,6 +1,6 @@
 <td class="preview_image_td">
 	{% if work %}
-	<a href="work-{{ work.id }}">
+	<a href="work-{{ work.id }}?{{ request.META.QUERY_STRING }}">
 		<img src="{% if work.processed_image %}{{ work.processed_image.url }}{% endif %}">
 		<img src="{{ STATIC_URL }}website/images/spacer.png" class="spacer">
 	</a>

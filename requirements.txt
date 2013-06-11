@@ -8,14 +8,17 @@ distribute==0.6.30
 dj-database-url==0.2.1
 django-countries==1.5
 django-dbbackup==1.70
+django-filter==0.6
 django-flatpages-tinymce==0.1.1
 -e git+https://github.com/danielbraun/django-form-utils.git@72c3130fc769bf450d30d39b274a4c6e1739aab1#egg=django_form_utils-dev
 django-imagekit==2.0.1
+django-jquery==1.9.1
 django-modeltranslation==0.6.1
 django-positions==0.4.3
 django-storages==1.1.8
 django-taggit==0.10a1
 django-tinymce==1.5.1
+django-url-tools==0.0.7
 docutils==0.10
 dropbox==1.5.1
 gunicorn==0.16.1

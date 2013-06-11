@@ -9,6 +9,7 @@ def default(request):
         'disciplines': Discipline.objects.all(),
         'login_form': AuthenticationForm(),
         'path': request.path,
+        'request': request,
         'registration_form': UserCreationForm(),
         'site': Site.objects.get_current()
     }

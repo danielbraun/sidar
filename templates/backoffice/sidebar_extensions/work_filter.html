@@ -1,0 +1,9 @@
+{% extends "includes/sidebar_extension.html" %}
+{% block title %}סינון עבודות{% endblock title %}
+{% block body %}
+	<form action="" method="get">
+
+		{{ filter.form.as_p }}
+		<tr><td><input type="submit" value="סנן"/></td></tr>
+	</form>
+{% endblock body %}

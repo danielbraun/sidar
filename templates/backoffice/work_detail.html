@@ -8,21 +8,22 @@
 
 
 {% block pagination %}
-	<a href="../">חזרה לתוצאות החיפוש</a>
+	<a href="../?{{ request.META.QUERY_STRING }}">חזרה לתוצאות החיפוש</a>
 	<div class="pagination_arrows">
+
 	{% if previous_work %}
-	<a href="../work-{{ previous_work.id }}">
+	<a href="../work-{{ previous_work.id }}?{{ request.META.QUERY_STRING }}">
 		{% else %}
 		<a class="disabled">
 			{% endif %}
 			‹ הקודם</a>
 			|
-			{% if next_work %}
-			<a href="../work-{{ next_work.id }}">
-				{% else %}
-				<a class="disabled">
-					{% endif %}
-					הבא ›</a>
+	{% if next_work %}
+	<a href="../work-{{ next_work.id }}?{{ request.META.QUERY_STRING }}">
+		{% else %}
+		<a class="disabled">
+			{% endif %}
+			הבא ›</a>
 				</div>
 {% endblock pagination %}
 

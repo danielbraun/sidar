@@ -11,6 +11,7 @@ from backoffice import models, views
 from backoffice.views import DesignerDetailView, DisciplineTemplateView, DesignerListView, WorkFieldListViewByDiscipline, WorkListView, SearchView
 from collection.views import CollectView
 from helpers.views import RegistrationFormView
+from backoffice.views import WorkFilterView
 
 
 admin.autodiscover()
@@ -33,7 +34,9 @@ discipline_urls = patterns(
             template_name='backoffice/discipline_about.html'),
         name='discipline-about'),
     (r'^article/$', DisciplineTemplateView.as_view(template_name='backoffice/article_list.html'), {}, "article-list"),
-    (r'^search/$', SearchView.as_view(), {}, 'search'),
+
+    (r'^search/$', WorkFilterView.as_view(), {}, 'search'),
+    (r'^search/work-(?P<work>\d+)/$', WorkFilterView.as_view(), {}, 'search'),
 
     (r'^event/$', DisciplineTemplateView.as_view(template_name='backoffice/event_list.html'), {}, "event-list"),
     (r'^link/$', DisciplineTemplateView.as_view(template_name='backoffice/link_list.html'), {}, "link-list"),

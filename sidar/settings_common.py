@@ -172,6 +172,9 @@ INSTALLED_APPS = (
     'django_countries',
     'storages',
     'form_utils',
+    'django_filters',
+    'jquery',
+    'url_tools',
 
 )
 
