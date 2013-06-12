@@ -2,13 +2,11 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
-
-from backoffice.forms import SearchForm
-from backoffice.models import Designer, Discipline, Work, Subject, Category, Collector
-from .filters import WorkFilterSet
 from django_filters.views import FilterView
+
+from .filters import WorkFilterSet
+from backoffice.models import Designer, Discipline, Work, Subject, Category, Collector
 
 
 class DisciplineMixin(object):
