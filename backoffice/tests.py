@@ -7,6 +7,7 @@ from bibliography.models import BookCategory
 from django.core.urlresolvers import reverse
 from backoffice.models import Collector
 from backoffice.models import Work
+from django.core.files import File
 
 
 class ViewTests(TestCase):
@@ -110,3 +111,14 @@ class WorkListViewTests(TestCase):
         """It should display only the selected collector's works."""
         self.assertNotIn(self.work,
                          self.collector_response.context['object_list'])
+
+
+class WorkTests(TestCase):
+    def test_sidar_id_change_after_upload(self):
+        """After Uploading a new image, the Work's sidar_id should update
+           accordingly, excluding the file's extension."""
+        work = Work.objects.create()
+        self.assertEqual(work.sidar_id, '')
+        work.raw_image = File(open('static/img/test_image.jpg'))
+        work.save()
+        self.assertEqual(work.sidar_id, 'test_image')

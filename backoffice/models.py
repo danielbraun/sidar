@@ -10,6 +10,7 @@ from imagekit.processors import ResizeToFit
 from imagekit.processors.crop import TrimBorderColor
 from taggit.managers import TaggableManager
 from tinymce.models import HTMLField
+import os
 
 
 class FilterableByDesignerMixin(object):
@@ -208,6 +209,14 @@ class Work(models.Model):
             'designer': self.designer.id,
             'work': self.id
         })
+
+    def save(self, *args, **kwargs):
+        """extract uploaded file name to sidar_id."""
+        if self.raw_image:
+            self.sidar_id = os.path.splitext(
+                os.path.basename(self.raw_image.file.name)
+            )[0]
+        super(Work, self).save(*args, **kwargs)
 
 
 class Category(CommonModel, FilterableByDesignerMixin,
