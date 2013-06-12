@@ -8,10 +8,9 @@ from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 
 from backoffice import models, views
-from backoffice.views import DesignerDetailView, DisciplineTemplateView, DesignerListView, WorkFieldListViewByDiscipline, WorkListView, SearchView
+from backoffice.views import DesignerDetailView, DisciplineTemplateView, DesignerListView, WorkFieldListViewByDiscipline, WorkListView, WorkFilterView
 from collection.views import CollectView
-from helpers.views import RegistrationFormView
-from backoffice.views import WorkFilterView
+from django.views.generic.base import RedirectView
 
 
 admin.autodiscover()
@@ -42,7 +41,6 @@ discipline_urls = patterns(
     (r'^link/$', DisciplineTemplateView.as_view(template_name='backoffice/link_list.html'), {}, "link-list"),
     (r'^video/$', DisciplineTemplateView.as_view(template_name='backoffice/video_list.html'), {}, "video-list"),
 
-    (r'^year/$', DisciplineTemplateView.as_view(template_name="backoffice/decade_list.html"), {}, "decade-list"),
     (r'^year/(?P<from>\d*)-(?P<until>\d*)/', include(work_urls), {'main_filter': 'year'}),
     (r'^year/(?P<from>\d*)-(?P<until>\d*)/(?P<year>\d+)/', include(work_urls), {'main_filter': 'year'}),
 
@@ -70,10 +68,11 @@ urlpatterns = patterns(
     # Deliberately no trailing slash after pages
     (r'^feedback/', include('feedback.urls')),
     (r'^tinymce/', include('tinymce.urls')),
+    (r'^accounts/', include('registration.backends.simple.urls')),
+    (r'^users/', RedirectView.as_view(url="/")),
     (r'^new/$', TemplateView.as_view(template_name="new/index.html")),
     (r'^logout/$', logout),
     (r'^login/$', login),
-    (r'^register/$', RegistrationFormView.as_view(), {}, "register"),
     (r'^admin/', include(admin.site.urls)),
     (r'^discipline/(?P<discipline>\d+)/', include(discipline_urls)),
     (r'^collection/', include('collection.urls')),

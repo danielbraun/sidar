@@ -164,31 +164,6 @@ class WorkFieldListViewByDiscipline(DisciplineMixin, ListView):
         ).order_by('parent', 'name_he').exclude(parent=None)
 
 
-class DisciplineSearchView(DisciplineMixin, FormView):
-    form_class = SearchForm
-    template_name = 'search.html'
-
-    def get_form_kwargs(self):
-        kwargs = super(DisciplineSearchView, self).get_form_kwargs()
-        kwargs['discipline'] = self.discipline
-        return kwargs
-
-
-class SearchView(DisciplineMixin, TemplateView):
-    template_name = "search.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(SearchView, self).get_context_data()
-        context['form'] = SearchForm(discipline=self.discipline)
-        if self.request.GET:
-            return WorkListView.as_view()(self.request,
-                                          discipline=self.discipline.id)
-        else:
-            self.template_name = "search.html"
-        # WorkListView.as_view()
-        return context
-
-
 class DesignerDetailView(DisciplineMixin, DetailView):
     model = Designer
 

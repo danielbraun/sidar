@@ -175,6 +175,7 @@ INSTALLED_APPS = (
     'django_filters',
     'jquery',
     'url_tools',
+    'registration',
 
 )
 
