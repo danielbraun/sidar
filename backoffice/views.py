@@ -139,7 +139,7 @@ class DesignerListView(DisciplineMixin, ListView):
         context = super(DesignerListView, self).get_context_data(**kwargs)
         context['generations'] = Designer.GENERATIONS
         context['collectors'] = Collector.objects\
-            .belonging_to_discipline(1, 'of_collections')\
+            .belonging_to_discipline(self.discipline, 'of_collections')\
             .filter(is_active=True)
         return context
 
