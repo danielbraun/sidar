@@ -2,7 +2,14 @@
 {% block title %}חיפוש מתקדם{% endblock title %}
 {% block body %}
 	<form action="" method="get">
-		{{ filter.form.as_p }}
+		{# {{ filter.form.as_p }} #}
+		{% for field in filter.form %}
+			<p>
+				{{ field.errors }}
+		        <span class="sidebar_linkitem" style="background-color:inherit;">{{ field.label_tag }}:</span>
+		        {{ field }}
+		    </p>
+		{% endfor %}
 		<p><br/>
 			<input type="submit" value="סנן" style="width:100%;" />
 		</p>
