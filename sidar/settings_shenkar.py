@@ -7,7 +7,7 @@ if os.environ.get('DEBUG'):
 else:
     DEBUG = TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', ]
+ALLOWED_HOSTS = ['10.0.10.250', ]
 
 PORTFOLIO_CSV_ROOT = ''
 
@@ -17,7 +17,7 @@ DATABASES = {
         'NAME': 'sidar',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
