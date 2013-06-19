@@ -89,7 +89,7 @@ class DesignPersona(CommonModel):
     photo = models.ImageField(u'דיוקן', upload_to="images/", blank=True)
     philosophy = models.FileField(u'קובץ פילוסופיה',
                                   upload_to="pdf/", blank=True)
-    is_active = models.BooleanField(u'מופיע אוספים', default=False)
+    is_active = models.BooleanField(u'מופיע באתר', default=False)
     philosophy_summary = HTMLField(u'תקציר פילוסופיה', blank=True)
 
     class Meta(CommonModel.Meta):
