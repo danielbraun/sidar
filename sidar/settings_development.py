@@ -4,6 +4,7 @@ import sys
 
 MEDIA_ROOT = 'media/'
 DEBUG = TEMPLATE_DEBUG = True
+ALLOWED_HOSTS = ['localhost', ]
 PORTFOLIO_CSV_ROOT = u'/Volumes/m$/D/מחלקות עיצוב'
 DATABASES = {
     'default': {
