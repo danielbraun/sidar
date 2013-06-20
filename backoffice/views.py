@@ -32,6 +32,8 @@ class DisciplineFilterMixin(DisciplineMixin):
 class ListViewFilteredByDiscipline(DisciplineFilterMixin, ListView):
     pass
 
+class FilterViewByDiscipline(DisciplineFilterMixin, FilterView):
+    pass
 
 class WorkListView(DisciplineMixin, ListView):
     paginate_by = 10

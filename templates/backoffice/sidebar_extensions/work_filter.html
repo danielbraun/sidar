@@ -1,8 +1,7 @@
 {% extends "includes/sidebar_extension.html" %}
-{% block title %}חיפוש מתקדם{% endblock title %}
+{% block title %}סינון{% endblock title %}
 {% block body %}
 	<form action="" method="get">
-		{# {{ filter.form.as_p }} #}
 		{% for field in filter.form %}
 			<p>
 				{{ field.errors }}

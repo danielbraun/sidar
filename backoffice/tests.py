@@ -49,9 +49,6 @@ class ViewTests(TestCase):
     def test_article_list(self):
         self.assertResponseOK('/discipline/1/article/')
 
-    def test_link_list(self):
-        self.assertResponseOK('/discipline/1/link/')
-
     def test_video_list(self):
         self.assertResponseOK('/discipline/1/video/')
 

@@ -27,6 +27,7 @@ discipline_urls = patterns(
     '',
     (r'^timeline/', include('timeline.urls')),
     (r'^book/', include('bibliography.urls')),
+    (r'^links/', include('links.urls')),
 
     url(r'^about/$',
         views.DisciplineTemplateView.as_view(
@@ -38,7 +39,6 @@ discipline_urls = patterns(
     (r'^search/work-(?P<work>\d+)/$', WorkFilterView.as_view(), {}, 'search'),
 
     (r'^event/$', DisciplineTemplateView.as_view(template_name='backoffice/event_list.html'), {}, "event-list"),
-    (r'^link/$', DisciplineTemplateView.as_view(template_name='backoffice/link_list.html'), {}, "link-list"),
     (r'^video/$', DisciplineTemplateView.as_view(template_name='backoffice/video_list.html'), {}, "video-list"),
 
     (r'^year/(?P<from>\d*)-(?P<until>\d*)/', include(work_urls), {'main_filter': 'year'}),
