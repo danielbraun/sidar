@@ -5,7 +5,9 @@ from html2text import html2text
 from backoffice.models import Work, Discipline, Designer, Category, Subject
 from backoffice.utils import all_portfolio_rows, remove_file_extension, split_languages_from_string
 from backoffice.models import Collector
-
+from django.conf import settings
+from django.core.files import File
+import os
 
 def match_is_self_collected(designer, collector):
     reversed_collector = ' '.join(collector.split()[::-1])
@@ -100,12 +102,16 @@ class Command(BaseCommand):
                 category=match_category(row.get(u'קטגוריה')),
                 size_as_text=row.get(u'גודל', ''),
                 publish_date_as_text=row.get(u'תאריך', ''),
-                publish_year=int(row.get(u'תאריך', ''))if row.get(u'תאריך', '').isdigit() else None,
+                publish_year=int(row.get(u'תאריך', ''))if row.get(
+                    u'תאריך', '').isdigit() else None,
                 client=row.get(u'לקוח', ''),
                 technique=match_technique(row.get(u'טכניקה', '')),
                 is_self_collected=match_is_self_collected(
                     row.get(u'מעצב', ''),
-                    row.get(u'מאוסף', ''))
+                    row.get(u'מאוסף', '')),
+                raw_image=File(open(os.path.join(
+                    settings.PORFOLIO_IMAGE_DIR,
+                    row['Filename'])))
             )
             w.subjects = match_subject(row.get(u'נושא'))
             w.of_collections = match_collector(row.get(u'מעצב', ''),
