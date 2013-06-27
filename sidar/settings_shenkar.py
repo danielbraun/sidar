@@ -7,6 +7,9 @@ if os.environ.get('DEBUG'):
 else:
     DEBUG = TEMPLATE_DEBUG = False
 
+PORTFOLIO_CSV_ROOT = ''
+PORFOLIO_IMAGE_DIR = ''
+
 ALLOWED_HOSTS = ['10.0.10.250', ]
 
 PORTFOLIO_CSV_ROOT = ''

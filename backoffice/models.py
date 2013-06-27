@@ -11,6 +11,7 @@ from imagekit.processors.crop import TrimBorderColor
 from taggit.managers import TaggableManager
 from tinymce.models import HTMLField
 import os
+from django.core.files.base import File
 
 
 class FilterableByDesignerMixin(object):
@@ -45,6 +46,7 @@ class GenericManager(models.Manager):
 class Discipline(CommonModel):
     info = HTMLField()
     active = models.BooleanField(u'פעיל')
+    sidar_id = models.CharField(max_length=3)
 
     def short_name(self):
         return u'ע.' + self.name
@@ -91,6 +93,7 @@ class DesignPersona(CommonModel):
                                   upload_to="pdf/", blank=True)
     is_active = models.BooleanField(u'מופיע באתר', default=False)
     philosophy_summary = HTMLField(u'תקציר פילוסופיה', blank=True)
+    sidar_id = models.CharField(max_length=10)
 
     class Meta(CommonModel.Meta):
         abstract = True
@@ -195,6 +198,8 @@ class Work(models.Model):
 
     description = models.TextField(u'תיאור', blank=True)
 
+    filename_regex_pattern = r'^(\w)-(\w+)-(\w+)-(\d+)(.+).jpg$'
+
     class Meta(CommonModel.Meta):
         verbose_name = "עבודה"
         verbose_name_plural = "עבודות"
@@ -218,6 +223,20 @@ class Work(models.Model):
             )[0]
         super(Work, self).save(*args, **kwargs)
 
+    @classmethod
+    def create_from_photo(cls, file_path):
+        import re
+        m = re.match(cls.filename_regex_pattern, os.path.basename(file_path))
+        if m:
+            with File(open(file_path)) as f:
+                names = m.groups()
+                return cls.objects.create(
+                    discipline=Discipline.objects.get_or_create(sidar_id=names[0])[0],
+                    designer=Designer.objects.get_or_create(sidar_id=names[1])[0],
+                    category=Category.objects.get_or_create(sidar_id=names[2])[0],
+                    raw_image=f
+                )
+
 
 class Category(CommonModel, FilterableByDesignerMixin,
                MainDisciplineMethodMixin):
@@ -225,6 +244,7 @@ class Category(CommonModel, FilterableByDesignerMixin,
                                blank=True, null=True)
     info = models.TextField(u'מידע על הקטגוריה')
     objects = GenericManager()
+    sidar_id = models.CharField(max_length=5)
 
     class Meta(CommonModel.Meta):
         verbose_name = "קטגוריה"

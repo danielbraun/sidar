@@ -119,3 +119,19 @@ class WorkTests(TestCase):
         work.raw_image = File(open('static/img/test_image.jpg'))
         work.save()
         self.assertEqual(work.sidar_id, 'test_image')
+
+    def test_create_from_photo(self):
+        """Creating a work from a photo alone should work properly."""
+        # work = Work.create_from_photo(File(open('static/img/G-AdO-Pos-002.jpg')))
+        work = Work.create_from_photo('static/img/G-AdO-Pos-002.jpg')
+        self.assertEqual(work.discipline.sidar_id, 'G')
+        self.assertEqual(work.designer.sidar_id, 'AdO')
+        self.assertEqual(work.category.sidar_id, 'Pos')
+        self.assertNotEqual(work.raw_image.name, '')
+
+    def test_filename_regex_pattern(self):
+        """Work filenames that should be imported"""
+        self.assertRegexpMatches('G-AdO-Pos-002.jpg', Work.filename_regex_pattern)
+        self.assertRegexpMatches('G-AdO-CV-002b.jpg', Work.filename_regex_pattern)
+        self.assertRegexpMatches('G-AdO-Sta-016 copy.jpg', Work.filename_regex_pattern)
+        self.assertRegexpMatches('G-AdO-Sta-016 copy 2.jpg', Work.filename_regex_pattern)
