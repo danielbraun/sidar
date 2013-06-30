@@ -18,45 +18,45 @@ class ViewTests(TestCase):
         return response
 
     def setUp(self):
-        Discipline(name_en='g', active=True).save()
+        self.discipline = Discipline.objects.create(name_en='g', active=True)
 
     def test_about_page(self):
-        self.assertResponseOK('/discipline/1/about/')
+        self.assertResponseOK('/discipline/%d/about/' % self.discipline.id)
 
     def test_homepage(self):
         self.assertResponseOK('/')
 
     def test_discipline_homepage(self):
-        self.assertResponseOK('/discipline/1/')
+        self.assertResponseOK('/discipline/%d/' % self.discipline.id)
 
     def test_book_list(self):
-        self.assertResponseOK('/discipline/1/book/')
+        self.assertResponseOK('/discipline/%d/book/' % self.discipline.id)
 
     def test_book_list_with_category(self):
         BookCategory(pk=1).save()
-        response = self.assertResponseOK('/discipline/1/book/1/')
+        response = self.assertResponseOK('/discipline/%d/book/1/' % self.discipline.id)
         self.assertIn('category', response.context)
 
     def test_category_list(self):
-        self.assertResponseOK('/discipline/1/category/')
+        self.assertResponseOK('/discipline/%d/category/' % self.discipline.id)
 
     def test_subject_list(self):
-        self.assertResponseOK('/discipline/1/subject/')
+        self.assertResponseOK('/discipline/%d/subject/' % self.discipline.id)
 
     def test_designer_list(self):
-        self.assertResponseOK('/discipline/1/designer/')
+        self.assertResponseOK('/discipline/%d/designer/' % self.discipline.id)
 
     def test_article_list(self):
-        self.assertResponseOK('/discipline/1/article/')
+        self.assertResponseOK('/discipline/%d/article/' % self.discipline.id)
 
     def test_video_list(self):
-        self.assertResponseOK('/discipline/1/video/')
+        self.assertResponseOK('/discipline/%d/video/' % self.discipline.id)
 
     def test_event_list(self):
-        self.assertResponseOK('/discipline/1/event/')
+        self.assertResponseOK('/discipline/%d/event/' % self.discipline.id)
 
     def test_search_page_loads(self):
-        self.assertResponseOK('/discipline/1/search/')
+        self.assertResponseOK('/discipline/%d/search/' % self.discipline.id)
 
 
 class ManagementCommandTests(TestCase):
