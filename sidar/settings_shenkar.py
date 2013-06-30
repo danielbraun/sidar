@@ -7,10 +7,12 @@ if os.environ.get('DEBUG'):
 else:
     DEBUG = TEMPLATE_DEBUG = False
 
+DEBUG = TEMPLATE_DEBUG = True
+MEDIA_ROOT = 'media/'
 PORTFOLIO_CSV_ROOT = ''
-PORFOLIO_IMAGE_DIR = ''
+PORFOLIO_IMAGE_DIR = '/home/sidar/images_to_import/'
 
-ALLOWED_HOSTS = ['10.0.10.250', ]
+ALLOWED_HOSTS = ['10.0.9.69', ]
 
 PORTFOLIO_CSV_ROOT = ''
 
