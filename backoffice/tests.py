@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
+from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from backoffice.management.commands.import_portfolio import match_is_self_collected, match_collector, match_technique
-from backoffice.models import Discipline
+from backoffice.models import Discipline, Collector, Work
 from bibliography.models import BookCategory
-from django.core.urlresolvers import reverse
-from backoffice.models import Collector
-from backoffice.models import Work
-from django.core.files import File
 
 
 class ViewTests(TestCase):
@@ -111,14 +108,6 @@ class WorkListViewTests(TestCase):
 
 
 class WorkTests(TestCase):
-    def test_sidar_id_change_after_upload(self):
-        """After Uploading a new image, the Work's sidar_id should update
-           accordingly, excluding the file's extension."""
-        work = Work.objects.create()
-        self.assertEqual(work.sidar_id, '')
-        work.raw_image = File(open('static/img/test_image.jpg'))
-        work.save()
-        self.assertEqual(work.sidar_id, 'test_image')
 
     def test_create_from_photo(self):
         """Creating a work from a photo alone should work properly."""

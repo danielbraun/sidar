@@ -48,18 +48,25 @@ class LargeImagePreviewInChangeForm(object):
 class WorkAdmin(LargeImagePreviewInChangeForm, TranslationAdmin):
     admin_thumbnail = AdminThumbnail(image_field='processed_image')
     admin_thumbnail.short_description = u'תצוגה מקדימה'
-    list_display = ('sidar_id', 'name', 'designer',
+    list_display = ('get_raw_image_filename', 'name', 'designer',
                     'category', 'discipline', 'admin_thumbnail')
     ordering = ('-id',)
     list_filter = ('discipline', 'category', 'designer', 'of_collections')
     filter_horizontal = ['subjects', 'of_collections']
-    readonly_fields = ['sidar_id', ]
-    fields = ['raw_image', 'designer', 'name', 'sidar_id', 'category', 'tags',
+    readonly_fields = ['get_raw_image_filename', ]
+    fields = ['raw_image', 'designer', 'name', 'get_raw_image_filename', 'category', 'tags',
               'discipline', 'publish_date_as_text', 'publish_year',
               'size_as_text', 'height',
-              'width', 'depth', 'country', 'technique', 'of_collections',
-              'is_self_collected', 'subjects', 'description',
+              'width', 'depth', 'country', 'client', 'technique',
+              'of_collections', 'is_self_collected', 'subjects', 'description',
               ]
+
+    def get_raw_image_filename(self, instance):
+        import os
+        if instance.raw_image:
+            return os.path.basename(instance.raw_image.name)
+        return None
+    get_raw_image_filename.short_description = u'שם קובץ'
 
     def queryset(self, request):
         qs = super(WorkAdmin, self).queryset(request)

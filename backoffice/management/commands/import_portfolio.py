@@ -91,7 +91,6 @@ class Command(BaseCommand):
             w = Work.objects.create(
                 name_he=row.get(u'שם העבודה', ''),
                 name_en=row.get('Document Title', ''),
-                sidar_id=remove_file_extension(row['Filename']),
                 description_he=html2text(row.get(u'תאור', '')),
                 description_en=html2text(row.get(u'Description', '')),
                 discipline=match_discipline(row),

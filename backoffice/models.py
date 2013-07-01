@@ -161,7 +161,6 @@ class Work(models.Model):
     tags = TaggableManager(u'מילות מפתח')
 
     name = models.CharField(u'שם העבודה', max_length=255)
-    sidar_id = models.CharField(u'קוד עבודה', max_length=50, blank=True)
     designer = models.ForeignKey('Designer', verbose_name=u'מעצב', null=True)
     raw_image = models.ImageField(u'תמונת מקור', upload_to='works', null=True)
     processed_image = ImageSpecField(
@@ -203,10 +202,6 @@ class Work(models.Model):
     class Meta(CommonModel.Meta):
         verbose_name = "עבודה"
         verbose_name_plural = "עבודות"
-        ordering = ['sidar_id', ]
-
-    def __unicode__(self):
-        return self.sidar_id
 
     def get_absolute_url(self):
         return reverse('work-detail', kwargs={
@@ -214,14 +209,6 @@ class Work(models.Model):
             'designer': self.designer.id,
             'work': self.id
         })
-
-    def save(self, *args, **kwargs):
-        """extract uploaded file name to sidar_id."""
-        if self.raw_image:
-            self.sidar_id = os.path.splitext(
-                os.path.basename(self.raw_image.file.name)
-            )[0]
-        super(Work, self).save(*args, **kwargs)
 
     @classmethod
     def create_from_photo(cls, file_path):
