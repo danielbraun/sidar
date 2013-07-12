@@ -1,9 +1,11 @@
 Django==1.5.1
 Fabric==1.5.1
-Pillow==1.7.8
+Pillow==2.0.0
 South==0.7.6
+argh==0.23.2
 argparse==1.2.1
 boto==2.9.2
+chardet==2.1.1
 distribute==0.6.30
 dj-database-url==0.2.1
 django-countries==1.5
@@ -16,6 +18,8 @@ django-jquery==1.9.1
 django-modeltranslation==0.6.1
 django-positions==0.4.3
 -e hg+https://bitbucket.org/ubernostrum/django-registration@b3c41b3c7f50523b4ecb8267d6d27a918adc2e1f#egg=django_registration-dev
+-e git+https://github.com/llazzaro/django-scheduler.git@8bda7588999864743086859f9c333227d62ae76f#egg=django_schedule-dev
+-e git+https://github.com/danielbraun/django-sidar-apps.git@4eaa1afcbd29048e55ee69e2e6ce810a4200f45b#egg=django_sidar_apps-dev
 django-storages==1.1.8
 django-taggit==0.10a1
 django-tinymce==1.5.1
@@ -27,5 +31,6 @@ html2text==3.200.3
 paramiko==1.9.0
 psycopg2==2.5
 pycrypto==2.6
+python-dateutil==2.1
 simples3==1.0
 wsgiref==0.1.2

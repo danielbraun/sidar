@@ -169,14 +169,20 @@ dd {margin-left:18px;}
 .generaltable th {border-bottom:floralwhite 2px ridge !important;border-left:floralwhite 2px ridge !important;border-collapse:collapse !important;border-top:floralwhite 2px ridge !important;border-right:floralwhite 2px ridge !important;}
 */
 .generaltable .preview_image_td {width:135px;}
-.generaltable .preview_image_td a  {display:block;width:135px;height:135px;position:relative;}
-.generaltable .preview_image_td a img  {position:absolute;right:0px;top:0px;width:135px;height:135px;}
+.generaltable .preview_image_td a  {display:block;width:135px;height:135px;position:relative;text-align: center;}
+.generaltable .preview_image_td a img  {max-width:135px;max-height:135px;}
 .generaltable .preview_info_td {width:232px;}
 
 .generaltable .midsize_image_td {width:350px;height:356px;}
-.generaltable .midsize_image_td a  {display:block;width:350px;height:350px;position:relative;}
-.generaltable .midsize_image_td a img  {position:absolute;right:0px;top:0px;width:350px;height:350px;}
+.generaltable .midsize_image_td a  {display:block;width:350px;height:350px;position:relative;text-align: center;}
+.generaltable .midsize_image_td a img  {max-width:350px;max-height:350px;}
 .generaltable .midsize_info_td {width:397px;}
+
+.generaltable .preview_image_td a, .generaltable .midsize_image_td a {
+	display: table-cell;
+	vertical-align: middle;
+}
+
 
 .generaltable .generaltextcell {font-size:14px;background-color:#d3d3d3;padding:4px;}
 .generaltable .generaltextcell ul, .generaltable .generaltextcell ol  {margin-right:20px;margin-top:10px;margin-bottom:10px;}
