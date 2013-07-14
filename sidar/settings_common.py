@@ -176,7 +176,8 @@ INSTALLED_APPS = (
     'jquery',
     'url_tools',
     'registration',
-    'links'
+    'links',
+    'moderation',
 
 )
 
