@@ -2,17 +2,13 @@ from sidar.settings_common import *
 
 import os
 
-if os.environ.get('DEBUG'):
-    DEBUG = TEMPLATE_DEBUG = True
-else:
-    DEBUG = TEMPLATE_DEBUG = False
 
-DEBUG = TEMPLATE_DEBUG = True
-MEDIA_ROOT = 'media/'
+DEBUG = TEMPLATE_DEBUG = False
+MEDIA_ROOT = '~/media/'
 PORTFOLIO_CSV_ROOT = ''
 PORFOLIO_IMAGE_DIR = '/home/sidar/images_to_import/'
 
-ALLOWED_HOSTS = ['10.0.9.69', ]
+ALLOWED_HOSTS = ['10.0.10.4', ]
 
 PORTFOLIO_CSV_ROOT = ''
 
