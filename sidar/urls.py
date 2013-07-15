@@ -11,10 +11,10 @@ from backoffice import models, views
 from backoffice.views import DesignerDetailView, DisciplineTemplateView, DesignerListView, WorkFieldListViewByDiscipline, WorkListView, WorkFilterView
 from collection.views import CollectView
 from django.views.generic.base import RedirectView
-
+from moderation.helpers import auto_discover
 
 admin.autodiscover()
-
+auto_discover()
 
 work_urls = patterns(
     '',
