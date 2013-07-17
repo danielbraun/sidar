@@ -177,6 +177,7 @@ INSTALLED_APPS = (
     'url_tools',
     'registration',
     'links',
+    'articles',
 
 )
 

@@ -26,12 +26,12 @@ discipline_urls = patterns(
     (r'^timeline/', include('timeline.urls')),
     (r'^book/', include('bibliography.urls')),
     (r'^links/', include('links.urls')),
+    (r'^articles/', include('articles.urls')),
 
     url(r'^about/$',
         views.DisciplineTemplateView.as_view(
             template_name='backoffice/discipline_about.html'),
         name='discipline-about'),
-    (r'^article/$', DisciplineTemplateView.as_view(template_name='backoffice/article_list.html'), {}, "article-list"),
 
     (r'^search/$', WorkFilterView.as_view(), {}, 'search'),
     (r'^search/work-(?P<work>\d+)/$', WorkFilterView.as_view(), {}, 'search'),
