@@ -18,7 +18,11 @@
 {% for article in object_list %}
 	<tr>
 		<td>
-			<a href="{{ article.article.url }}" target="_new">{{ article.title }}</a>
+			{% if article.article %}
+				<a href="{{ article.article.url }}" target="_new">{{ article.title }}</a>
+			{% else %}
+				{{ article.title }}
+			{% endif %}
 		</td>
 		<td>{{ article.about_designer }}</td>
 		<td>{{ article.category }}</td>
