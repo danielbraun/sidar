@@ -149,20 +149,37 @@ dd {margin-left:18px;}
 
 .generaltable , .generaltable td, .generaltable th {border-collapse:separate;border-width:1px;border-style:solid;border-color:rgb(141,138,132) floralWhite floralWhite rgb(141,138,132);text-align:right;border-spacing:0px;}
 .generaltable  {border: 0px;}
+/* collection buttons */
+#upbuttoncollection{background-color:transparent; color:green;float:right !important;border:none;height:20px !important; width:24px !important ;text-align:center !important;}
+#downbuttoncollection{background-color:transparent;color:green;float:right !important;border:none;height:20px !important; width:24px !important;text-align:center !important;}
+#deletebuttoncollection{background-color:transparent;color:red;border:none;text-align:center !important;font-size:12px;}
+#savebuttoncollection{background-color:transparent;color:blue;border:none;text-align:center !important;font-size:12px;}
+
+
 
 /* Firefox only */
 @-moz-document url-prefix() {
-.generaltable, .generaltable td, .generaltable th {border-collapse:collapse;border-color:#fffaf0;border-style:ridge;border-width:2px;text-align:right;border-spacing:0px;}
+.generaltable, .generaltable td, .generaltable th {border-collapse:collapse;border-color:#fffaf0;border-style:ridge;border-width:2px;text-align:right;border-spacing:0px;} 
+/* collection buttons */
+#upbuttoncollection{background-color:transparent; color:green;float:right !important;border:none;height:20px !important; width:24px !important ;text-align:center !important;}
+#downbuttoncollection{background-color:transparent;color:green;float:right !important;border:none;height:20px !important; width:24px !important;text-align:center !important;margin-right:14px;}
+#deletebuttoncollection{background-color:transparent;color:red;border:none;text-align:center !important;font-size:12px;}
+#savebuttoncollection{background-color:transparent;color:blue;border:none;text-align:center !important;font-size:12px;}
 }
 /* Safari and Chrome */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-.generaltable, .generaltable td, .generaltable th {border-collapse:collapse;border-color:#fffaf0;border-style:ridge;border-width:2px;text-align:right;border-spacing:0px;}
+.generaltable, .generaltable td, .generaltable th {border-collapse:collapse;border-color:#fffaf0;border-style:ridge;border-width:2px;text-align:right;border-spacing:0px;} 
+/* collection buttons */
+#upbuttoncollection{background-color:transparent; color:green;float:right !important;border:none;height:20px !important; width:24px !important ;text-align:center !important;}
+#downbuttoncollection{background-color:transparent;color:green;float:right !important;border:none;height:20px !important; width:24px !important;text-align:center !important;margin-right:14px;}
+#deletebuttoncollection{background-color:transparent;color:red;border:none;text-align:center !important;font-size:12px;}
+#savebuttoncollection{background-color:transparent;color:blue;border:none;text-align:center !important;font-size:12px;}
 }
 
 
 .generaltable {width:100%;}
 .generaltable td {vertical-align:top;padding:1px;}
-.generaltable th {vertical-align:top;padding:2px;background-color:#000000;color:#ffffff;font-weight:bold;}
+.generaltable th {vertical-align:top;padding:2px;background-color:#000000;color:#ffffff;font-weight:bold;} 
 
 /*.generaltable table {border-bottom:floralwhite 2px ridge !important;border-left:floralwhite 2px ridge !important;border-collapse:collapse !important;border-top:floralwhite 2px ridge !important;border-right:floralwhite 2px ridge !important;}
 .generaltable td {border-bottom:floralwhite 2px ridge !important;border-left:floralwhite 2px ridge !important;border-collapse:collapse !important;border-top:floralwhite 2px ridge !important;border-right:floralwhite 2px ridge !important;}
@@ -189,7 +206,7 @@ dd {margin-left:18px;}
 .generaltable .generaltextcell small  {font-size:12px;}
 
 .generaltable .designerportraitcell  {padding-right:150px;background-repeat:no-repeat;background-position:617px 5px;height:160px;}
-
+.preview_info_td .generaltable {width:219px !important;}
 /* sidebar */
 #sidebar {width:210px;position:absolute;top:0px;left:0px;}
 
@@ -329,3 +346,4 @@ form.registration input {direction: ltr;}
 	border: lightgray solid 1px;
 	cursor: move;
 }
+

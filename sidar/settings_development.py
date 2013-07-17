@@ -18,13 +18,13 @@ DATABASES = {
 }
 
 # Don't set up legacy database during testing
-if 'test' not in sys.argv:
-    for name in LEGACY_DB_NAMES:
-        DATABASES[name] = {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': name,
-            'USER': 'root',
-            'PASSWORD': 'sidar',
-            'HOST': '',
-            'PORT': '',
-        }
+# if 'test' not in sys.argv:
+#     for name in LEGACY_DB_NAMES:
+#         DATABASES[name] = {
+#             'ENGINE': 'django.db.backends.mysql',
+#             'NAME': name,
+#             'USER': 'root',
+#             'PASSWORD': 'sidar',
+#             'HOST': '',
+#             'PORT': '',
+#         }
