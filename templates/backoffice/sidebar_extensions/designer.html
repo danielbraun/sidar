@@ -1,2 +1,5 @@
 {% include "backoffice/sidebar_extensions/available_categories_for_designer.html" %}
+{% if designer.attached_files %}
+	{% include "backoffice/sidebar_extensions/attachments.html" %}
+{% endif %}
 {% include "backoffice/sidebar_extensions/designer_picture.html" %}

@@ -7,7 +7,6 @@ argh==0.23.2
 argparse==1.2.1
 boto==2.9.2
 chardet==2.1.1
-
 distribute==0.6.30
 dj-database-url==0.2.1
 django-countries==1.5
@@ -21,7 +20,7 @@ django-modeltranslation==0.6.1
 django-positions==0.4.3
 -e hg+https://bitbucket.org/ubernostrum/django-registration@b3c41b3c7f50523b4ecb8267d6d27a918adc2e1f#egg=django_registration-dev
 -e git+https://github.com/llazzaro/django-scheduler.git@8bda7588999864743086859f9c333227d62ae76f#egg=django_schedule-dev
--e git+https://github.com/danielbraun/django-sidar-apps.git@267d83055a75db871559af20ec1b47a5fb3d3d91#egg=django_sidar_apps-dev
+-e git+https://github.com/danielbraun/django-sidar-apps.git@b61efca2deaafd1b78819c7f49a608163305166a#egg=django_sidar_apps-dev
 django-storages==1.1.8
 django-taggit==0.10a1
 django-tinymce==1.5.1
