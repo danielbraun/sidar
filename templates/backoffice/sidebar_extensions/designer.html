@@ -2,5 +2,10 @@
 {% if designer.attached_files %}
 	{% include "backoffice/sidebar_extensions/attachments.html" %}
 {% endif %}
-{% include "backoffice/sidebar_extensions/related_designers.html" %}
+
+{% if designer.designer_set.all or designer.belongs_to_studio %}
+	{% include "backoffice/sidebar_extensions/related_designers.html" %}
+{% endif %}
+
+
 {% include "backoffice/sidebar_extensions/designer_picture.html" %}
