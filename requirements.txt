@@ -20,7 +20,7 @@ django-modeltranslation==0.6.1
 django-positions==0.4.3
 -e hg+https://bitbucket.org/ubernostrum/django-registration@b3c41b3c7f50523b4ecb8267d6d27a918adc2e1f#egg=django_registration-dev
 -e git+https://github.com/llazzaro/django-scheduler.git@8bda7588999864743086859f9c333227d62ae76f#egg=django_schedule-dev
--e git+https://github.com/danielbraun/django-sidar-apps.git@b61efca2deaafd1b78819c7f49a608163305166a#egg=django_sidar_apps-dev
+-e git+https://github.com/danielbraun/django-sidar-apps.git@ea6a772a8a5b7d816f2c4486a46d6645d6272eed#egg=django_sidar_apps-dev
 django-storages==1.1.8
 django-taggit==0.10a1
 django-tinymce==1.5.1

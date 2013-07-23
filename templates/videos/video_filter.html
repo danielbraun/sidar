@@ -1,0 +1,40 @@
+{% extends "table.html" %}
+{% block body_class %}movies{% endblock body_class %}
+
+{% block maintitle %}סרטים{% endblock maintitle %}
+
+{% block pagination %}
+	{% include "includes/pagination.html" %}
+{% endblock pagination %}
+
+{% block table_rows %}
+
+<tr>
+	<th>תיאור</th>
+	<th>עוסק במעצב</th>
+	<th>שנה</th>
+	<th>משך סרטון</th>
+	<th>קטגוריה</th>
+</tr>
+
+{% for video in object_list %}
+	<tr>
+		<td>
+			{% if video.video %}
+				<a href="{{ video.video.url }}" target="_new">{{ video.description }}</a>
+			{% else %}
+				{{ video.video }}
+			{% endif %}
+		</td>
+		<td>{{ video.related_designer }}</td>
+		<td>{{ video.year }} </td>
+		<td>{{ video.duration}} דקות</td>
+		<td>{{ video.category }}</td>
+	</tr>
+{% endfor %}
+
+{% endblock table_rows %}
+
+{% block sidebar_extensions %}
+	{% include "backoffice/sidebar_extensions/work_filter.html" %}
+{% endblock sidebar_extensions %}
