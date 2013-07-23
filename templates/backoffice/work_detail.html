@@ -63,7 +63,7 @@
 								מעצב
 							</td>
 							<td class="large">
-								<strong><a href="">{{ work.designer.name }}</a></strong>
+								<strong><a href="{{ work.designer.get_absolute_url }}">{{ work.designer.name }}</a></strong>
 							</td>
 						</tr>
 						<tr>
@@ -80,7 +80,7 @@
 							</td>
 							<td>
 								{% for subject in work.subjects.all %}
-									<a href="">
+									<a href="{{ subject.get_absolute_url }}">
 										{{ subject.name }}</a>{% if not forloop.last %},{% endif %}
 								{% endfor %}
 							</td>
@@ -106,7 +106,7 @@
 								קטגוריה
 							</td>
 							<td>
-								<a href="">{{ work.category.name }}</a>
+								<a href="{{ work.category.get_absolute_url }}">{{ work.category.name }}</a>
 							</td>
 						</tr>
 						<tr>
@@ -203,7 +203,7 @@
 							</td>
 							<td>
 								{% for collector in work.of_collections.all %}
-									<a href="{{ collector.homepage }}">{{ collector }}</a>{% if not forloop.last %},{% endif %}
+									<a href="{{ collector.get_absolute_url }}">{{ collector }}</a>{% if not forloop.last %},{% endif %}
 								{% endfor %}
 								{% if work.is_self_collected %}
 									{{ work.designer }}
