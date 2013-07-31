@@ -15,10 +15,13 @@
 		{% csrf_token %}
 		<ul id="sortable" class="collection_sortable">
 			{% for item in collectable_list %}
-				<li>
-					<input type="hidden" name="collectable[]" value="{{ item.id }}">
-					<img src="sfghfgh" width="135">
+		
+				<li>			
+					<input type="hidden" name="collectable[]" value="{{item.id}}" />
+												
+						<img src="{{item.original_work.raw_image.url}}" width="135" />
 				</li>
+				
 			{% endfor %}
 		</ul>
 		<div style="text-align:center;"><input type="submit" value="שמירה"></div>
