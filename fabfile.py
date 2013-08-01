@@ -50,5 +50,6 @@ def test():
 
 def deploy():
     test()
-    local(source + 'git push github master')
-    local(source + 'git push heroku master')
+    local('git push origin master')
+    local('git push heroku master')
+    local('heroku open')

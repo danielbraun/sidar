@@ -1,0 +1,30 @@
+{% extends "events/event_list.html" %} 
+
+{% block pagination %}
+<a href="{% url 'events_index' discipline.id %}">חזרה לרשימת האירועים</a>
+{% endblock %}
+
+{% block pagebody %}
+<table class="generaltable">
+    <tbody>
+        <tr><th>שם האירוע</th></tr>
+        <tr><td class="generaltextcell">{{ event.title }}</td></tr>
+
+        <tr><th style="background-color:#686868;">תיאור הארוע</th></tr>
+        <tr><td class="generaltextcell">{{ event.description }}</td></tr>
+
+        <tr><th style="background-color:#959394;">מיקום הארוע</th></tr>
+        <tr><td class="generaltextcell">{{ event.location }}</td></tr>
+
+        <tr><th style="background-color:#ABABAB;">מועד האירוע</th></tr>
+        <tr><td class="generaltextcell">{{ event.date }}</td></tr>
+
+        {% autoescape off %}
+        <tr>
+            <td class="generaltextcell">{{ event.body }}</td>
+        </tr>
+        {% endautoescape %}
+    </tbody>
+</table>
+
+{% endblock %}

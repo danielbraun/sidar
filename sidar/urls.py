@@ -6,11 +6,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout, login
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
-
 from backoffice import models, views
 from backoffice.views import DesignerDetailView, DisciplineTemplateView, DesignerListView, WorkFieldListViewByDiscipline, WorkListView, WorkFilterView
 from collection.views import CollectView
 from django.views.generic.base import RedirectView
+from events.models import Event
 
 admin.autodiscover()
 
@@ -28,7 +28,12 @@ discipline_urls = patterns(
     (r'^book/', include('bibliography.urls')),
     (r'^links/', include('links.urls')),
     (r'^articles/', include('articles.urls')),
-
+    url(regex=r'^events/$',
+        view=views.DisciplineListView.as_view(model=Event),
+        name='events_index'),
+    url(regex=r'^events/(?P<pk>\d+)/$',
+        view=views.DisciplineDetailView.as_view(model=Event),
+        name='event-details'),
     url(r'^about/$',
         views.DisciplineTemplateView.as_view(
             template_name='backoffice/discipline_about.html'),
@@ -36,8 +41,6 @@ discipline_urls = patterns(
 
     (r'^search/$', WorkFilterView.as_view(), {}, 'search'),
     (r'^search/work-(?P<work>\d+)/$', WorkFilterView.as_view(), {}, 'search'),
-
-    (r'^event/$', DisciplineTemplateView.as_view(template_name='backoffice/event_list.html'), {}, "event-list"),
 
     (r'^year/(?P<from>\d*)-(?P<until>\d*)/', include(work_urls), {'main_filter': 'year'}),
     (r'^year/(?P<from>\d*)-(?P<until>\d*)/(?P<year>\d+)/', include(work_urls), {'main_filter': 'year'}),

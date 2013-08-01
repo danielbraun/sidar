@@ -179,6 +179,7 @@ INSTALLED_APPS = (
     'links',
     'articles',
     'videos',
+    'events',
 
 )
 
