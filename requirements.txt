@@ -13,14 +13,14 @@ django-countries==1.5
 django-dbbackup==1.70
 django-filter==0.6
 django-flatpages-tinymce==0.1.1
--e git+https://github.com/danielbraun/django-form-utils.git@72c3130fc769bf450d30d39b274a4c6e1739aab1#egg=django_form_utils-dev
+-e git+https://github.com/danielbraun/django-form-utils.git@374b6ca04c32890923b7c6cee95316160b1b7208#egg=django_form_utils-dev
 django-imagekit==2.0.1
 django-jquery==1.9.1
 django-modeltranslation==0.6.1
 django-positions==0.4.3
+-e git+https://github.com/danielbraun/django-moderation.git#egg=django-moderation
 -e hg+https://bitbucket.org/ubernostrum/django-registration@b3c41b3c7f50523b4ecb8267d6d27a918adc2e1f#egg=django_registration-dev
--e git+https://github.com/llazzaro/django-scheduler.git@8bda7588999864743086859f9c333227d62ae76f#egg=django_schedule-dev
--e git+https://github.com/danielbraun/django-sidar-apps.git@411944d8c2a307e47f66ccaddfc5a8a53e7b2405#egg=django_sidar_apps-dev
+-e git+https://github.com/danielbraun/django-sidar-apps.git@9edd784bdff175b70f4211b45b2067e374f8d346#egg=django_sidar_apps-dev
 django-storages==1.1.8
 django-taggit==0.10a1
 django-tinymce==1.5.1

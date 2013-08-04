@@ -11,7 +11,9 @@ from backoffice.views import DesignerDetailView, DisciplineTemplateView, Designe
 from collection.views import CollectView
 from django.views.generic.base import RedirectView
 from events.models import Event
+from moderation.helpers import auto_discover
 
+auto_discover()
 admin.autodiscover()
 
 work_urls = patterns(

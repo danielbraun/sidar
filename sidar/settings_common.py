@@ -180,7 +180,7 @@ INSTALLED_APPS = (
     'articles',
     'videos',
     'events',
-
+    'moderation',
 )
 
 # A sample logging configuration. The only tangible logging
