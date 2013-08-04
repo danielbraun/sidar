@@ -11,7 +11,9 @@
 <a href="javascript:window.print()">הדפסה</a>
 |
 <a href="{% url 'collection-sortable-list' %}">סדרן שקופיות</a>
-
+|
+<a href="{% url 'collection-slideshow-list' %}">מצגת</a>
+	
 {% endblock pagination %}
 
 {% block extra_js %}
@@ -19,6 +21,7 @@
 {% endblock extra_js %}
 
 {% block pagebody %}
+
 <table class="generaltable" cellspacing="2" border="1">
 	<tbody>
 
@@ -51,28 +54,28 @@
 							<td style="text-align:center;">
 								<form method="post" action="{{ object.id }}/down/" style="display:inline;">
 									{% csrf_token %}
-									<input type="submit" value="▼" style="color:green;">
+									<input type="submit" value="▼" style="color:green;width:25px">
 								</form>
 
 
 								<form method="post" action="{% url 'collectable-up' object.id %}" style="display:inline;">
 									{% csrf_token %}
-									<input type="submit" value="▲" style="color:green;">
+									<input type="submit" value="▲" style="color:green;width:25px">
 								</form>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</td>
-
 		</tr>
 
 		{% endfor %}
-		<tr></tr>
+		<tr> </tr>
 
 
 
 
 
 	</tbody></table>
+
 	{% endblock pagebody %}

@@ -111,9 +111,9 @@ dd {margin-left:18px;}
 #main_nav .navitem_disabled a {color:#bbbbbb;cursor:default;}
 #main_nav .navitem_disabled a:hover span {display:none;}
 
-#header_sidebar {position:absolute;left:0px;top:3px;width:210px;height:100%;background-repeat:no-repeat;background-position:top left;background-image:url(images/sidebar/main_logo.png);}
-.abu #header_sidebar {position:absolute;left:0px;top:3px;width:210px;height:100%;background-repeat:no-repeat;background-position:top left;background-image:url(images/sidebar/main_logo.png);}
-.tar #header_sidebar {position:absolute;left:0px;top:3px;width:210px;height:100%;background-repeat:no-repeat;background-position:top left;background-image:url(images/sidebar/main_logo.png);}
+#header_sidebar {position:absolute;left:0px;top:3px;width:210px;height:100%;background-repeat:no-repeat;background-position:top left;background-image:url(images/sidebar/main_logo.jpg);}
+.abu #header_sidebar {position:absolute;left:0px;top:3px;width:210px;height:100%;background-repeat:no-repeat;background-position:top left;background-image:url(images/sidebar/main_logo.jpg);}
+.tar #header_sidebar {position:absolute;left:0px;top:3px;width:210px;height:100%;background-repeat:no-repeat;background-position:top left;background-image:url(images/sidebar/main_logo.jpg);}
 .gd #header_sidebar {background-image:url(images/sidebar/gd_logo.jpg);}
 .id #header_sidebar {background-image:url(images/sidebar/id_logo.jpg);}
 .jd #header_sidebar {background-image:url(images/sidebar/jd_logo.jpg);}
@@ -200,15 +200,17 @@ dd {margin-left:18px;}
 .generaltable .designerportraitcell  {padding-right:150px;background-repeat:no-repeat;background-position:617px 5px;height:160px;}
 
 /* sidebar */
-#sidebar {width:210px;position:absolute;top:0px;left:0px;}
-.jd #sidebar {background-color:#fd978c;height: 100%;background-repeat:repeat-y} /*background-position:center top;*/
+#sidebar {width:210px;position:absolute;top:0px;left:0px;height: 100%;background-color:#e1e3e3;background-repeat:repeat-y} /*background-color:#c3c7c8 */
+.collect #pagebody #sidebar {position:relative}
+
+.jd #sidebar {background-color:#fecbc5;height: 100%;background-repeat:repeat-y} /*background-position:center top;*/
 .gd #sidebar {background-color:#b3c3dd;height: 100%;background-repeat:repeat-y}
 .id #sidebar {background-color:#f7bc78;height: 100%;background-repeat:repeat-y}
-.fd #sidebar {background-color:#67a7b5;height: 100%;background-repeat:repeat-y}
-.td #sidebar {background-color:black;height: 100%;background-repeat:repeat-y}
-.bed #sidebar{background-color:black;height: 100%;background-repeat:repeat-y}
-.cd #sidebar {background-color:black;height: 100%;background-repeat:repeat-y}
-.art #sidebar{background-color:black;height: 100%;background-repeat:repeat-y}
+.fd #sidebar {background-color:#b3d3ea;height: 100%;background-repeat:repeat-y}
+.td #sidebar {background-color:#d6e5ca;height: 100%;background-repeat:repeat-y}
+.bed #sidebar{background-color:#e1d0e0;height: 100%;background-repeat:repeat-y}
+.cd #sidebar {background-color:#f3dde9;height: 100%;background-repeat:repeat-y}
+.art #sidebar{background-color:#fdf2b8;height: 100%;background-repeat:repeat-y}
 
 #sidebar_searchlink {display:block;background-color:#000000;color:#FFFFFF;display:block;font-size:14px;font-weight:bold;line-height:27px;padding-right:8px;margin-bottom:26px;
 background-image:url(images/corner_advancedsearch.png);background-repeat:no-repeat;background-position:bottom right;
@@ -307,7 +309,7 @@ border-bottom:2px solid #dbd8d2;
 
 .search input {width:185px;}
 
-#homepage_intro_div {background-color:white;color:black;font-size:14px;width:235px;height:215px;position:absolute;top:162px;right:0px;}
+#homepage_intro_div {background-color:white;color:black;font-size:14px;width:235px;height:215px;position:absolute;top:162px;right:0px;z-index:3}
 #homepage_intro_div .shenkarlogo {width:46px;height:40px;background-image:url(images/homepage_logo_shenkar.png);position:absolute;top:25px;right:50px;}
 #homepage_intro_div  .shenkartagline {position:absolute;top:82px;right:50px;font-size:14px;font-weight:bold;width:165px;}
 #homepage_intro_div  .verticallogo {width:10px;height:100px;background-image:url(images/homepage_logo_vertical.png);position:absolute;top:27px;right:25px;}
@@ -341,7 +343,7 @@ form.registration input {direction: ltr;}
 
 
 
-.collection_sortable { list-style: none; width: 100%; }
+.collection_sortable { list-style: none; width: 100%;}
 .collection_sortable li {
 	display: inline-block;
 	margin: 1px;
