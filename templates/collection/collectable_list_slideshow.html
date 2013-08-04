@@ -1,0 +1,25 @@
+{% extends "collection/collectable_list.html" %}
+
+{% block extra_js %}
+	{{ block.super }}
+
+{% endblock extra_js %}
+
+{% block pagination %}
+	<a href="{% url 'collection-home' %}">‹ חזרה לדף האיסוף</a>
+{% endblock pagination %}
+
+{% block pagebody %}
+	<form method="post">
+		{% csrf_token %}
+		<div class="slideshow">
+			{% for item in collectable_list %}
+					<li>
+						{{item.id}}
+					</li>	
+			{% endfor %}
+		</div>
+	
+	</form>
+
+{% endblock pagebody %}
