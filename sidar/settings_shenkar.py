@@ -4,13 +4,12 @@ import os
 
 
 DEBUG = TEMPLATE_DEBUG = False
-MEDIA_ROOT = '~/media/'
-PORTFOLIO_CSV_ROOT = ''
-PORFOLIO_IMAGE_DIR = '/home/sidar/images_to_import/'
+MEDIA_ROOT = '/home/sidar/media/'
+
+PORTFOLIO_CSV_ROOT = PORTFOLIO_IMAGE_DIR = '/home/sidar/data_to_upload/'
 
 ALLOWED_HOSTS = ['10.0.10.4', ]
 
-PORTFOLIO_CSV_ROOT = ''
 
 DATABASES = {
     'default': {
