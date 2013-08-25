@@ -1,5 +1,7 @@
 {% extends "table.html" %}
 {% load date_tags %}
+ <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
 
 
 {% block body_class %}years{% endblock body_class %}
@@ -7,6 +9,7 @@
 
 {% block sidebar_extensions %}
 <div id="changer"></div>
+<p class="dclass"> </p>
 {% endblock sidebar_extensions %}
 
 {% block table_rows %}
@@ -30,25 +33,67 @@
 
 			</a>
 		</td>
-		<td>
-			<span style="cursor: help;" title="{% for event in decade.list %}{% if event.type == event.HISTORICAL %}{{ event.year }} - {{ event }}&#10;{% endif %}{% endfor %}">
-				{% for event in decade.list %}
-					{% if event.is_important and event.type == event.HISTORICAL %}
-						{{ event.description|truncatewords:2|slice:"0:-4" }},
-					{% endif %}
-				{% endfor %}
+		
+		<td id="div1">
+			
+			<span style="cursor: pointer;visibility: visible" title=""  >
+					<div class="dparent" onClick="show(this)">
+					{% for event in decade.list  %}
+						{% if event.is_important and event.type == event.HISTORICAL %}
+							{{ event.description|truncatewords:2|slice:"0:-1" }},
+						{% endif %}
+					{% endfor %}
+									
+					{% for event in decade.list %}
+					{% if forloop.first%}
+					
+						{% if event.is_important and event.type == event.HISTORICAL %}
+								<br>
+								<div class="dchild" >
+									{% for event in decade.list  %}
+									{% if event.is_important and event.type == event.HISTORICAL %}
+										{{ event.year }} - {{ event }} &#10;
+									{% endif %}<br>
+								{% endfor %}
+								</div>	
+							
+						{% endif %}
+						
+					{%endif%}
+					{% endfor %}
+					</div>
 			</span>
+			
 		</td>
 		<td style="">
-			<span style="cursor: help;" title="{% for event in decade.list %}{% if event.type != event.HISTORICAL %}{{ event.year }} - {{ event }}&#10;{% endif %}{% endfor %}">
-				{% for event in decade.list %}
+			<span style="cursor: pointer;" title="">
+				<div class="dparent" class="dparent" onClick="show(this)">
+					{% for event in decade.list  %}
 					{% if event.is_important and event.type != event.HISTORICAL %}
-						{{ event.description|truncatewords:2|slice:"0:-4" }},
-					{% endif %}
-				{% endfor %}
+							{{ event.description|truncatewords:2|slice:"0:-1" }},
+						{% endif %}
+					{% endfor %}
+									
+					{% for event in decade.list %}
+					{% if forloop.first%}
+					
+						{% if event.is_important and event.type != event.HISTORICAL %}
+								<br>
+								<div class="dchild" >
+									{% for event in decade.list  %}
+									{% if event.is_important and event.type != event.HISTORICAL %}
+										{{ event.year }} - {{ event }} &#10;
+									{% endif %}<br>
+								{% endfor %}
+								</div>	
+							
+						{% endif %}
+						
+					{%endif%}
+					{% endfor %}
+					</div>
 			</span>
 		</td>
 	</tr>
 {% endfor %}
-
 {% endblock table_rows %}

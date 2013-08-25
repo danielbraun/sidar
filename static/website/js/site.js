@@ -40,3 +40,19 @@ $(function(){
 	// 	show_collect_win();
 	// });
 });
+var check =1;
+function show (obj)
+{
+	if (check ==1 )
+		{
+			obj.className="new_class";
+			check=0;
+		}
+		else{
+			obj.className="old_class";
+			check=1;
+		}
+}
+
+
+
