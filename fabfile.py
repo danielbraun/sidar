@@ -5,6 +5,7 @@ env.hosts = ['sidar@design25.local']
 DESIGN26_HOSTNAME = 'design26.local'
 github_repo = 'https://github.com/danielbraun/sidar.git'
 design26m_mount_point = '/mnt/design26m'
+source = 'source venv/bin/activate && '
 
 
 def mount_design26m():
@@ -35,10 +36,20 @@ def push_ssh_key():
 def deploy_design25_from_github():
     # mount_design26m()
     local('pip freeze > requirements.txt')
-    source = 'source venv/bin/activate && '
     with cd('~/sidar'):
         run('git pull')
         run(source + 'pip install -r requirements.txt')
         run(source + 'python manage.py migrate')
         run(source + 'python manage.py collectstatic --noinput')
     sudo('service gunicorn restart')
+
+
+def test():
+    local('./manage.py test backoffice bibliography collection feedback timeline links articles videos')
+
+
+def deploy():
+    test()
+    local('git push origin master')
+    local('git push heroku master')
+    local('heroku open')

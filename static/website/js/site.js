@@ -15,6 +15,14 @@ jQuery(document).ready(function() {
 		$("#collect_form").submit();
 	});
 
+/* to mach the site for each screen*/
+$(function(){
+    var windowH = $(window).height();
+    var wrapperH = $('#pagebody').height();
+    if(windowH > wrapperH) {                            
+        $('#pagebody').css({'height':($(window).height())+'px'});
+    }                                                                                   
+});
 	// var search_form = $("#search_form");
 	// search_form.ajaxForm(function(response) {
 	// 	$("#search_form tbody").html(response);
