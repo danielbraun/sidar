@@ -202,7 +202,7 @@ dd {margin-left:18px;}
 
 /* sidebar */
 #sidebar {width:210px;position:absolute;top:0px;left:0px;height: 100%;background-color:#e1e3e3;background-repeat:repeat-y} /*background-color:#c3c7c8 */
-.collect #pagebody #sidebar {position:relative}
+.collect #pagebody #sidebar {position:relative; background-color:transparent; }
 
 .jd #sidebar {background-color:#fecbc5;height: 100%;background-repeat:repeat-y} /*background-position:center top;*/
 .gd #sidebar {background-color:#b3c3dd;height: 100%;background-repeat:repeat-y}
@@ -347,7 +347,7 @@ form.registration th {text-align: left;}
 form.registration input {direction: ltr;}
 
 
-
+.collection_sortable sidebar { }
 .collection_sortable { list-style: none; width: 100%;}
 .collection_sortable li {
 	display: inline-block;
