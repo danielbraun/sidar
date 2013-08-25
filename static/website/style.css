@@ -8,6 +8,7 @@ blockquote:before, blockquote:after, q:before, q:after {content:'';content:none;
 table {border-collapse:collapse;border-spacing:0;}
 select, input[type="text"] {font-family:arial;font-size:12px;width:100%;}
 input[type="text"] {width: 97%;}
+input[type="password"] {width: 97%;}
 /* style.css */
 html {overflow-y:scroll;}
 body {font-size:12px;line-height:18px;color:#222222;background-color:#ffffff;font-family:Arial,sans-serif;height:100%;}
@@ -96,7 +97,7 @@ dd {margin-left:18px;}
 #main_nav .navitem_5, #main_nav .navitem_5 a span, .designer #pagebody #maintitle {background-color:#5da526;}
 #main_nav .navitem_6, #main_nav .navitem_6 a span, .article #pagebody #maintitle {background-color:#8a4583;}
 #main_nav .navitem_7, #main_nav .navitem_7 a span, .links #pagebody #maintitle {background-color:#ee7aa8;}
-#main_nav .navitem_8, #main_nav .navitem_8 a span, .biblio #pagebody #maintitle {background-color:#d58bb5;}
+#main_nav .navitem_8, #main_nav .navitem_8 a span, .biblio #pagebody #maintitle {background-color:#E00117;}
 #main_nav .navitem_9, #main_nav .navitem_9 a span, .movies #pagebody #maintitle {background-color:#c33f15;}
 #main_nav .navitem_10, #main_nav .navitem_10 a span, .events #pagebody #maintitle {background-color:#cc6318;}
 .single #pagebody #maintitle {background-color:#5da526;}
@@ -217,6 +218,10 @@ background-image:url(images/corner_advancedsearch.png);background-repeat:no-repe
 border-bottom:2px solid #dbd8d2;
 }
 #sidebar_searchlink:hover {text-decoration:none;}
+#sidebar_searchlink_flatpages {display:block;color:#CCCCCC !important;background-color:#B0B0B0 !important;display:block;font-size:14px;font-weight:bold;line-height:27px;padding-right:8px;margin-bottom:26px;
+cursor:default;text-decoration:none;font-size:14px;font-weight:bold;line-height:27px;padding-right:8px;margin-bottom:26px;
+background-image:url(images/corner_advancedsearch.png);background-repeat:no-repeat;background-position:bottom right;
+border-bottom:2px solid #dbd8d2;}
 
 .sidebar_searchlink_disabled {color:#CCCCCC !important;background-color:#B0B0B0 !important;cursor:default;}
 
@@ -350,3 +355,9 @@ form.registration input {direction: ltr;}
 	border: lightgray solid 1px;
 	cursor: move;
 }
+
+
+.dchild { display: none; }
+.new_class .dchild{ display: block }
+.old_class .dchild{ display: none}
+
