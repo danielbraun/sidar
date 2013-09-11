@@ -20,7 +20,8 @@ Quick Start
 3. Install the dependencies globally:
 	
 	`sudo pip install django`
-	`sudo pip install -r requirements.txt`
+	`sudo pip install -r requirements/development.txt`
+
 4. Create the database:
 	
 	`python manage.py syncdb`
