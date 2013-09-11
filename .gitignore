@@ -12,6 +12,10 @@ local_settings.py
 sqlite3.db-journal
 Thumbs.db
 *.swp
+.settings
+.project
+.pydevproject
+
 
 # Ignore virtualenv directories:
 bin
@@ -21,3 +25,5 @@ src
 include
 build
 .Python
+Scripts
+
