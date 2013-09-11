@@ -12,3 +12,11 @@ local_settings.py
 sqlite3.db-journal
 Thumbs.db
 *.swp
+
+# Ignore virtualenv directories:
+bin
+lib
+share
+src
+include
+.Python
