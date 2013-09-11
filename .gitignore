@@ -19,4 +19,5 @@ lib
 share
 src
 include
+build
 .Python
