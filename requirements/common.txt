@@ -20,7 +20,7 @@ django-modeltranslation==0.6.1
 django-positions==0.4.3
 -e git+https://github.com/danielbraun/django-moderation.git#egg=django-moderation
 -e hg+https://bitbucket.org/ubernostrum/django-registration@b3c41b3c7f50523b4ecb8267d6d27a918adc2e1f#egg=django_registration-dev
--e git+https://github.com/danielbraun/django-sidar-apps.git@507f80662925166c3ca78b055291942ab6cd0966#egg=django_sidar_apps-dev
+-e git+https://github.com/danielbraun/django-sidar-apps.git#egg=django_sidar_apps
 django-storages==1.1.8
 django-taggit==0.10a1
 django-tinymce==1.5.1
