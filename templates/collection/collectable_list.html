@@ -11,7 +11,8 @@
 <a href="javascript:window.print()">הדפסה</a>
 |
 <a href="{% url 'collection-sortable-list' %}">סדרן שקופיות</a>
-
+|
+<a href="{% url 'collection-slideshow-list' %}">מצגת</a>
 {% endblock pagination %}
 
 {% block extra_js %}
@@ -23,7 +24,7 @@
 	<tbody>
 
 		{% for object in collectable_list %}
-
+		
 		<tr>
 			{% include "backoffice/includes/work_summary.html" with work=object.original_work %}
 			<td class="preview_collectactions_td" valign="top">

@@ -13,7 +13,8 @@
 	{% if user.is_authenticated and work %}
 	<form method="post" action="collect/" id="collect_form">
 		{% csrf_token %}
-		<a href="" class="sidebar_linkitem">הוסף עבודה זו לדף האישי</a>
+		<a href="" class="sidebar_linkitem" onclick="addWork()">הוסף עבודה זו לדף האישי</a>
+		<script>function addWork(){alert ("העבודה נוספה")}</script>
 	</form>
 	{% endif %}
 
