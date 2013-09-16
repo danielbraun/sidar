@@ -43,6 +43,7 @@ discipline_urls = patterns(
 
     (r'^search/$', WorkFilterView.as_view(), {}, 'search'),
     (r'^search/work-(?P<work>\d+)/$', WorkFilterView.as_view(), {}, 'search'),
+    (r'^search/', include(work_urls)),
 
     (r'^year/(?P<from>\d*)-(?P<until>\d*)/', include(work_urls), {'main_filter': 'year'}),
     (r'^year/(?P<from>\d*)-(?P<until>\d*)/(?P<year>\d+)/', include(work_urls), {'main_filter': 'year'}),
