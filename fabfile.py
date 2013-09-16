@@ -1,11 +1,11 @@
 from fabric.api import *
 
 
-env.hosts = ['sidar@design25.local']
+env.hosts = ['sidar@10.0.10.4']
 DESIGN26_HOSTNAME = 'design26.local'
 github_repo = 'https://github.com/danielbraun/sidar.git'
 design26m_mount_point = '/mnt/design26m'
-source = 'source venv/bin/activate && '
+source = 'source bin/activate && '
 
 
 def mount_design26m():
@@ -33,15 +33,13 @@ def push_ssh_key():
     run('rm %s' % keyfile)
 
 
-def deploy_design25_from_github():
-    # mount_design26m()
-    local('pip freeze > requirements.txt')
-    with cd('~/sidar'):
+def deploy_shenkar_server():
+    with cd('~/django_projects/sidar'):
         run('git pull')
-        run(source + 'pip install -r requirements.txt')
+        run(source + 'pip install -r requirements/common.txt')
         run(source + 'python manage.py migrate')
         run(source + 'python manage.py collectstatic --noinput')
-    sudo('service gunicorn restart')
+    sudo('service sidar restart')
 
 
 def test():
