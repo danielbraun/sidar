@@ -17,10 +17,16 @@ Quick Start
 2. Change your working directory:
 
 	`cd sidar`
-3. Install the dependencies globally:
+3. Create a virtualenv and activate it e.g. :
+
+        `virtualenv .`
+        `Scripts\activate`
+
+3. Install the dependencies :
 	
-	`sudo pip install django`
-	`sudo pip install -r requirements.txt`
+	`pip install django==1.5.1`
+	`pip install -r requirements/development.txt`
+
 4. Create the database:
 	
 	`python manage.py syncdb`
