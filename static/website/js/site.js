@@ -52,6 +52,14 @@ function show (obj)
 			obj.className="old_class";
 			check=1;
 		}
+		
+	$(function(){
+    var windowH = $(window).height();
+    var wrapperH = $('#pagebody').height();
+    if(windowH > wrapperH) {                            
+        $('#pagebody').css({'height':($(window).height())+'px'});
+    }                                                                                   
+	});
 }
 
 
