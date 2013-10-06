@@ -355,7 +355,7 @@ form.registration input {direction: ltr;}
 	border: lightgray solid 1px;
 	cursor: move;
 }
-
+.collection_sortable li img{max-width: 135px; max-height: 135px;cursor: pointer}
 
 .dchild { display: none; }
 .new_class .dchild{ display: block }
