@@ -1,10 +1,70 @@
 <script type="text/javascript">
-
+var str=window.location.href;
 var leftrightslide=new Array()
-{% for work in object_list %}
-leftrightslide[{{ forloop.counter0 }}]="<a href='{% url 'work-detail' discipline=work.discipline.id designer=work.designer.id work=work.id %}'><img src='' alt='{{ work.name }}' width='{{ size }}px' height='{{ size }}px' /><\/a>"
-{% endfor %}
+var pagename=str.substring((str.lastIndexOf("discipline/")),str.length) ;
 
+if (pagename.search("discipline/1")!= -1)
+{
+{% for work in object_list %}
+{% if work.discipline.sidar_id == "fas" %}
+leftrightslide['{{ forloop.counter0 }}']="<a href='{% url 'work-detail' discipline=work.discipline.id designer=work.designer.id work=work.id %}'><img src='{{ work.raw_image.url }}' alt='{{ work.name }}' width='{{ size }}px' height='{{ size }}px' /><\/a>"
+{% endif %}
+{% endfor %}
+}
+else if (pagename.search("discipline/2")!= -1)
+{
+{% for work in object_list %}
+{% if work.discipline.sidar_id == "gd" %}
+leftrightslide['{{ forloop.counter0 }}']="<a href='{% url 'work-detail' discipline=work.discipline.id designer=work.designer.id work=work.id %}'><img src='{{ work.raw_image.url }}' alt='{{ work.name }}' width='{{ size }}px' height='{{ size }}px' /><\/a>"
+{% endif %}
+{% endfor %}
+}
+else if (pagename.search("discipline/3")!= -1)
+{
+{% for work in object_list %}
+{% if work.discipline.sidar_id == "td" %}
+leftrightslide['{{ forloop.counter0 }}']="<a href='{% url 'work-detail' discipline=work.discipline.id designer=work.designer.id work=work.id %}'><img src='{{ work.raw_image.url }}' alt='{{ work.name }}' width='{{ size }}px' height='{{ size }}px' /><\/a>"
+{% endif %}
+{% endfor %}
+}
+else if (pagename.search("discipline/4")!= -1)
+{
+{% for work in object_list %}
+{% if work.discipline.sidar_id == "bed" %}
+leftrightslide['{{ forloop.counter0 }}']="<a href='{% url 'work-detail' discipline=work.discipline.id designer=work.designer.id work=work.id %}'><img src='{{ work.raw_image.url }}' alt='{{ work.name }}' width='{{ size }}px' height='{{ size }}px' /><\/a>"
+{% endif %}
+{% endfor %}
+}
+else if (pagename.search("discipline/5")!= -1)
+{
+{% for work in object_list %}
+{% if work.discipline.sidar_id == "cd" %}
+leftrightslide['{{ forloop.counter0 }}']="<a href='{% url 'work-detail' discipline=work.discipline.id designer=work.designer.id work=work.id %}'><img src='{{ work.raw_image.url }}' alt='{{ work.name }}' width='{{ size }}px' height='{{ size }}px' /><\/a>"
+{% endif %}
+{% endfor %}
+}
+else if (pagename.search("discipline/6")!= -1)
+{
+{% for work in object_list %}
+{% if work.discipline.sidar_id == "jd" %}
+leftrightslide['{{ forloop.counter0 }}']="<a href='{% url 'work-detail' discipline=work.discipline.id designer=work.designer.id work=work.id %}'><img src='{{ work.raw_image.url }}' alt='{{ work.name }}' width='{{ size }}px' height='{{ size }}px' /><\/a>"
+{% endif %}
+{% endfor %}
+}
+else if (pagename.search("discipline/7")!= -1)
+{
+{% for work in object_list %}
+{% if work.discipline.sidar_id == "id" %}
+leftrightslide['{{ forloop.counter0 }}']="<a href='{% url 'work-detail' discipline=work.discipline.id designer=work.designer.id work=work.id %}'><img src='{{ work.raw_image.url }}' alt='{{ work.name }}' width='{{ size }}px' height='{{ size }}px' /><\/a>"
+{% endif %}
+{% endfor %}
+}
+else
+{
+{% for work in object_list %}
+leftrightslide['{{ forloop.counter0 }}']="<a href='{% url 'work-detail' discipline=work.discipline.id designer=work.designer.id work=work.id %}'><img src='{{ work.raw_image.url }}' alt='{{ work.name }}' width='{{ size }}px' height='{{ size }}px' /><\/a>"
+{% endfor %}
+}
 				//Specify gap between each image (use HTML):
 				var imagegap=" "
 
