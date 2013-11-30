@@ -1,0 +1,72 @@
+{% extends "backoffice/discipline_detail.html" %}
+
+{% block pagination %}
+{% include "includes/pagination.html" %}
+{% endblock pagination %}
+
+{% block body_class %}{{ main_filter }}{% endblock body_class %}
+
+{% block maintitle %}
+	{% if main_filter == 'years' %}
+		שנים ›
+		{% if from %}משנת {{ from }}{% endif %}
+		{% if until %}עד {{ until }}{% endif %}
+	{% endif %}
+	{% if main_filter == 'category' %}קטגוריות › {{ category }}{% endif %}
+	{% if main_filter == 'subject' %}נושאים › {{ subject }}{% endif %}
+
+	{% if main_filter == 'designer' and collector %}אספנים › {{ collector }}
+	{% elif main_filter == 'designer' and designer %}מעצבים › {{ designer }}
+	{% endif %}
+
+	{% if filter.form %}חיפוש מתקדם{% endif %}
+{% endblock maintitle %}
+
+{% block pagebody %}
+<table class="generaltable" cellspacing="2" border="1">
+	<tbody>
+		<tr>
+			{% for work in work_list %}
+				{% include "backoffice/includes/work_summary.html" %}
+				{% if forloop.last and not forloop.counter|divisibleby:2 %}
+					{% include "backoffice/includes/work_summary.html" with work=None%}
+				{% endif %}
+				{% if forloop.counter|divisibleby:2 %}</tr><tr>{% endif %}
+			{% endfor %}
+		</tr>
+	</tbody>
+</table>
+
+{% endblock pagebody %}
+
+
+{% block sidebar_extensions %}
+	{% if not from == until %}
+		{% include "backoffice/sidebar_extensions/available_years.html" %}
+	{% endif %}
+
+	{% if main_filter == "category" %}
+		{% include "backoffice/sidebar_extensions/available_designers_in_category.html" %}
+	{% endif %}
+
+	{% if main_filter == "subject" %}
+		{% include "backoffice/sidebar_extensions/available_designers_in_subject.html" %}
+	{% endif %}
+
+	{% if category.info %}
+		{% include "backoffice/sidebar_extensions/info.html" with object=category %}
+	{% endif %}
+
+	{% if subject.info %}
+		{% include "backoffice/sidebar_extensions/info.html" with object=subject %}
+	{% endif %}
+
+	{% if designer and not collector %}
+		{% include "backoffice/sidebar_extensions/designer.html" %}
+	{% endif %}
+
+	{% if filter.form %}
+		{% include "backoffice/sidebar_extensions/work_filter.html" %}
+	{% endif %}
+
+{% endblock sidebar_extensions %}

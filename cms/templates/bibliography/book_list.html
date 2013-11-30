@@ -1,0 +1,43 @@
+{% extends "table.html" %}
+{% block body_class %}biblio{% endblock body_class %}
+{% block maintitle %}
+	ביבליוגרפיה
+	{% if category %}
+		› {{ category }}
+	{% endif %}
+{% endblock maintitle %}
+
+{% block pagination %}
+	{% include "includes/pagination.html" %}
+{% endblock pagination %}
+
+
+{% block table_rows %}
+
+<tr>
+	<th width="22%">מחבר/עורך/מאייר</th>
+	<th width="22%">שם הספר</th>
+	<th width="22%">הוצאה/ מקום/ שנה</th>
+	<th width="10%">קטגוריה</th>
+	<th>הערות</th>
+</tr>
+{% for book in object_list %}
+<tr>
+	<td>{{ book.author_as_text }}</td>
+	<td>{{ book.title }}</td>
+	<td>{{ book.publication_as_text }}</td>
+	<td>
+		<a href="{% url 'book-list' discipline.id book.category.id %}">
+			{{ book.category }}
+		</a>
+
+	</td>
+	<td>{{ book.comments }}</td>
+</tr>
+{% endfor %}
+
+{% endblock table_rows %}
+
+{% block sidebar_extensions %}
+	{% include "bibliography/sidebar_extensions/categories.html" %}
+{% endblock sidebar_extensions %}

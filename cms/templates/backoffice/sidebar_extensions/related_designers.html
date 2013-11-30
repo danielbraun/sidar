@@ -1,0 +1,20 @@
+{% extends "includes/sidebar_extension.html" %}
+{% block title %}מעצבים קשורים{% endblock title %}
+
+{% block body %}
+{% if designer.belongs_to_studio %}
+	<a href="{{ designer.belongs_to_studio.get_absolute_url }}"
+	   class="sidebar_linkitem">
+	   {{ designer.belongs_to_studio }}
+	</a>
+{% endif %}
+
+{% for related_designer in designer.designer_set.all %}
+	<a href="{{ related_designer.get_absolute_url }}"
+	   class="sidebar_linkitem">
+	   {{ related_designer }}
+	</a>
+{% endfor %}
+
+
+{% endblock body %}

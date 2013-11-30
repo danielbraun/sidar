@@ -1,0 +1,16 @@
+{% extends "includes/sidebar_extension.html" %}
+{% block title %}סינון{% endblock title %}
+{% block body %}
+	<form action="" method="get">
+		{% for field in filter.form %}
+			<p>
+				{{ field.errors }}
+		        <span class="sidebar_linkitem" style="background-color:inherit;">{{ field.label_tag }}:</span>
+		        {{ field }}
+		    </p>
+		{% endfor %}
+		<p><br/>
+			<input type="submit" value="סנן" style="width:100%;" />
+		</p>
+	</form>
+{% endblock body %}

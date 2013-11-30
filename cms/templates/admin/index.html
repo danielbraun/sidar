@@ -1,0 +1,41 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+{% load url from future %}
+
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+
+{% block content_title %}{% endblock content_title %}
+
+{% block content %}
+{% if app_list %}
+<ul class="thumbnails">
+	{% for app in app_list %}
+	<li class="span5th">
+		<div class="thumbnail">
+			<div class="square">
+				<h1>{% trans app.name %}</h1>
+				<ul>
+					{% for model in app.models %}
+						<li>
+						{% if model.admin_url %}
+							<a href="{{ model.admin_url }}">ניהול {{ model.name }}</a>
+						{% else %}
+							ניהול {{ model.name }}
+						{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</li>
+
+	{% endfor %}
+</ul>
+{% else %}
+<p>{% trans "You don't have permission to edit anything." %}</p>
+{% endif %}
+{% endblock %}

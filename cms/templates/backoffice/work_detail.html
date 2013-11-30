@@ -1,0 +1,220 @@
+{% extends "backoffice/discipline_detail.html" %}
+{% block maintitle %}{{ work.designer }}{% endblock maintitle %}
+{% block body_class %}designer{% endblock body_class %}
+
+{% block sidebar_extensions %}
+	{% include "backoffice/sidebar_extensions/designer.html" with category="" designer=work.designer%}
+{% endblock sidebar_extensions %}
+
+
+{% block pagination %}
+	<a href="../?{{ request.META.QUERY_STRING }}">חזרה לתוצאות החיפוש</a>
+	<div class="pagination_arrows">
+
+	{% if previous_work %}
+	<a href="../work-{{ previous_work.id }}?{{ request.META.QUERY_STRING }}">
+		{% else %}
+		<a class="disabled">
+			{% endif %}
+			‹ הקודם</a>
+			|
+	{% if next_work %}
+	<a href="../work-{{ next_work.id }}?{{ request.META.QUERY_STRING }}">
+		{% else %}
+		<a class="disabled">
+			{% endif %}
+			הבא ›</a>
+				</div>
+{% endblock pagination %}
+
+{% block pagebody %}
+
+<table class="generaltable" cellspacing="2" border="1">
+	<tbody>
+		<tr>
+			<td class="midsize_image_td">
+				<a><img src="{% if work.processed_image %}{{ work.processed_image.url }}{% endif %}"><img src="{{ STATIC_URL }}website/images/spacer.png" class="spacer"></a>
+				<table class="generaltable">
+					<tbody>
+						<tr>
+							<td>
+								זכויות יוצרים
+							</td>
+							<td>
+								עבודה זו מוגנת ואין להעתיקה או לשכפלה מבלי אישור
+							</td>
+						</tr>
+						<tr>
+							<td>
+								copyrights
+							</td>
+							<td>
+								This work is copyright protected ©
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+			<td class="midsize_info_td">
+				<table class="generaltable">
+					<tbody>
+						<tr>
+							<td width="60">
+								מעצב
+							</td>
+							<td class="large">
+								<strong><a href="{{ work.designer.get_absolute_url }}">{{ work.designer.name }}</a></strong>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Designer
+							</td>
+							<td>
+								<strong>{{ work.designer.name_en }}</strong>&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td>
+								נושא
+							</td>
+							<td>
+								{% for subject in work.subjects.all %}
+									<a href="{{ subject.get_absolute_url }}">
+										{{ subject.name }}</a>{% if not forloop.last %},{% endif %}
+								{% endfor %}
+							</td>
+						</tr>
+						<tr>
+							<td nowrap>
+								שם העבודה
+							</td>
+							<td>
+								{{ work.name }}
+							</td>
+						</tr>
+						<tr>
+							<td nowrap>
+								Title
+							</td>
+							<td>
+								{{ work.name_en }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								קטגוריה
+							</td>
+							<td>
+								<a href="{{ work.category.get_absolute_url }}">{{ work.category.name }}</a>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								תאריך
+							</td>
+							<td>
+								{{ work.publish_date_as_text }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								לקוח
+							</td>
+							<td>
+								{{ work.client }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Client
+							</td>
+							<td>
+								{{ work.client.name_en }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								טכניקה
+							</td>
+							<td>
+								{{ work.techniques.all|join:", " }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Technique
+							</td>
+							<td>
+
+							</td>
+						</tr>
+						<tr>
+							<td>
+								גודל
+							</td>
+							<td>
+								{{ work.size_as_text }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								תאור
+							</td>
+							<td>
+								{{ work.description }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Description
+							</td>
+							<td>
+								{{ work.description_en }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								ארץ
+							</td>
+							<td>
+								{{ work.country.name }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								מילות מפתח
+							</td>
+							<td>
+								{{ work.tags.all|join:", " }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								פריט
+							</td>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td>
+								מאוסף
+							</td>
+							<td>
+								{% for collector in work.of_collections.all %}
+									<a href="{{ collector.get_absolute_url }}">{{ collector }}</a>{% if not forloop.last %},{% endif %}
+								{% endfor %}
+								{% if work.is_self_collected %}
+									{{ work.designer }}
+								{% endif %}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</tbody>
+</table><!-- ends -->
+
+{% endblock pagebody %}

@@ -1,0 +1,124 @@
+{% extends "backoffice/discipline_detail.html" %}
+
+{% block body_class %}designer{% endblock body_class %}
+
+{% block maintitle %}
+רשימת מעצבים
+<small>רשימה פוטנציאלית ראשונית בלבד</small>
+
+{% endblock maintitle %}
+
+
+{% block pagination %}
+<small>מקרא צבעים:
+	<strong>
+		{% for generation_id, generation_title in generations %}
+		<span class="designer_type_{{ generation_id }}">{{ generation_title }}</span>
+		{% endfor %}
+	</strong>
+</small>
+{% endblock pagination %}
+{% block pagebody %}
+<table class ="generaltable designers_list">
+	<tbody>
+		<tr>
+			{% for group in object_list %}
+			{% if forloop.first %}
+			<td>
+			
+				<table class="generaltable">
+					<tbody>
+						<tr>
+							<th>אוספים</th>
+						</tr>
+						{% for collector in collectors %}
+							<tr>
+								<td>
+									<strong>
+										<a href="{% url 'work-list' discipline=discipline.id 												collector=collector.id %}"
+										   style="color:black;">
+											{{ collector }}
+										</a>
+									</strong>
+								</td>
+							</tr>
+						{% endfor %}
+					
+					</tbody>
+				</table>
+					<br>
+				<table class="generaltable">
+				<tbody>
+					<tr>
+						<th>
+							{{ group.letters|join:"-" }}
+						</th>
+					</tr>
+					
+					{% for group in group.designer_groups %}
+					{%if forloop.first%}
+					{% for designer in group %}
+					
+					<tr>
+						<td class="designers_group_{{ designer.generation_as_choices }}">
+							{% if designer.is_active %}
+								<a href="{% url 'work-list' discipline=discipline.id designer=designer.id %}"
+								   class="designer_type_{{ designer.generation_as_choices }}">
+							{% else %}
+								<a class="disabled">
+							{% endif %}
+								<strong>{{ designer.name }}</strong>
+							</a>
+						</td>
+					</tr>
+					
+					{% endfor %}
+					{%endif%}
+					{% endfor %}
+					
+					
+				</tbody>
+			</table><br/>
+			
+			</td>{% endif %}
+			{% endfor %}
+
+			{% for group in object_list %}
+			{%if not forloop.first%}
+			{% cycle "<td>" "" %}
+			
+			<table class="generaltable">
+				<tbody>
+					<tr>
+						<th>
+							{{ group.letters|join:"-" }}
+						</th>
+					</tr>
+					{% for group in group.designer_groups %}
+					{% for designer in group %}
+					<tr>
+						<td class="designers_group_{{ designer.generation_as_choices }}">
+							{% if designer.is_active %}
+								<a href="{% url 'work-list' discipline=discipline.id designer=designer.id %}"
+								   class="designer_type_{{ designer.generation_as_choices }}">
+							{% else %}
+								<a class="disabled">
+							{% endif %}
+								<strong>{{ designer.name }}</strong>
+							</a>
+						</td>
+					</tr>
+					{% endfor %}
+					{% endfor %}
+				</tbody>
+			</table><br/>
+
+		{% cycle "" "</td>" %}
+		{% endif %}	
+			{% endfor %}
+		</tr>
+	</tbody>
+</table>
+
+
+{% endblock pagebody %}

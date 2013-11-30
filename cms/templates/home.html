@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load flatpages %}
+{% load backoffice_extras %}
+{% block navigation %}
+<ul>
+	{% get_flatpages as flatpages %}
+	{% for page in flatpages %}
+	<li class="navitem_{{ forloop.counter }}">
+		<a href="/pages{{ page.url }}">{{ page.title }}</a>
+	</li>
+	{% endfor %}
+
+	{% for object in disciplines %}
+	{% if object.active %}
+	<li class="navitem_{{ forloop.counter|add:"2" }}">
+		<a href="{% url 'discipline-detail' object.id %}"> {{ object.short_name }}</a>
+	</li>
+	{% else %}
+	<li class="navitem_disabled">
+		<a>{{ object.short_name }}</a>
+	</li>
+	{% endif %}
+	{% endfor %}
+</ul>
+{% endblock navigation %}
+
+{% block sidebar %}
+	<a href="#" id="sidebar_searchlink_flatpages">חיפוש מתקדם</a>
+{% endblock sidebar %}
+{% block pagebody %}
+
+
+
+<div style="height:108px;"></div>
+
+{% work_marquee %}
+<div id="homepage_intro_div">
+	<div class="shenkarlogo"></div>
+	<div class="verticallogo"></div>
+	<div class="shenkartagline">
+		מכון שנקר לתיעוד וחקר העיצוב בישראל
+	</div>
+	<div class="verticaltagline">
+		המכון עוסק בהיסטוריית העיצוב מאז ההתיישבות הראשונה בארץ ישראל.
+	</div>
+
+</div>
+<div id="homepage_subintro_div"  style="margin-top:215px;">
+	<br>
+	<strong>האתר ותכניו נמצאים בתהליך הקמה, ולכן ייתכנו בהם טעויות.</strong> נשמח לקבל כל הערה. <span>הכניסה לאתר חופשית. כדי להשתמש בדף האישי יש להירשם למערכת.</span>
+</div>
+
+
+
+{% endblock pagebody %}

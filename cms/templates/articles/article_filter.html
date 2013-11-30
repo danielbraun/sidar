@@ -1,0 +1,36 @@
+{% extends "table.html" %}
+{% block body_class %}article{% endblock body_class %}
+
+{% block maintitle %}מאמרים{% endblock maintitle %}
+
+{% block pagination %}
+	{% include "includes/pagination.html" %}
+{% endblock pagination %}
+
+{% block table_rows %}
+
+<tr>
+	<th>כותרת</th>
+	<th>עוסק במעצב</th>
+	<th>קטגורית עיצוב</th>
+</tr>
+
+{% for article in object_list %}
+	<tr>
+		<td>
+			{% if article.article %}
+				<a href="{{ article.article.url }}" target="_new">{{ article.title }}</a>
+			{% else %}
+				{{ article.title }}
+			{% endif %}
+		</td>
+		<td>{{ article.about_designer }}</td>
+		<td>{{ article.category }}</td>
+	</tr>
+{% endfor %}
+
+{% endblock table_rows %}
+
+{% block sidebar_extensions %}
+	{% include "backoffice/sidebar_extensions/work_filter.html" %}
+{% endblock sidebar_extensions %}

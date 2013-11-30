@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>
+		{{ site.name }}
+	</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="robots" content="noindex, nofollow">
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}website/style.css"><!--[if gtE IE 8]>
+<link rel="stylesheet" type="text/css" href="style_ie8.css" />
+<![endif]-->
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.map.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}website/js/site.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.form.js"></script>
+
+	{% block extra_js %}
+		{% endblock extra_js %}
+</head>
+<body class="{% block pos %}main{% endblock pos %} {% block body_class %}pages{% endblock body_class %}">
+	<div id="pagewrap">
+		{% block header %}
+		<div id="pageheader">
+			<a id="logo" href="{% url 'home' %}">מכון שנקר לתיעוד וחקר העיצוב בישראל | Shenkar Design Archive &amp; Research Center</a>
+
+			<div id="main_nav">
+				{% block navigation %}{% endblock navigation %}
+			</div>
+			<div class="clearboth"></div>
+			<div id="header_sidebar">
+				<a href="{% if discipline %}{% url 'discipline-detail' discipline.id %}{% else %}{% url 'home' %}{% endif %}" class="posindex_link"></a>
+				<a href="{% url 'home' %}" class="mainindex_link"></a>
+				<form id="deciplineform" action="" method="post">
+					<select name="select" onchange="window.location.href=this.value">
+						<option value="">
+							בחר/י תחום מיקוד
+						</option>
+						{% for object in disciplines %}
+						<option value="{% url 'discipline-detail' object.id %}"{% if object.id == discipline.id %}selected{% endif %} {% if not object.active %}disabled{% endif %}>
+							{{ object.long_name }}
+						</option>
+						{% endfor %}
+					</select>
+				</form>
+			</div>
+		</div>
+		{% endblock header %}
+		<div id="pagebody">
+
+			<div id="maintitle">
+				<strong>{% block maintitle %}{% endblock maintitle %}</strong>
+				{% block result_number %}
+					{% if paginator %}
+						- {{ paginator.count }} תוצאות
+					{% endif %}
+				{% endblock result_number %}
+			</div>
+
+			<div class="pagination">{% block pagination %}{% endblock pagination %}</div>
+			<div class="main_text_wrap">
+				{% block pagebody %}{% endblock pagebody %}
+				<div id="pagefooter">
+					<p>
+						© {% now "Y" %} <a href="{% url 'home' %}">מכון שנקר לתיעוד וחקר העיצוב בישראל</a>, כל הזכויות שמורות.
+					</p>
+				</div>
+			</div>
+			<div id="sidebar">
+				{% block sidebar %}{% endblock sidebar %}
+			</div>
+
+		</div>
+		<div class="clearboth"></div>
+	</div>
+</body>
+</html>

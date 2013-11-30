@@ -1,0 +1,50 @@
+
+
+
+{% if messages %}
+	{% for message in messages %}
+		{% if message.tags == 'feedback success' %}
+			<div class="sidebar_block_title" style="display:block;margin-bottom:0px;">טופס הערות</div>
+			<div id="{{ message.tags }}" class="sidebar_block_content" style="background-color:#ffffff;text-decoration:none;padding-top:8px;padding-bottom:8px;">
+				{{ message }}
+			</div>
+		{% endif %}
+	{% endfor %}
+{% endif %}
+
+
+<a href="javascript:displayFeedbackBox();" id="feedback_link" class="sidebar_linkitem" style="color:green;">טופס הערות</a>
+<div id="feedback" style="display:none;">
+	<div class="sidebar_block_title" style="display:block;margin-bottom:0px;">
+		טופס הערות
+		<a href="javascript:displayFeedbackBox();" style="position:absolute;left:3px;color:#ffffff;">X</a>
+	</div>
+
+
+
+	<div class="sidebar_block_content" style="background-color:#ffffff;text-decoration:none;padding-top:8px;">
+		<form method="post" action="{% url 'feedback-send' %}?next={{ path }}">
+			{% csrf_token %}
+			<table border="0" style="width:100%;display:inline;">
+				<tbody>
+					<tr>
+						<td>
+							אנא רישמו את ההערה על פי שנים | קטגוריה | נושאים | מעצבים, ופרטו את הבעיה.<br><br><strong>הערות:</strong>
+						</td>
+					</tr>
+					<input type="hidden" name="user" value="{{ user.id }}">
+					<tr>
+						<td>
+							<p><textarea id="feedback-text" name="comments" style="resize:none;"></textarea></p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="submit" name="subfeedback" class="feedback_submit" value="שליחה">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</div>
+</div>

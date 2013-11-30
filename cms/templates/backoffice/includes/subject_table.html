@@ -1,0 +1,18 @@
+<table class="generaltable">
+	<tbody>
+		<tr>
+			<th>{{ group.grouper }}</th>
+		</tr>
+		{% for subject in group.list %}
+		<tr>
+			<td>
+				<a href="{% url 'work-list' discipline=discipline.id subject=subject.id %}">
+					<strong>{{ subject.name }}</strong>
+				</a>
+
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<br/>

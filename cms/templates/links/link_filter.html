@@ -1,0 +1,33 @@
+{% extends "table.html" %}
+{% load i18n %}
+
+{% block body_class %}links{% endblock body_class %}
+
+{% block maintitle %}{% trans "Links" %}{% endblock maintitle %}
+
+{% block pagination %}
+	{% include "includes/pagination.html" %}
+{% endblock pagination %}
+
+{% block table_rows %}
+<tr>
+	<th>{% trans "site name" %}</th>
+	<th>{% trans "site address" %}</th>
+	<th>{% trans "site language" %}</th>
+	<th>{% trans "link category" %}</th>
+	<th>{% trans "comments" %}</th>
+</tr>
+{% for link in object_list %}
+	<tr>
+		<td>{{ link.name }}</td>
+		<td>{{ link.url }}</td>
+		<td>{{ link.get_language_display }}</td>
+		<td>{{ link.category }}</td>
+		<td>{{ link.comments }}</td>
+	</tr>
+{% endfor %}
+{% endblock table_rows %}
+
+{% block sidebar_extensions %}
+	{% include "backoffice/sidebar_extensions/work_filter.html" %}
+{% endblock sidebar_extensions %}
