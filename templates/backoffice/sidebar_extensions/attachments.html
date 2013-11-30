@@ -1,8 +1,0 @@
-{% extends "includes/sidebar_extension.html" %}
-{% block title %}קבצים מצורפים{% endblock title %}
-
-{% block body %}
-{% for attachment in designer.attached_files %}
-	<a href="{{ attachment.url }}" target="_new" class="sidebar_linkitem">{{ attachment.field.verbose_name }}</a>
-{% endfor %}
-{% endblock body %}
